@@ -1,15 +1,7 @@
 import React from 'react';
 import './Partida.css';
 import logo from '../sv-logo.jpg';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Toolbar from '@material-ui/core/Toolbar';
-import AppBar from '@material-ui/core/AppBar';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import Grid from '@material-ui/core/Grid';
-import Container from '@material-ui/core/Container';
+import { Button, Typography, Toolbar, AppBar, Card, CardActions, CardContent, Grid, Container } from '@material-ui/core';
 import Players from './components/Players.js'
 import Chat from './components/Chat.js'
 
