@@ -10,16 +10,15 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
-import Players from './Players.js'
+import Players from './components/Players.js'
+import Chat from './components/Chat.js'
 
 const cards = [
     {
         "title": "Chat",
         "id":1,
         "component":
-        <Typography>
-          This is a media card. You can use this section to describe the content.
-        </Typography>
+        <Chat />
     },
     {
         "title": "Jugadores",
