@@ -4,11 +4,11 @@ import { TextField, List, ListItem, ListItemAvatar, Avatar } from '@material-ui/
 const messages = [
     {
         "text": "Que onda muchcahos",
-        "from": "Primer Jugador"
+        "from": "Maw"
     },
     {
         "text": "Callate",
-        "from": "Segundo Jugador"
+        "from": "Lau"
     }
 ]
 

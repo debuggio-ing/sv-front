@@ -20,22 +20,19 @@ const useStyles = makeStyles((theme) => ({
 // dummy data so far
 const players = [
     {
-        nickname: "Valdomero"
+        nickname: "Ulince"
     },
     {
-        nickname: "Jovita"
+        nickname: "Nico"
     },
     {
-        nickname: "Valdomero"
+        nickname: "Lau"
     },
     {
-        nickname: "Jovita"
+        nickname: "Law"
     },
     {
-        nickname: "Valdomero"
-    },
-    {
-        nickname: "Jovita"
+        nickname: "Maw"
     }
 ]
 
@@ -54,12 +51,12 @@ function Players({startGame, playing}) {
       {players.map((player) => (
         <ListItem>
           <ListItemAvatar>
-          <Avatar alt="Primer Jugador" src="/static/images/avatar/1.jpg" />
+          <Avatar alt={player.nickname} src="/static/images/avatar/1.jpg" />
             </ListItemAvatar>
             {player.nickname}
         </ListItem>
       ))}
-      {!playing ? button : ""}
+      {!playing ? button : <div/>}
     </List>
 }
 

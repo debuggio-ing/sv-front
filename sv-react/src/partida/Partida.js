@@ -2,9 +2,9 @@ import React from 'react';
 import './Partida.css';
 import logo from '../sv-logo.jpg';
 import { Typography, Toolbar, AppBar, Card, CardContent, Grid, Container } from '@material-ui/core';
-import Players from './components/Players.js'
-import Chat from './components/Chat.js'
-import Board from './components/Board.js'
+import Players from './components/Players/Players.js'
+import Chat from './components/Chat/Chat.js'
+import Board from './components/Board/Board.js'
 import { connect } from 'react-redux'
 import { startGame } from './../redux/actions.js'
 
@@ -26,7 +26,7 @@ class Partida extends React.Component {
             </Typography>
           </Toolbar>
           </AppBar>
-          <Container className="" maxWidth="md">
+          <Container className="">
               <Grid container spacing={4}>
 
                       <Grid item key="chat" md={this.props.playing ? "3" : "6"}>
@@ -47,7 +47,7 @@ class Partida extends React.Component {
                                 <Typography gutterBottom variant="h5" component="h2">
                                   Tablero
                                 </Typography>
-                                <Board/>
+                                <Board proclamacionesMortifagas={[1,2]} proclamacionesFenix={[1,2]}/>
                               </CardContent>
                             </Card>
                           </Grid>
@@ -60,7 +60,7 @@ class Partida extends React.Component {
                             <Typography gutterBottom variant="h5" component="h2">
                               Jugadores
                             </Typography>
-                            <Players startGame={this.props.play}/>
+                            <Players startGame={this.props.play} playing={this.props.playing}/>
                           </CardContent>
                         </Card>
                       </Grid>
