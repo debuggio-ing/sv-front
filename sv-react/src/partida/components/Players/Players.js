@@ -62,7 +62,8 @@ function Players({startGame, playing}) {
 
 
 Players.propTypes = {
-  startGame: PropTypes.func.isRequired
+  startGame: PropTypes.func.isRequired,
+  playing: PropTypes.number.isRequired
 }
 
 export default Players;
