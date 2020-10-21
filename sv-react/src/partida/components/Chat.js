@@ -1,15 +1,5 @@
 import React from 'react';
-import { Input, TextField, List, ListItem, ListItemText, ListItemAvatar, Avatar } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
-      width: '25ch',
-    },
-  },
-}));
+import { TextField, List, ListItem, ListItemAvatar, Avatar } from '@material-ui/core';
 
 const messages = [
     {
@@ -22,8 +12,7 @@ const messages = [
     }
 ]
 
-function Chat() {
-    const classes = useStyles();
+function Chat(key) {
     return <div>
         <List className="chatMessages">
           {messages.map((message) => (
