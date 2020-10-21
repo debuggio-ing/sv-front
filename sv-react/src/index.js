@@ -5,7 +5,6 @@ import { Partida } from './partida/Partida';
 import * as serviceWorker from './serviceWorker';
 import { createStore } from "redux"
 import partidaReducer from "./redux/reducers.js"
-import startGame from "./redux/actions.js"
 import { Provider } from "react-redux"
 
 const store = createStore(partidaReducer);
