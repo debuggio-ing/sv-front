@@ -2,7 +2,9 @@ import React from 'react';
 import startGame from './actions.js'
 
 const initialState = {
-  playing: 0
+  playing: 0,
+  proclamacionesFenix: 2,
+  proclamacionesMortifagas: 4
 }
 
 export default (state=initialState, action) => {

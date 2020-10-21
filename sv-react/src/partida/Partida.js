@@ -47,7 +47,8 @@ class Partida extends React.Component {
                                 <Typography gutterBottom variant="h5" component="h2">
                                   Tablero
                                 </Typography>
-                                <Board proclamacionesMortifagas={[1,2]} proclamacionesFenix={[1,2]}/>
+                                <Board proclamacionesMortifagas={Array(this.props.proclamacionesMortifagas).fill()}
+                                       proclamacionesFenix={Array(this.props.proclamacionesFenix).fill()}/>
                               </CardContent>
                             </Card>
                           </Grid>
@@ -73,7 +74,11 @@ class Partida extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({ playing: state.playing })
+const mapStateToProps = state => ({
+  playing: state.playing,
+  proclamacionesFenix: state.proclamacionesFenix,
+  proclamacionesMortifagas: state.proclamacionesMortifagas
+})
 
 const mapDispatchToProps = dispatch => {
   return {
