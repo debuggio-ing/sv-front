@@ -17,7 +17,7 @@ class Match extends React.Component {
   render() {
     return (
       <div className="match">
-        
+
           <Container className="">
               <Grid container spacing={4}>
 

@@ -42,13 +42,9 @@ class App extends React.Component {
                         }
                         <div className="jumbotron">
                             <div className="container">
-                                <div className="row">
-                                    <div className="col-md-6 offset-md-3">
                                         <PrivateRoute exact path="/" component={HomePage} />
                                         <Route path="/login" component={LoginPage} />
                                         <Route path="/match" component={Match} />
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -56,4 +52,4 @@ class App extends React.Component {
         );
     }
 }
-export { App }; 
+export { App };
