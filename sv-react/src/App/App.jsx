@@ -32,8 +32,7 @@ class App extends React.Component {
         return (
             <header className="match-header">
                 <AppBar position="relative">
-                <Toolbar className="sv-toolBar">
-                    
+                <Toolbar className="sv-toolBar">                   
                     <Typography variant="h6" color="inherit" noWrap>
                     Secret Voldemort
                     </Typography>

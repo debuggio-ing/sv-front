@@ -16,15 +16,6 @@ class LoginPage extends React.Component {
 
     render() {
         return (
-            <header className="match-header">
-                <AppBar position="relative">
-                <Toolbar className="sv-toolBar">
-                    
-                    <Typography variant="h6" color="inherit" noWrap>
-                    Secret Voldemort
-                    </Typography>
-                </Toolbar>
-                </AppBar>
             <div>
                 <h2>Iniciar Sesión</h2>
                 <Formik
