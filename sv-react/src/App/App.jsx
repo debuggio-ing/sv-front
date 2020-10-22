@@ -30,14 +30,6 @@ class App extends React.Component {
     render() {
         const { currentUser } = this.state;
         return (
-            <header className="match-header">
-                <AppBar position="relative">
-                <Toolbar className="sv-toolBar">                   
-                    <Typography variant="h6" color="inherit" noWrap>
-                    Secret Voldemort
-                    </Typography>
-                </Toolbar>
-                </AppBar>
                 <Router history={history}>
                     <div>
                         {currentUser &&
@@ -61,7 +53,6 @@ class App extends React.Component {
                         </div>
                     </div>
                 </Router>
-            </header>
         );
     }
 }
