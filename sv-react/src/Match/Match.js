@@ -1,6 +1,6 @@
 import React from 'react';
-import './Partida.css';
-import logo from '../sv-logo.jpg';
+import './Match.csx';
+//import logo from '../sv-logo.jpg';
 import { Typography, Toolbar, AppBar, Card, CardContent, Grid, Container } from '@material-ui/core';
 import Players from './components/Players/Players.js'
 import Chat from './components/Chat/Chat.js'
@@ -9,23 +9,15 @@ import { connect } from 'react-redux'
 import { startGame } from './../redux/actions.js'
 
 
-class Partida extends React.Component {
+class Match extends React.Component {
   constructor(props){
     super(props);
   }
 
   render() {
     return (
-      <div className="Partida">
-        <header className="Partida-header">
-          <AppBar position="relative">
-          <Toolbar className="sv-toolBar">
-            <img src={logo} className="S-V-logo" alt="logo" />
-            <Typography variant="h6" color="inherit" noWrap>
-              Secret Voldemort
-            </Typography>
-          </Toolbar>
-          </AppBar>
+      <div className="match">
+
           <Container className="">
               <Grid container spacing={4}>
 
@@ -68,7 +60,6 @@ class Partida extends React.Component {
 
               </Grid>
           </Container>
-        </header>
       </div>
     )
   }
@@ -86,7 +77,7 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-const connectionPartida = connect(mapStateToProps, mapDispatchToProps)(Partida)
+const connectionPartida = connect(mapStateToProps, mapDispatchToProps)(Match)
 
 
-export  { connectionPartida as Partida };
+export  { connectionPartida as Match };
