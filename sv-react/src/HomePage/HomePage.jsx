@@ -1,6 +1,21 @@
 import React from 'react';
 
 import { userService, authenticationService } from '@/_services';
+import { List, ListItem } from '@material-ui/core';
+import MatchCard from './components/MatchCard/MatchCard.js'
+
+const match = {
+  name: "Nombre",
+  players: [
+    {
+      nickname: "Juancito"
+    },
+    {
+      nickname: "Pepito"
+    }
+  ],
+  playing: 0
+}
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -30,6 +45,11 @@ class HomePage extends React.Component {
                         )}
                     </ul>
                 }
+                <List>
+                  <ListItem>
+                    <MatchCard match={match}/>
+                  </ListItem>
+                </List>
             </div>
         );
     }
