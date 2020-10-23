@@ -34,6 +34,7 @@ function logout() {
     currentUserSubject.next(null);
 }
 
+// Returns Object{access_token: <token for simple access>, refresh_token: <token for updating>}
 function login(email, password) {
     const requestOptions = {
         method: 'POST',
@@ -44,7 +45,7 @@ function login(email, password) {
     return fetch(`${config.apiUrl}/api/login`, requestOptions)
         .then(handleResponse)
         .then(token => {
-            // // store jwt token in local storage to keep user logged in between page refreshes
+            // store jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('currentUser', JSON.stringify(token));
             currentUserSubject.next(token);
             return user;
