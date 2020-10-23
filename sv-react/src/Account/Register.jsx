@@ -28,7 +28,7 @@ class RegisterPage extends React.Component {
                                 acceptTerms: false
                             }}
                             validationSchema={Yup.object().shape({
-                                title: Yup.string()
+                                username: Yup.string()
                                 .required('Este campo es obligatorio'),
                             email: Yup.string()
                                 .email('Email invalido como vos imbecil')
