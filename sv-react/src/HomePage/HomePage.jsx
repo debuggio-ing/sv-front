@@ -3,19 +3,8 @@ import React from 'react';
 import { userService, authenticationService } from '@/_services';
 import { List, ListItem } from '@material-ui/core';
 import MatchCard from './components/MatchCard/MatchCard.js'
-
-const match = {
-  name: "Nombre",
-  players: [
-    {
-      nickname: "Juancito"
-    },
-    {
-      nickname: "Pepito"
-    }
-  ],
-  playing: 0
-}
+import { connect } from 'react-redux'
+import { joinGame } from './../redux/actions.js'
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -35,7 +24,7 @@ class HomePage extends React.Component {
         const { currentUser, users } = this.state;
         return (
             <div>
-                <h1>Hi {currentUser.firstName}!</h1>
+                <h1>Hi {currentUser.firstName}! playing {this.props.currentGame}</h1>
                 <p>You're logged in with React & JWT!!</p>
                 <h3>Users from secure api end point:</h3>
                 {users &&
@@ -46,13 +35,28 @@ class HomePage extends React.Component {
                     </ul>
                 }
                 <List>
-                  <ListItem>
-                    <MatchCard match={match}/>
-                  </ListItem>
+                  {this.props.matches.map((match) => (
+                    <ListItem>
+                      <MatchCard match={match} joinGame={this.props.joinGame}/>
+                    </ListItem>
+                  ))}
                 </List>
             </div>
         );
     }
 }
 
-export { HomePage };
+const mapStateToProps = state => ({
+  matches: state.matches,
+  currentGame: state.currentGame
+})
+
+const mapDispatchToProps = dispatch => {
+  return {
+    joinGame: (id) => dispatch({...joinGame, id})
+  }
+}
+
+const connectionHome = connect(mapStateToProps, mapDispatchToProps)(HomePage)
+
+export { connectionHome as HomePage };

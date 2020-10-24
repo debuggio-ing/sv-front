@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function MatchCard({match}) {
+function MatchCard({match, joinGame}) {
     const classes = useStyles();
     return (
     <Card className={classes.card}>
@@ -41,7 +41,8 @@ function MatchCard({match}) {
           ))}
         </List>
         {!match.playing
-          ? <Button className={classes.joinButton} variant="contained" color="primary">
+          ? <Button className={classes.joinButton} variant="contained" color="primary"
+                    onClick={() => joinGame(match.id)}>
               Unirse
             </Button>
           : <div/>}
