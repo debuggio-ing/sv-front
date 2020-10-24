@@ -7,10 +7,6 @@ import { Provider } from "react-redux"
 
 import { App } from './App';
 
-// setup fake backend
-import { configureFakeBackend } from './_helpers';
-configureFakeBackend();
-
 const store = createStore(partidaReducer);
 
 render(

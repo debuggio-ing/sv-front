@@ -4,9 +4,9 @@ import { Router, Route, Link } from 'react-router-dom';
 import { history } from '@/_helpers';
 import { authenticationService } from '@/_services';
 import { PrivateRoute } from '@/_components';
-import { AppBar } from '@material-ui/core';
+//import { AppBar } from '@material-ui/core'; to be used later
+import { RegisterPage, LoginPage } from '@/Account';
 import { HomePage } from '@/HomePage';
-import { LoginPage } from '@/LoginPage';
 import { Match } from '@/Match';
 
 class App extends React.Component {
@@ -45,6 +45,7 @@ class App extends React.Component {
                                         <PrivateRoute exact path="/" component={HomePage} />
                                         <Route path="/login" component={LoginPage} />
                                         <Route path="/match" component={Match} />
+                                        <Route path="/register" component={RegisterPage} />
                             </div>
                         </div>
                     </div>
