@@ -8,6 +8,10 @@ export function handleResponse(response) {
                 // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
                 authenticationService.logout();
             }
+            if (422 == response.status) {
+                authenticationService.refreshToken();
+                return "Token Refreshed";
+            }
 
             const error = (data && data.message) || response.statusText;
             return Promise.reject(error);
@@ -16,3 +20,5 @@ export function handleResponse(response) {
         return data;
     });
 }
+
+
