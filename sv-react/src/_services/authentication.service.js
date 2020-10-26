@@ -9,6 +9,7 @@ export const authenticationService = {
     register,
     login,
     logout,
+    refreshToken,
     currentUser: currentUserSubject.asObservable(),
     get currentUserValue () { return currentUserSubject.value }
 };
@@ -20,12 +21,11 @@ function register(username, email, password) {
         body: JSON.stringify({username, email, password })
     };
 
-    return fetch(`${config.apiUrl}/api/register`, requestOptions)
+    return fetch(`${config.apiUrl}/api/register/`, requestOptions)
     // handle errors
     .then(handleResponse)
-    // store token if necessary
     .then(user => {
-        console.log(user)
+        console.log(user) // debugging purposes
     });
 }
 function logout() {
@@ -42,13 +42,30 @@ function login(email, password) {
         body: JSON.stringify({ email, password })
     };
 
-    return fetch(`${config.apiUrl}/api/login`, requestOptions)
+    return fetch(`${config.apiUrl}/api/login/`, requestOptions)
         .then(handleResponse)
         .then(token => {
             // store jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('currentUser', JSON.stringify(token));
+            console.log(JSON.parse(localStorage.getItem('currentUser')));
             currentUserSubject.next(token);
             return user;
         });
 }
 
+function refreshToken(){
+    const currentUser = authenticationService.currentUserValue;
+     const requestOptions = {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${currentUser.refresh_token}` },
+    };
+    return fetch(`${config.apiUrl}/api/refresh/`, requestOptions)
+        .then(handleResponse)
+        .then(token => {
+            // store jwt token in local storage to keep user logged in between page refreshes
+            localStorage.setItem('currentUser', JSON.stringify(token));
+            console.log(JSON.parse(localStorage.getItem('currentUser')));
+            currentUserSubject.next(token);
+            return;
+        });
+}
