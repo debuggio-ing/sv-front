@@ -3,8 +3,15 @@ const startGame = {
 };
 
 const joinGame = {
-  type: "JOIN"
+  type: "JOIN",
+  id: 0
 };
 
 
-export { startGame, joinGame }
+const listLobbies = {
+  type: "LISTLOBBIES",
+  lobbies: []
+}
+
+
+export { startGame, joinGame, listLobbies }

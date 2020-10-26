@@ -1,34 +1,19 @@
 import React from 'react';
 import startGame from './actions.js'
 
+import { lobbyService } from '@/_services';
+
 const initialState = {
   playing: 0,
   proclamacionesFenix: 2,
   proclamacionesMortifagas: 4,
-  matches: [
+  lobbies: [
     {
       name: "Nombre",
       id: 1,
-      players: [
-        {
-          nickname: "Juancito"
-        },
-        {
-          nickname: "Pepito"
-        }
-      ],
-      playing: 0
-    },
-    {
-      name: "Nombre",
-      id: 2,
-      players: [
-        {
-          nickname: "Juancito"
-        },
-        {
-          nickname: "Pepito"
-        }
+      current_players: [
+          "Juancito",
+          "Pepito"
       ],
       playing: 0
     }
@@ -41,6 +26,8 @@ export default (state=initialState, action) => {
       return {...state, playing: 1};
     case "JOIN":
       return {...state, currentGame: action.id};
+    case "LISTLOBBIES":
+      return {...state, lobbies: action.lobbies};
     default:
       return state;
   }

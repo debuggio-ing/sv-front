@@ -23,26 +23,26 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function MatchCard({match, joinGame}) {
+function LobbyCard({lobby, joinGame}) {
     const classes = useStyles();
     return (
     <Card className={classes.card}>
       <CardContent className="">
         <Typography gutterBottom variant="h5" component="h2">
-          {match.name}
+          {lobby.name}
         </Typography>
         <List className={classes.sidewaysLists}>
-          {match.players.map((player) => (
-            <ListItem className={classes.listItem}>
+          {lobby.current_players.map((player, index) => (
+            <ListItem key={index} className={classes.listItem}>
               <ListItemAvatar>
-              <Avatar alt={player.nickname} src="/static/images/avatar/1.jpg" className={classes.avatarColor} />
+              <Avatar alt={player} src="/static/images/avatar/1.jpg" className={classes.avatarColor} />
               </ListItemAvatar>
             </ListItem>
           ))}
         </List>
-        {!match.playing
+        {!lobby.playing
           ? <Button className={classes.joinButton} variant="contained" color="primary"
-                    onClick={() => joinGame(match.id)}>
+                    onClick={() => joinGame(lobby.id)}>
               Unirse
             </Button>
           : <div/>}
@@ -51,4 +51,4 @@ function MatchCard({match, joinGame}) {
     )
 }
 
-export default MatchCard;
+export default LobbyCard;

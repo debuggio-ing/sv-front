@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { userService, authenticationService } from '@/_services';
-import { List, ListItem } from '@material-ui/core';
-import MatchCard from './components/MatchCard/MatchCard.js'
+import { userService, authenticationService, lobbyService } from '@/_services';
+import { List, ListItem, Button } from '@material-ui/core';
+import LobbyCard from './components/LobbyCard/LobbyCard.js'
 import { connect } from 'react-redux'
-import { joinGame } from './../redux/actions.js'
+import { joinGame, listLobbies } from './../redux/actions.js'
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -14,6 +14,14 @@ class HomePage extends React.Component {
             currentUser: authenticationService.currentUserValue,
             users: null
         };
+        this.doListLobbies()
+    }
+
+    doListLobbies() {
+      lobbyService.listLobbies().then( lobbies =>{
+          this.props.listLobbies(lobbies)
+        }
+      )
     }
 
     componentDidMount() {
@@ -34,10 +42,11 @@ class HomePage extends React.Component {
                         )}
                     </ul>
                 }
+                <Button onClick={() => this.doListLobbies()}>Refrescar Lobbies</Button>
                 <List>
-                  {this.props.matches.map((match) => (
-                    <ListItem>
-                      <MatchCard match={match} joinGame={this.props.joinGame}/>
+                  {this.props.lobbies.map((lobby) => (
+                    <ListItem key={lobby.id}>
+                      <LobbyCard lobby={lobby} joinGame={this.props.joinGame}/>
                     </ListItem>
                   ))}
                 </List>
@@ -47,13 +56,14 @@ class HomePage extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  matches: state.matches,
+  lobbies: state.lobbies,
   currentGame: state.currentGame
 })
 
 const mapDispatchToProps = dispatch => {
   return {
-    joinGame: (id) => dispatch({...joinGame, id})
+    joinGame: (id) => dispatch({...joinGame, id}),
+    listLobbies: (lobbies) => dispatch({...listLobbies, lobbies})
   }
 }
 
