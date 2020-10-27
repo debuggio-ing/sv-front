@@ -19,6 +19,9 @@ class Match extends React.Component {
       <div className="match">
 
           <Container className="">
+              <Typography gutterBottom variant="h5" component="h2">
+                {this.props.currentGame.name}
+              </Typography>
               <Grid container spacing={4}>
 
                       <Grid item key="chat" md={this.props.playing ? "3" : "6"}>
@@ -68,7 +71,8 @@ class Match extends React.Component {
 const mapStateToProps = state => ({
   playing: state.playing,
   proclamacionesFenix: state.proclamacionesFenix,
-  proclamacionesMortifagas: state.proclamacionesMortifagas
+  proclamacionesMortifagas: state.proclamacionesMortifagas,
+  currentGame: state.currentGame
 })
 
 const mapDispatchToProps = dispatch => {
