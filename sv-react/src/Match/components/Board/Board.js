@@ -1,8 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { List, ListItem, Grid } from '@material-ui/core';
-import Card from './Card.js'
-import PropTypes from 'prop-types'
+import Card from './../Card/Card.js';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,12 +24,12 @@ function Board({proclamacionesMortifagas, proclamacionesFenix}){
       <Grid container className={classes.root, classes.cardList} spacing="1">
         {proclamacionesMortifagas.map((proclamacion) => (
           <Grid xs="2" sm="2" md="2">
-            <Card type={"Mortifaga"}/>
+            <Card type={"Mortifaga"} portrait={true}/>
           </Grid>
         ))}
         {voidMortifagas.map((proclamacion) => (
           <Grid xs="2" sm="2" md="2">
-            <Card type={"Void"}/>
+            <Card type={"Void"} portrait={true}/>
           </Grid>
         ))}
       </Grid>
@@ -37,12 +37,12 @@ function Board({proclamacionesMortifagas, proclamacionesFenix}){
       <Grid container className={classes.root, classes.cardList} spacing="1">
         {proclamacionesFenix.map((proclamacion) => (
           <Grid xs="2" sm="2" md="2">
-            <Card type={"Fenix"}/>
+            <Card type={"Fenix"} portrait={true}/>
           </Grid>
         ))}
         {voidFenix.map((proclamacion) => (
           <Grid xs="2" sm="2" md="2">
-            <Card type={"Void"}/>
+            <Card type={"Void"} portrait={true}/>
           </Grid>
         ))}
       </Grid>

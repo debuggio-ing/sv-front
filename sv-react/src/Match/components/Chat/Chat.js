@@ -15,9 +15,9 @@ const messages = [
 function Chat(key) {
     return <div>
         <List className="chatMessages">
-          {messages.map((message) => (
-              <ListItem >
-              <ListItemAvatar>
+          {messages.map((message, index) => (
+              <ListItem key={index}>
+              <ListItemAvatar key={index}>
               <Avatar alt={message.from} src="/static/images/avatar/1.jpg" />
                 </ListItemAvatar>
                 {message.text}
