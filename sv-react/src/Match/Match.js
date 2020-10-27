@@ -6,7 +6,7 @@ import Players from './components/Players/Players.js'
 import Chat from './components/Chat/Chat.js'
 import Board from './components/Board/Board.js'
 import { connect } from 'react-redux'
-import { startGame } from './../redux/actions.js'
+import { startGame, vote } from './../redux/actions.js'
 import Vote from './components/Vote/Vote.js'
 
 
@@ -66,7 +66,7 @@ class Match extends React.Component {
                                 <Typography gutterBottom variant="h5" component="h2">
                                   Votación
                                 </Typography>
-                                <Vote vote={this.props.play}/>
+                                <Vote vote={this.props.vote}/>
                               </CardContent>
                             </Card>
                           </Grid>
@@ -89,7 +89,11 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    play: () => dispatch(startGame)
+    play: () => dispatch(startGame),
+    vote: (choosen) => {
+      alert(choosen)
+      dispatch(vote)
+    }
   }
 }
 

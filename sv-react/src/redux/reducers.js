@@ -29,6 +29,8 @@ export default (state=initialState, action) => {
       return {...state, currentGame: action.id};
     case "LISTLOBBIES":
       return {...state, lobbies: action.lobbies};
+    case "VOTE":
+      return {...state, voting: 0};
     default:
       return state;
   }
