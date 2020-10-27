@@ -91,6 +91,13 @@ const mapDispatchToProps = dispatch => {
   return {
     play: () => dispatch(startGame),
     vote: (choosen) => {
+      /* NICO METELE ACA
+      gameService.vote(choosen).then( result => {
+          dispatch(vote)
+        }
+      ).catch( err => {
+        alert("No se pudo efectual el voto")
+      })*/
       alert(choosen)
       dispatch(vote)
     }
