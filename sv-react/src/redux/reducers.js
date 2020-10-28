@@ -17,7 +17,10 @@ const initialState = {
       ],
       playing: 0
     }
-  ]
+  ],
+  currentGame: {
+    name: "default"
+  }
 }
 
 export default (state=initialState, action) => {
@@ -25,7 +28,7 @@ export default (state=initialState, action) => {
     case "START":
       return {...state, playing: 1};
     case "JOIN":
-      return {...state, currentGame: action.id};
+      return {...state, currentGame: action.lobby};
     case "LISTLOBBIES":
       return {...state, lobbies: action.lobbies};
     default:
