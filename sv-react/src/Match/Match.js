@@ -88,7 +88,8 @@ const mapStateToProps = state => ({
   playing: state.playing,
   proclamacionesFenix: state.proclamacionesFenix,
   proclamacionesMortifagas: state.proclamacionesMortifagas,
-  voting: state.voting
+  voting: state.voting,
+  currentGame: state.currentGame
 })
 
 const mapDispatchToProps = dispatch => {
@@ -96,13 +97,12 @@ const mapDispatchToProps = dispatch => {
     play: () => dispatch(startGame),
     vote: (chosen) => {
       gameService.vote(chosen).then( result => {
+          alert(chosen)
           dispatch(vote)
         }
       ).catch( err => {
         alert("No se pudo efectual el voto")
       })
-      alert(chosen)
-      dispatch(vote)
     }
   }
 }
