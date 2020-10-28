@@ -49,7 +49,7 @@ function login(email, password) {
             localStorage.setItem('currentUser', JSON.stringify(token));
             console.log(JSON.parse(localStorage.getItem('currentUser')));
             currentUserSubject.next(token);
-            return user;
+            return token;
         });
 }
 
