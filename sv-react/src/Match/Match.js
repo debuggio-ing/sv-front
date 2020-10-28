@@ -8,6 +8,7 @@ import Board from './components/Board/Board.js'
 import { connect } from 'react-redux'
 import { startGame, vote } from './../redux/actions.js'
 import Vote from './components/Vote/Vote.js'
+import {gameService} from '@/_services'
 
 
 class Match extends React.Component {
@@ -87,22 +88,21 @@ const mapStateToProps = state => ({
   playing: state.playing,
   proclamacionesFenix: state.proclamacionesFenix,
   proclamacionesMortifagas: state.proclamacionesMortifagas,
-  voting: state.voting
+  voting: state.voting,
+  currentGame: state.currentGame
 })
 
 const mapDispatchToProps = dispatch => {
   return {
     play: () => dispatch(startGame),
-    vote: (choosen) => {
-      /* NICO METELE ACA
-      gameService.vote(choosen).then( result => {
+    vote: (chosen) => {
+      gameService.vote(chosen).then( result => {
+          alert(chosen)
           dispatch(vote)
         }
       ).catch( err => {
         alert("No se pudo efectual el voto")
-      })*/
-      alert(choosen)
-      dispatch(vote)
+      })
     }
   }
 }

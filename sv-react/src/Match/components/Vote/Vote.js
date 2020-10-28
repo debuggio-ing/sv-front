@@ -21,7 +21,7 @@ function Vote({vote}) {
     let classes = useStyles();
     return <Grid container className={classes.root, classes.cardList} spacing="1">
         <Grid xs="6" sm="6" md="6">
-          <Card type={"Lumus"} portrait={false} clickAction={vote}/>
+          <Card type={"Lumos"} portrait={false} clickAction={vote}/>
         </Grid>
         <Grid xs="6" sm="6" md="6">
           <Card type={"Nox"} portrait={false} clickAction={vote}/>

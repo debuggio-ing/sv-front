@@ -21,8 +21,8 @@ function Card({type, portrait, clickAction}){
     case "Fenix":
       url = "public/img/fenix.png"
       break;
-    case "Lumus":
-      url = "public/img/lumus.png"
+    case "Lumos":
+      url = "public/img/lumos.png"
       break;
     case "Nox":
       url = "public/img/nox.png"
