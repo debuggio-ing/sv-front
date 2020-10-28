@@ -6,7 +6,8 @@ import Players from './components/Players/Players.js'
 import Chat from './components/Chat/Chat.js'
 import Board from './components/Board/Board.js'
 import { connect } from 'react-redux'
-import { startGame } from './../redux/actions.js'
+import { startGame, vote } from './../redux/actions.js'
+import Vote from './components/Vote/Vote.js'
 
 
 class Match extends React.Component {
@@ -61,6 +62,20 @@ class Match extends React.Component {
                         </Card>
                       </Grid>
 
+                      {this.props.voting
+                        ? <Grid item key="vote" md={this.props.playing ? "3" : "6"}>
+                            <Card className="">
+                              <CardContent className="">
+                                <Typography gutterBottom variant="h5" component="h2">
+                                  Votación
+                                </Typography>
+                                <Vote vote={this.props.vote}/>
+                              </CardContent>
+                            </Card>
+                          </Grid>
+                        : <br/>
+                      }
+
               </Grid>
           </Container>
       </div>
@@ -72,12 +87,23 @@ const mapStateToProps = state => ({
   playing: state.playing,
   proclamacionesFenix: state.proclamacionesFenix,
   proclamacionesMortifagas: state.proclamacionesMortifagas,
-  currentGame: state.currentGame
+  voting: state.voting
 })
 
 const mapDispatchToProps = dispatch => {
   return {
-    play: () => dispatch(startGame)
+    play: () => dispatch(startGame),
+    vote: (choosen) => {
+      /* NICO METELE ACA
+      gameService.vote(choosen).then( result => {
+          dispatch(vote)
+        }
+      ).catch( err => {
+        alert("No se pudo efectual el voto")
+      })*/
+      alert(choosen)
+      dispatch(vote)
+    }
   }
 }
 

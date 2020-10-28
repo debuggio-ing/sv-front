@@ -48,9 +48,9 @@ function Players({startGame, playing}) {
         button = <Button className={classes.playButton} disabled variant="contained">Jugar</Button>
     }
     return <List className={classes.root}>
-      {players.map((player) => (
-        <ListItem>
-          <ListItemAvatar>
+      {players.map((player, index) => (
+        <ListItem key={index}>
+          <ListItemAvatar key={index}>
           <Avatar alt={player.nickname} src="/static/images/avatar/1.jpg" />
             </ListItemAvatar>
             {player.nickname}

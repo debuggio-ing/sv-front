@@ -13,5 +13,9 @@ const listLobbies = {
   lobbies: []
 }
 
+const vote = {
+  type: "VOTE"
+}
 
-export { startGame, joinGame, listLobbies }
+
+export { startGame, joinGame, listLobbies, vote }

@@ -7,6 +7,7 @@ const initialState = {
   playing: 0,
   proclamacionesFenix: 2,
   proclamacionesMortifagas: 4,
+  voting: 1,
   lobbies: [
     {
       name: "Nombre",
@@ -31,6 +32,8 @@ export default (state=initialState, action) => {
       return {...state, currentGame: action.lobby};
     case "LISTLOBBIES":
       return {...state, lobbies: action.lobbies};
+    case "VOTE":
+      return {...state, voting: 0};
     default:
       return state;
   }
