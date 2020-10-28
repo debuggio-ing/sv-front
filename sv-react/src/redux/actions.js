@@ -4,7 +4,7 @@ const startGame = {
 
 const joinGame = {
   type: "JOIN",
-  id: 0
+  lobby: { name: "def" } 
 };
 
 

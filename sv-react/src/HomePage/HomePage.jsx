@@ -5,6 +5,7 @@ import { List, ListItem, Button } from '@material-ui/core';
 import LobbyCard from './components/LobbyCard/LobbyCard.js'
 import { connect } from 'react-redux'
 import { joinGame, listLobbies } from './../redux/actions.js'
+import { history } from '@/_helpers';
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -14,14 +15,7 @@ class HomePage extends React.Component {
             currentUser: authenticationService.currentUserValue,
             users: null
         };
-        this.doListLobbies()
-    }
-
-    doListLobbies() {
-      lobbyService.listLobbies().then( lobbies =>{
-          this.props.listLobbies(lobbies)
-        }
-      )
+        this.props.listLobbies()
     }
 
     componentDidMount() {
@@ -32,7 +26,7 @@ class HomePage extends React.Component {
         const { currentUser, users } = this.state;
         return (
             <div>
-                <h1>Hi {currentUser.firstName}! playing {this.props.currentGame}</h1>
+                <h1>Hi {currentUser.firstName}! playing {this.props.currentGame.name}</h1>
                 <p>You're logged in with React & JWT!!</p>
                 <h3>Users from secure api end point:</h3>
                 {users &&
@@ -42,7 +36,7 @@ class HomePage extends React.Component {
                         )}
                     </ul>
                 }
-                <Button onClick={() => this.doListLobbies()}>Refrescar Lobbies</Button>
+                <Button onClick={() => this.props.listLobbies()}>Refrescar Lobbies</Button>
                 <List>
                   {this.props.lobbies.map((lobby) => (
                     <ListItem key={lobby.id}>
@@ -62,8 +56,23 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    joinGame: (id) => dispatch({...joinGame, id}),
-    listLobbies: (lobbies) => dispatch({...listLobbies, lobbies})
+    joinGame: (id) => {
+      lobbyService.joinLobby(id).then( lobby => {
+          dispatch({...joinGame, lobby})
+          history.push("/match")
+        }
+      ).catch( err => {
+        alert("No se pudo unir a la partida")
+      })
+    },
+    listLobbies: (lobbies) => {
+      lobbyService.listLobbies().then( lobbies =>{
+          dispatch({...listLobbies, lobbies})
+        }
+      ).catch( err =>
+        alert("No se pudieron listar los lobbies")
+      )
+    }
   }
 }
 
