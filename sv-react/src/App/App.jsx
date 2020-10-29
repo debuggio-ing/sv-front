@@ -1,14 +1,14 @@
 import React from 'react';
 import { Router, Route, Link } from 'react-router-dom';
 
-import { AppBar, Toolbar, Typography, Button } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, Button, Grid } from '@material-ui/core';
 import { history } from '@/_helpers';
 import { authenticationService } from '@/_services';
 import { PrivateRoute } from '@/_components';
-//import { AppBar } from '@material-ui/core'; to be used later
 import { RegisterPage, LoginPage } from '@/Account';
 import { HomePage } from '@/HomePage';
 import { Match } from '@/Match';
+import { lobbyService } from '../_services';
 
 class App extends React.Component {
     constructor(props) {
@@ -28,6 +28,10 @@ class App extends React.Component {
         history.push('/login');
     }
 
+    // newmatch () {
+    //   lobbyService.newmatch()
+    // }
+
     render() {
         const { currentUser } = this.state;
         return (
@@ -37,15 +41,15 @@ class App extends React.Component {
                           <AppBar position="relative">
                             <Toolbar className="sv-toolBar" style={{backgroundColor: "#5c4965"}}>
                               <img src="public/sv-logo.jpg" style={{width: "80px"}} alt="logo" />
-                              <Typography variant="h6" color="inherit" noWrap>
+                              <Typography variant="h6" color="inherit" Wrap>
                                 Secret Voldemort
                               </Typography>
                               <Button color="inherit" onClick={this.logout}>
                                 Log out
                               </Button>
-                              <Button color="inherit">
-                                Jugar
-                              </Button>
+                              <Grid container justify="flex-end">
+                              <Button color="inherit">Nueva Partida </Button>
+                              </Grid>
                             </Toolbar>
                           </AppBar>
                         }
