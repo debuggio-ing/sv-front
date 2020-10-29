@@ -1,6 +1,7 @@
 import React from 'react';
 import { Router, Route, Link } from 'react-router-dom';
 
+import { AppBar, Toolbar, Typography, Button } from '@material-ui/core';
 import { history } from '@/_helpers';
 import { authenticationService } from '@/_services';
 import { PrivateRoute } from '@/_components';
@@ -33,12 +34,20 @@ class App extends React.Component {
                 <Router history={history}>
                     <div>
                         {currentUser &&
-                            <nav className="navbar navbar-expand navbar-dark bg-dark">
-                                <div className="navbar-nav">
-                                    <Link to="/" className="nav-item nav-link">Inicio</Link>
-                                    <a onClick={this.logout} className="nav-item nav-link">Logout</a>
-                                </div>
-                            </nav>
+                          <AppBar position="relative">
+                            <Toolbar className="sv-toolBar" style={{backgroundColor: "#5c4965"}}>
+                              <img src="public/sv-logo.jpg" style={{width: "80px"}} alt="logo" />
+                              <Typography variant="h6" color="inherit" noWrap>
+                                Secret Voldemort
+                              </Typography>
+                              <Button color="inherit" onClick={this.logout}>
+                                Log out
+                              </Button>
+                              <Button color="inherit">
+                                Jugar
+                              </Button>
+                            </Toolbar>
+                          </AppBar>
                         }
                         <div className="jumbotron">
                             <div className="container">
