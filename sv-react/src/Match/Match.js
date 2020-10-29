@@ -1,5 +1,4 @@
 import React from 'react';
-import './Match.csx';
 //import logo from '../sv-logo.jpg';
 import { Typography, Toolbar, AppBar, Card, CardContent, Grid, Container } from '@material-ui/core';
 import Players from './components/Players/Players.js'
