@@ -28,6 +28,10 @@ class App extends React.Component {
         authenticationService.logout();
         history.push('/login');
     }
+    
+    goHome() {
+      history.push('/');
+    }
 
     render() {
         const { currentUser } = this.state;
@@ -37,7 +41,7 @@ class App extends React.Component {
                         {currentUser &&
                           <AppBar position="relative">
                             <Toolbar className="sv-toolBar" style={{backgroundColor: "#5c4965"}}>
-                              <img src="public/sv-logo.jpg" style={{width: "80px"}} alt="logo" />
+                              <img src="public/sv-logo.jpg" onClick={this.goHome} style={{width: "80px"}} alt="logo" />
                               <Typography variant="h6" color="inherit">
                                 Secret Voldemort
                               </Typography>
