@@ -13,6 +13,11 @@ import {gameService} from '@/_services'
 class Match extends React.Component {
   constructor(props){
     super(props);
+    this.reloadGamePublic();
+  }
+
+  reloadGamePublic(){
+    this.props.gameStatus(this.props.currentGame.id);
   }
 
   render() {
@@ -57,7 +62,7 @@ class Match extends React.Component {
                             <Typography gutterBottom variant="h5" component="h2">
                               Jugadores
                             </Typography>
-                            <Players startGame={this.props.play} playing={this.props.playing}/>
+                            <Players startGame={this.props.play} playing={this.props.playing} players={this.props.currentGame.current_players}/>
                           </CardContent>
                         </Card>
                       </Grid>
@@ -101,6 +106,15 @@ const mapDispatchToProps = dispatch => {
         }
       ).catch( err => {
         alert("No se pudo efectual el voto")
+      })
+    },
+    gameStatus: (gameId) => {
+      gameService.gameStatus(gameId).then( game => {
+          alert(chosen)
+          dispatch(...gameStatus, game)
+        }
+      ).catch( err => {
+        alert("No se pudo actualizar el estado de la partida")
       })
     }
   }
