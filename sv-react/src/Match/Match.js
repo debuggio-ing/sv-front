@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 import { startGame, vote } from './../redux/actions.js'
 import Vote from './components/Vote/Vote.js'
 import { gameService, lobbyService } from '@/_services'
+import { history } from '@/_helpers';
 
 
 class Match extends React.Component {
@@ -17,6 +18,9 @@ class Match extends React.Component {
   }
 
   reloadGamePublic(){
+    if(this.props.currentGame.id == -1){
+      history.push("/")
+    }
     if(this.props.playing){
       this.props.gameStatus(this.props.currentGame.id);
     }

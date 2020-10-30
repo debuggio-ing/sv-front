@@ -21,7 +21,8 @@ const gameStatus = {
   type: "UPDATEGAMESTATUS",
   currentGame: {
     current_players: [],
-    name: "default"
+    name: "default",
+    id: -1
   }
 }
 

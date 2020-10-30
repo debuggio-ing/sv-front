@@ -21,7 +21,7 @@ const initialState = {
   ],
   currentGame: {
     name: "default",
-    id: 1,
+    id: -1,
     current_players: []
   }
 }
