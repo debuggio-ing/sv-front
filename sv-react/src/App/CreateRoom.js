@@ -7,7 +7,6 @@ import {TextField,
          DialogContent,
          DialogContentText,
          DialogTitle} from "@material-ui/core"
-//import { userService } from '@/_services'
 import { Formik } from "formik";
 import * as Yup from "yup";
 import {lobbyService} from '@/_services'
@@ -43,7 +42,9 @@ function CreateRoom(props) {
               <DialogContentText>Llena los campos para iniciar una crear una sala nueva</DialogContentText>
               <Formik
                 initialValues={{
-                    players: ''
+                    players: '',
+                    lobbyName: ''
+
                 }}
                 validationSchema={Yup.object().shape({
                     players: Yup.number()
@@ -52,14 +53,20 @@ function CreateRoom(props) {
                     .integer('Este numero debe ser entero')
                     .max(10,'Este numero debe ser menor o igual a 10')
                     .min(5,'Este numero debe ser mayor o igual a 5')
-                    .typeError("Esto no es un numero")
+                    .typeError("Esto no es un numero"),
+                    lobbyName: Yup.string()
+                    .required('Este campo es obligatorio')
+                    .min(1,'El nombre no puede ser vacio')
+                    .max(20,'El nombre excede los 20 caracteres')
+                    .typeError("Esto no es un string")
                 })}
                 onSubmit={({ lobbyName, players }, { setStatus, setSubmitting }) => {
                     setSubmitting(true);
                     lobbyService.createLobby(lobbyName, players)
                         .then(
                             (response) => {
-                                setSubmitionCompleted(true)       
+                                setSubmitionCompleted(true)
+                                setOpen(false)
                             },
                             error => {
                                 setSubmitting(false)
