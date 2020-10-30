@@ -9,6 +9,7 @@ import { RegisterPage, LoginPage } from '@/Account';
 import { HomePage } from '@/HomePage';
 import { Match } from '@/Match';
 import { lobbyService } from '../_services';
+import CreateRoom from './CreateRoom'
 
 class App extends React.Component {
     constructor(props) {
@@ -28,10 +29,6 @@ class App extends React.Component {
         history.push('/login');
     }
 
-    // newmatch () {
-    //   lobbyService.newmatch()
-    // }
-
     render() {
         const { currentUser } = this.state;
         return (
@@ -41,14 +38,14 @@ class App extends React.Component {
                           <AppBar position="relative">
                             <Toolbar className="sv-toolBar" style={{backgroundColor: "#5c4965"}}>
                               <img src="public/sv-logo.jpg" style={{width: "80px"}} alt="logo" />
-                              <Typography variant="h6" color="inherit" Wrap>
+                              <Typography variant="h6" color="inherit">
                                 Secret Voldemort
                               </Typography>
                               <Button color="inherit" onClick={this.logout}>
                                 Log out
                               </Button>
                               <Grid container justify="flex-end">
-                              <Button color="inherit">Nueva Partida </Button>
+                                < CreateRoom />
                               </Grid>
                             </Toolbar>
                           </AppBar>
