@@ -4,6 +4,7 @@ import { authHeader, handleResponse } from '@/_helpers';
 export const lobbyService = {
     listLobbies,
     joinLobby,
+    startMatch,
 };
 // Returns a list of objects()
 function listLobbies() {
@@ -37,4 +38,20 @@ function joinLobby(lobby_id) {
             console.log(lobby)
             return lobby;
         });
+}
+
+// Receives the lobbyId the user wants to start and returns error or the gameId of the started match
+function startMatch(lobbyId) {
+    const requestOptions = {
+        method: 'POST',
+        headers: authHeader(),
+    };
+    // This works if the backend wants to code properly, otherwise modify function to receive the number of current players
+    return fetch(`${config.apiUrl}/api/lobbies/` + lobbyId.toString() + '/start/', requestOptions)
+        .then(handleResponse)
+        // DEBUG purposes
+        .then(gameId => {
+            console.log(gameId);
+            return gameId;
+        })
 }
