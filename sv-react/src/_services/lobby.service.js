@@ -1,12 +1,55 @@
 import config from 'config';
-import { authHeader, handleResponse } from '@/_helpers';
+import {
+    authHeader,
+    handleResponse
+} from '@/_helpers';
 
 export const lobbyService = {
     listLobbies,
     joinLobby,
     startMatch,
+    getLobby,
+    createLobby,
 };
-// Returns a list of objects()
+
+
+// Given a name and max_players (str, int) it returns the data of the created lobby with the creator already in the game
+function createLobby(name, max_players){
+    const requestOptions = {
+        method: 'POST',
+        headers: Object.assign(authHeader(),
+            {'Content-Type': 'application/json'}),
+        body: JSON.stringify({name, max_players}),
+    }
+    return fetch(`${config.apiUrl}/api/lobbies/new/`, requestOptions)
+        // handle errors
+        .then(handleResponse)
+        .then(lobby => {
+            // for debugging purposes
+            console.log(lobby);
+            return lobby;
+        })
+}
+
+// Given a lobby_id it returns its information or "No content" in case it doesn't exist
+function getLobby(lobby_id) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader(),
+    }
+    return fetch(`${config.apiUrl}/api/lobbies/` + lobby_id.toString() + `/`, requestOptions)
+        // handle errors
+        .then(handleResponse)
+        .then(lobby => {
+            // for debugging purposes
+            console.log(lobby);
+            return lobby;
+        })
+}
+
+
+
+// Returns a list of objects() with the data of all the lobbies in the server
 function listLobbies() {
     const requestOptions = {
         method: 'GET',
