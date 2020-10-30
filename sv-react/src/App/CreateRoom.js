@@ -10,7 +10,7 @@ import {TextField,
 //import { userService } from '@/_services'
 import { Formik } from "formik";
 import * as Yup from "yup";
-
+import {lobbyService} from '@/_services'
 const styles = {};
 
 function CreateRoom(props) {
@@ -54,20 +54,18 @@ function CreateRoom(props) {
                     .min(5,'Este numero debe ser mayor o igual a 5')
                     .typeError("Esto no es un numero")
                 })}
-                onSubmit={({ players }, { setStatus, setSubmitting }) => {
+                onSubmit={({ lobbyName, players }, { setStatus, setSubmitting }) => {
                     setSubmitting(true);
-                    console.log(players)
-                    setSubmitionCompleted(true)
-                    // userservice.newlobby(players) aca iria el servicio
-                    //     .then(
-                    //         (response) => {
-                    //             setSubmitionCompleted(true)       
-                    //         },
-                    //         error => {
-                    //             setSubmitting(false)
-                    //             setStatus(error)
-                    //         }
-                    //     );
+                    lobbyService.createLobby(lobbyName, players)
+                        .then(
+                            (response) => {
+                                setSubmitionCompleted(true)       
+                            },
+                            error => {
+                                setSubmitting(false)
+                                setStatus(error)
+                            }
+                        );
                 }}
               >
                 {(props) => {
@@ -89,7 +87,17 @@ function CreateRoom(props) {
                         value={values.name}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        helperText={errors.players && touched.players && errors.players}
+                        helperText={errors.players && touched.players}
+                        margin="normal"
+                      />
+                      <TextField
+                        label="Nombre"
+                        name="lobbyName"
+                        className={classes.textField}
+                        value={values.name}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        helperText={errors.lobbyName && touched.lobbyName}
                         margin="normal"
                       />
                       <DialogActions>

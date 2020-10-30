@@ -21,14 +21,12 @@ function createLobby(name, max_players){
             {'Content-Type': 'application/json'}),
         body: JSON.stringify({name, max_players}),
     }
-    return fetch(`${config.apiUrl}/api/lobbies/new`, requestOptions)
+    return fetch(`${config.apiUrl}/api/lobbies/new/`, requestOptions)
         // handle errors
         .then(handleResponse)
         .then(lobby => {
             // for debugging purposes
-            console.log("Lobby creado ");
             console.log(lobby);
-            console.log("fin del creado");
             return lobby;
         })
 }
@@ -44,9 +42,7 @@ function getLobby(lobby_id) {
         .then(handleResponse)
         .then(lobby => {
             // for debugging purposes
-            console.log("INICIO DE LISTADO");
             console.log(lobby);
-            console.log("FIN DE LISTADO");
             return lobby;
         })
 }
