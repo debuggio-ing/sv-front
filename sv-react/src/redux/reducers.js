@@ -7,7 +7,7 @@ const initialState = {
   playing: 0,
   proclamacionesFenix: 2,
   proclamacionesMortifagas: 4,
-  voting: 1,
+  voting: 0,
   lobbies: [
     {
       name: "Nombre",

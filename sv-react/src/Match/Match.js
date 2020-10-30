@@ -13,12 +13,15 @@ import { gameService, lobbyService } from '@/_services'
 class Match extends React.Component {
   constructor(props){
     super(props);
-    //this.reloadGamePublic();
+    this.reloadGamePublic();
   }
 
   reloadGamePublic(){
     if(this.props.playing){
       this.props.gameStatus(this.props.currentGame.id);
+    }
+    else {
+      // should reload from lobbystatus
     }
   }
 
@@ -42,7 +45,7 @@ class Match extends React.Component {
                           </CardContent>
                         </Card>
                       </Grid>
-<Button onClick={this.reloadGamePublic}> Refresh game</Button>
+
                       {this.props.playing
                         ? <Grid item key="board" xs="6" sm="6" md="6">
                             <Card className="">
@@ -101,7 +104,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   return {
     play: (lobbyId) => {
-      alert("game")
       lobbyService.startMatch(lobbyId).then( result => {
           dispatch(startGame)
         }
