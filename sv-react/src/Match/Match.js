@@ -1,6 +1,6 @@
 import React from 'react';
 //import logo from '../sv-logo.jpg';
-import { Typography, Toolbar, AppBar, Card, CardContent, Grid, Container } from '@material-ui/core';
+import { Typography, Toolbar, AppBar, Card, CardContent, Grid, Container, Button } from '@material-ui/core';
 import Players from './components/Players/Players.js'
 import Chat from './components/Chat/Chat.js'
 import Board from './components/Board/Board.js'
@@ -13,6 +13,13 @@ import { gameService, lobbyService } from '@/_services'
 class Match extends React.Component {
   constructor(props){
     super(props);
+    //this.reloadGamePublic();
+  }
+
+  reloadGamePublic(){
+    if(this.props.playing){
+      this.props.gameStatus(this.props.currentGame.id);
+    }
   }
 
   render() {
@@ -35,7 +42,7 @@ class Match extends React.Component {
                           </CardContent>
                         </Card>
                       </Grid>
-
+<Button onClick={this.reloadGamePublic}> Refresh game</Button>
                       {this.props.playing
                         ? <Grid item key="board" xs="6" sm="6" md="6">
                             <Card className="">
@@ -57,7 +64,7 @@ class Match extends React.Component {
                             <Typography gutterBottom variant="h5" component="h2">
                               Jugadores
                             </Typography>
-                            <Players startGame={this.props.play} playing={this.props.playing}/>
+                            <Players startGame={this.props.play} playing={this.props.playing} players={this.props.currentGame.current_players}/>
                           </CardContent>
                         </Card>
                       </Grid>
@@ -111,7 +118,15 @@ const mapDispatchToProps = dispatch => {
         alert("No se pudo efectual el voto")
       })
     },
-    startGame
+    gameStatus: (gameId) => {
+      gameService.gameStatus(gameId).then( game => {
+          alert(chosen)
+          dispatch(...gameStatus, game)
+        }
+      ).catch( err => {
+        alert("No se pudo actualizar el estado de la partida")
+      })
+    }
   }
 }
 

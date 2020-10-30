@@ -20,7 +20,9 @@ const initialState = {
     }
   ],
   currentGame: {
-    name: "default"
+    name: "default",
+    id: 1,
+    current_players: []
   }
 }
 
@@ -34,6 +36,8 @@ export default (state=initialState, action) => {
       return {...state, lobbies: action.lobbies};
     case "VOTE":
       return {...state, voting: 0};
+    case "UPDATEGAMESTATUS":
+      return {...state, currentGame: action.game};
     default:
       return state;
   }

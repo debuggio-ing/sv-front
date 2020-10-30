@@ -17,26 +17,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-// dummy data so far
-const players = [
-    {
-        nickname: "Ulince"
-    },
-    {
-        nickname: "Nico"
-    },
-    {
-        nickname: "Lau"
-    },
-    {
-        nickname: "Law"
-    },
-    {
-        nickname: "Maw"
-    }
-]
 
-function Players({startGame, playing}) {
+function Players({startGame, playing, players}) {
     const classes = useStyles();
     let button;
     if(players.length >= 5){
@@ -51,9 +33,9 @@ function Players({startGame, playing}) {
       {players.map((player, index) => (
         <ListItem key={index}>
           <ListItemAvatar key={index}>
-          <Avatar alt={player.nickname} src="/static/images/avatar/1.jpg" />
+          <Avatar alt={player} src="/static/images/avatar/1.jpg" />
             </ListItemAvatar>
-            {player.nickname}
+            {player}
         </ListItem>
       ))}
       {!playing ? button : <div/>}
