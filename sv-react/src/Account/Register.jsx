@@ -34,8 +34,9 @@ class RegisterPage extends React.Component {
                                 .email('Email invalido')
                                 .required('Este campo es obligatorio'),
                             password: Yup.string()
-                                .min(6, 'La contraseña debe tener al menos 6 carateres')
-                                .required('Este campo es obligatorio'),
+                                .min(8, 'La contraseña debe tener al menos 8 carateres')
+                                .required('Este campo es obligatorio')
+                                .max(30,'Por favor no mas de 30 caracteres'),
                             acceptTerms: Yup.bool()
                                 .oneOf([true], 'Por favor lee y acepta los términos y condiciones')
                             })}

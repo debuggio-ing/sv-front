@@ -27,8 +27,12 @@ class LoginPage extends React.Component {
                               password: ''
                           }}
                           validationSchema={Yup.object().shape({
-                              email: Yup.string().required('Este campo es obligatorio'),
-                              password: Yup.string().required('Este campo es obligatorio')
+                              email: Yup.string()
+                              .required('Este campo es obligatorio')
+                              .max(255)
+                              .email('Email invalido'),
+                              password: Yup.string()
+                              .required('Este campo es obligatorio')
                           })}
                           onSubmit={({ email, password }, { setStatus, setSubmitting }) => {
                               setStatus();
