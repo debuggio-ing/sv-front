@@ -4,20 +4,22 @@ import { authenticationService, lobbyService } from '@/_services';
 import { List, ListItem, Button } from '@material-ui/core';
 import LobbyCard from './components/LobbyCard/LobbyCard.js'
 import { connect } from 'react-redux'
-import { joinGame, listLobbies } from './../redux/actions.js'
+import { joinGame, listLobbies, leaveGame } from './../redux/actions.js'
 import { history } from '@/_helpers';
 
 class HomePage extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
             currentUser: authenticationService.currentUserValue,
             users: null
         };
-        this.props.listLobbies()
     }
 
+    componentDidMount(){
+      this.props.listLobbies();
+      this.props.leave();
+    }
     render() {
         const { currentUser, users } = this.state;
         return (
@@ -59,6 +61,9 @@ const mapDispatchToProps = dispatch => {
       ).catch( err =>
         alert("No se pudieron listar los lobbies")
       )
+    },
+    leave: () => {
+      dispatch(leaveGame)
     }
   }
 }

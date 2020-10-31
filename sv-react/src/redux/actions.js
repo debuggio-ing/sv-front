@@ -2,6 +2,10 @@ const startGame = {
   type: "START"
 };
 
+const leaveGame = {
+  type: "LEAVE"
+};
+
 const joinGame = {
   type: "JOIN",
   lobby: { name: "def" }
@@ -17,14 +21,22 @@ const vote = {
   type: "VOTE"
 }
 
-const gameStatus = {
+const updateGameStatus = {
   type: "UPDATEGAMESTATUS",
-  currentGame: {
+  game: {
     current_players: [],
     name: "default",
     id: -1
   }
 }
 
+const updateLobbyStatus = {
+  type: "UPDATELOBBYSTATUS",
+  lobby: {
+    current_players: [],
+    name: "default",
+    id: -1
+  }
+}
 
-export { startGame, joinGame, listLobbies, vote, gameStatus }
+export { startGame, joinGame, listLobbies, vote, updateLobbyStatus, updateGameStatus, leaveGame }

@@ -5,7 +5,7 @@ import Players from './components/Players/Players.js'
 import Chat from './components/Chat/Chat.js'
 import Board from './components/Board/Board.js'
 import { connect } from 'react-redux'
-import { startGame, vote } from './../redux/actions.js'
+import { startGame, vote, updateLobbyStatus, updateGameStatus  } from './../redux/actions.js'
 import Vote from './components/Vote/Vote.js'
 import { gameService, lobbyService } from '@/_services'
 import { history } from '@/_helpers';
@@ -14,7 +14,6 @@ import { history } from '@/_helpers';
 class Match extends React.Component {
   constructor(props){
     super(props);
-    this.reloadGamePublic();
   }
 
   reloadGamePublic(){
@@ -25,14 +24,18 @@ class Match extends React.Component {
       this.props.gameStatus(this.props.currentGame.id);
     }
     else {
-      // should reload from lobbystatus
+      this.props.lobbyStatus(this.props.currentGame.id);
     }
+  }
+
+  componentDidMount(){
+    console.log(this.props.currentGame);
+    this.reloadGamePublic();
   }
 
   render() {
     return (
       <div className="match">
-
           <Container className="">
               <Typography gutterBottom variant="h5" component="h2">
                 {this.props.currentGame.name}
@@ -70,6 +73,7 @@ class Match extends React.Component {
                           <CardContent className="">
                             <Typography gutterBottom variant="h5" component="h2">
                               Jugadores
+                              <Button onClick={() => this.reloadGamePublic()} > Refresh </Button>
                             </Typography>
                             <Players startGame={this.props.play} playing={this.props.playing} players={this.props.currentGame.current_players}/>
                           </CardContent>
@@ -126,11 +130,25 @@ const mapDispatchToProps = dispatch => {
     },
     gameStatus: (gameId) => {
       gameService.gameStatus(gameId).then( game => {
-          alert(chosen)
-          dispatch(...gameStatus, game)
+          console.log(game)
+          dispatch({...updateGameStatus, game})
         }
       ).catch( err => {
         alert("No se pudo actualizar el estado de la partida")
+      })
+    },
+    lobbyStatus: (lobbyId) => {
+      lobbyService.getLobby(lobbyId).then( lobby => {
+          if(lobby.game){
+            gameStatus(lobby.game);
+          }
+          else{
+            dispatch({...updateLobbyStatus, lobby})  
+          }
+        }
+      ).catch( err => {
+        console.log(err)
+        alert("No se pudo actualizar el estado del lobby")
       })
     }
   }

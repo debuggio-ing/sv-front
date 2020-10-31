@@ -38,6 +38,10 @@ export default (state=initialState, action) => {
       return {...state, voting: 0};
     case "UPDATEGAMESTATUS":
       return {...state, currentGame: action.game};
+    case "UPDATELOBBYSTATUS":
+      return {...state, currentGame: action.lobby};
+    case "LEAVE":
+      return {...state, playing: 0, currentGame: {id: -1}};
     default:
       return state;
   }
