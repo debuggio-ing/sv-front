@@ -37,7 +37,9 @@ export default (state=initialState, action) => {
     case "VOTE":
       return {...state, voting: 0};
     case "UPDATEGAMESTATUS":
-      return {...state, currentGame: action.game};
+      let players = action.game.player_list.map((player) => player.username);
+      let game = {...state.currentGame, ...action.game, current_players:players};
+      return {...state, voting: action.game.voting, currentGame: game};
     case "UPDATELOBBYSTATUS":
       return {...state, currentGame: action.lobby};
     case "LEAVE":

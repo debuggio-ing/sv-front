@@ -17,6 +17,7 @@ class Match extends React.Component {
   }
 
   reloadGamePublic(){
+    console.log("refreshing");
     if(this.props.currentGame.id == -1){
       history.push("/")
     }
@@ -60,8 +61,8 @@ class Match extends React.Component {
                                 <Typography gutterBottom variant="h5" component="h2">
                                   Tablero
                                 </Typography>
-                                <Board proclamacionesMortifagas={Array(this.props.proclamacionesMortifagas).fill()}
-                                       proclamacionesFenix={Array(this.props.proclamacionesFenix).fill()}/>
+                                <Board proclamacionesMortifagas={Array(this.props.currentGame.score.bad).fill()}
+                                       proclamacionesFenix={Array(this.props.currentGame.score.good).fill()}/>
                               </CardContent>
                             </Card>
                           </Grid>
@@ -75,7 +76,7 @@ class Match extends React.Component {
                               Jugadores
                               <Button onClick={() => this.reloadGamePublic()} > Refresh </Button>
                             </Typography>
-                            <Players startGame={this.props.play} playing={this.props.playing} players={this.props.currentGame.current_players}/>
+                            <Players startGame={() => this.props.play(this.props.currentGame.id)} playing={this.props.playing} players={this.props.currentGame.current_players}/>
                           </CardContent>
                         </Card>
                       </Grid>
@@ -112,6 +113,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   return {
     play: (lobbyId) => {
+      console.log(lobbyId)
       lobbyService.startMatch(lobbyId).then( result => {
           dispatch(startGame)
         }
@@ -130,7 +132,6 @@ const mapDispatchToProps = dispatch => {
     },
     gameStatus: (gameId) => {
       gameService.gameStatus(gameId).then( game => {
-          console.log(game)
           dispatch({...updateGameStatus, game})
         }
       ).catch( err => {
@@ -139,11 +140,18 @@ const mapDispatchToProps = dispatch => {
     },
     lobbyStatus: (lobbyId) => {
       lobbyService.getLobby(lobbyId).then( lobby => {
-          if(lobby.game){
-            gameStatus(lobby.game);
+          console.log(lobby)
+          if(lobby.started){
+            gameService.gameStatus(lobbyId).then( game => {
+                dispatch({...updateGameStatus, game})
+                dispatch(startGame);
+              }
+            ).catch( err => {
+              alert("No se pudo actualizar el estado de la partida")
+            });
           }
           else{
-            dispatch({...updateLobbyStatus, lobby})  
+            dispatch({...updateLobbyStatus, lobby})
           }
         }
       ).catch( err => {
