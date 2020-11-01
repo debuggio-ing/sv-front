@@ -21,14 +21,18 @@ const useStyles = makeStyles((theme) => ({
 function Players({startGame, playing, players, owner}) {
     const classes = useStyles();
     let button;
-    if(players.length >= 5 && owner){
-        button = <Button className={classes.playButton} variant="contained" color="primary" onClick={startGame}>
-                    Jugar
-                 </Button>
+    
+    if (owner) {
+      if(players.length >= 5){
+          button = <Button className={classes.playButton} variant="contained" color="primary" onClick={startGame}>
+                      Jugar
+                   </Button>
+      }
+      else {
+        <br/>
+      }
     }
-    else {
-        button = <Button className={classes.playButton} disabled variant="contained">Jugar</Button>
-    }
+
     return <List className={classes.root}>
       {players.map((player, index) => (
         <ListItem key={index}>
