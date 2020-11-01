@@ -21,11 +21,19 @@ class Match extends React.Component {
     if(this.props.currentGame.id == -1){
       history.push("/")
     }
-    if(this.props.playing){
-      this.props.gameStatus(this.props.currentGame.id);
+    else{
+      if(this.props.playing){
+        this.props.gameStatus(this.props.currentGame.id);
+      }
+      else {
+        this.props.lobbyStatus(this.props.currentGame.id);
+      }
     }
-    else {
-      this.props.lobbyStatus(this.props.currentGame.id);
+  }
+
+  startGame(){
+    if(this.props.currentGame.id != -1){
+      this.props.play(this.props.currentGame.id)
     }
   }
 
@@ -78,7 +86,7 @@ class Match extends React.Component {
                             <Typography gutterBottom variant="h5" component="h2">
                               Jugadores
                             </Typography>
-                            <Players startGame={() => this.props.play(this.props.currentGame.id)} playing={this.props.playing} players={this.props.currentGame.current_players}/>
+                              <Players startGame={() => this.startGame()} playing={this.props.playing} players={this.props.currentGame.current_players}/>
                           </CardContent>
                         </Card>
                       </Grid>
@@ -115,9 +123,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   return {
     play: (lobbyId) => {
-      console.log(lobbyId)
       lobbyService.startMatch(lobbyId).then( result => {
-          dispatch(startGame)
+          if(result.startConfirmation){
+            dispatch(startGame)
+          }
         }
       ).catch( err => {
         alert("No se pudo iniciar la partida")
@@ -142,8 +151,8 @@ const mapDispatchToProps = dispatch => {
     },
     lobbyStatus: (lobbyId) => {
       lobbyService.getLobby(lobbyId).then( lobby => {
-          console.log(lobby)
           if(lobby.started){
+            dispatch({...updateLobbyStatus, lobby})
             gameService.gameStatus(lobbyId).then( game => {
                 dispatch({...updateGameStatus, game})
                 dispatch(startGame);
