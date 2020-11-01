@@ -35,10 +35,10 @@ function vote(chosen, gameId = 1) { //delete '= 1'
 // Given a gameId it returns GamePublic which consists of:
 // GamePublic = {
 // player_list : List [PlayerPublic] where PlayerPublic = {
-//                                                          player_id : int, 
+//                                                          player_id : int,
 //                                                          alive : bool ,
 //                                                          voted : bool,
-//                                                          last_vote : bool, 
+//                                                          last_vote : bool,
 //                                                          username: str
 //                                                      }
 // minister : int

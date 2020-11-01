@@ -1,13 +1,14 @@
 import React from 'react';
 //import logo from '../sv-logo.jpg';
-import { Typography, Toolbar, AppBar, Card, CardContent, Grid, Container } from '@material-ui/core';
+import { Typography, Toolbar, AppBar, Card, CardContent, Grid, Container, Button } from '@material-ui/core';
 import Players from './components/Players/Players.js'
 import Chat from './components/Chat/Chat.js'
 import Board from './components/Board/Board.js'
 import { connect } from 'react-redux'
-import { startGame, vote } from './../redux/actions.js'
+import { startGame, vote, updateLobbyStatus, updateGameStatus  } from './../redux/actions.js'
 import Vote from './components/Vote/Vote.js'
-import {gameService} from '@/_services'
+import { gameService, lobbyService } from '@/_services'
+import { history } from '@/_helpers';
 
 
 class Match extends React.Component {
@@ -15,10 +16,27 @@ class Match extends React.Component {
     super(props);
   }
 
+  reloadGamePublic(){
+    console.log("refreshing");
+    if(this.props.currentGame.id == -1){
+      history.push("/")
+    }
+    if(this.props.playing){
+      this.props.gameStatus(this.props.currentGame.id);
+    }
+    else {
+      this.props.lobbyStatus(this.props.currentGame.id);
+    }
+  }
+
+  componentDidMount(){
+    console.log(this.props.currentGame);
+    this.reloadGamePublic();
+  }
+
   render() {
     return (
       <div className="match">
-
           <Container className="">
               <Typography gutterBottom variant="h5" component="h2">
                 {this.props.currentGame.name}
@@ -43,8 +61,8 @@ class Match extends React.Component {
                                 <Typography gutterBottom variant="h5" component="h2">
                                   Tablero
                                 </Typography>
-                                <Board proclamacionesMortifagas={Array(this.props.proclamacionesMortifagas).fill()}
-                                       proclamacionesFenix={Array(this.props.proclamacionesFenix).fill()}/>
+                                <Board proclamacionesMortifagas={Array(this.props.currentGame.score.bad).fill()}
+                                       proclamacionesFenix={Array(this.props.currentGame.score.good).fill()}/>
                               </CardContent>
                             </Card>
                           </Grid>
@@ -56,8 +74,9 @@ class Match extends React.Component {
                           <CardContent className="">
                             <Typography gutterBottom variant="h5" component="h2">
                               Jugadores
+                              <Button onClick={() => this.reloadGamePublic()} > Refresh </Button>
                             </Typography>
-                            <Players startGame={this.props.play} playing={this.props.playing}/>
+                            <Players startGame={() => this.props.play(this.props.currentGame.id)} playing={this.props.playing} players={this.props.currentGame.current_players}/>
                           </CardContent>
                         </Card>
                       </Grid>
@@ -93,7 +112,15 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    play: () => dispatch(startGame),
+    play: (lobbyId) => {
+      console.log(lobbyId)
+      lobbyService.startMatch(lobbyId).then( result => {
+          dispatch(startGame)
+        }
+      ).catch( err => {
+        alert("No se pudo iniciar la partida")
+      })
+    },
     vote: (chosen) => {
       gameService.vote(chosen).then( result => {
           alert(chosen)
@@ -101,6 +128,35 @@ const mapDispatchToProps = dispatch => {
         }
       ).catch( err => {
         alert("No se pudo efectual el voto")
+      })
+    },
+    gameStatus: (gameId) => {
+      gameService.gameStatus(gameId).then( game => {
+          dispatch({...updateGameStatus, game})
+        }
+      ).catch( err => {
+        alert("No se pudo actualizar el estado de la partida")
+      })
+    },
+    lobbyStatus: (lobbyId) => {
+      lobbyService.getLobby(lobbyId).then( lobby => {
+          console.log(lobby)
+          if(lobby.started){
+            gameService.gameStatus(lobbyId).then( game => {
+                dispatch({...updateGameStatus, game})
+                dispatch(startGame);
+              }
+            ).catch( err => {
+              alert("No se pudo actualizar el estado de la partida")
+            });
+          }
+          else{
+            dispatch({...updateLobbyStatus, lobby})
+          }
+        }
+      ).catch( err => {
+        console.log(err)
+        alert("No se pudo actualizar el estado del lobby")
       })
     }
   }

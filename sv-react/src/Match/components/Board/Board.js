@@ -18,8 +18,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 function Board({proclamacionesMortifagas, proclamacionesFenix}){
   const classes = useStyles();
-  const voidMortifagas = Array(5-proclamacionesMortifagas.length).fill();
-  const voidFenix = Array(6-proclamacionesFenix.length).fill();
+  const voidMortifagas = Array(6-proclamacionesMortifagas.length).fill();
+  const voidFenix = Array(5-proclamacionesFenix.length).fill();
   return <div>
       <Grid container className={classes.root, classes.cardList} spacing="1">
         {proclamacionesMortifagas.map((proclamacion) => (
