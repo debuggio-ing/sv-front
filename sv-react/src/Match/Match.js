@@ -143,7 +143,6 @@ const mapDispatchToProps = dispatch => {
     },
     lobbyStatus: (lobbyId) => {
       lobbyService.getLobby(lobbyId).then( lobby => {
-          console.log(lobby)
           if(lobby.started){
             gameService.gameStatus(lobbyId).then( game => {
                 console.log(game)

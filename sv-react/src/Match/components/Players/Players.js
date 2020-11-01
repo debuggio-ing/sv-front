@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 function Players({startGame, playing, players, owner}) {
     const classes = useStyles();
     let button;
-    if(owner){
+    if(players.length >= 5 && owner){
         button = <Button className={classes.playButton} variant="contained" color="primary" onClick={startGame}>
                     Jugar
                  </Button>
