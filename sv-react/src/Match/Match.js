@@ -76,7 +76,8 @@ class Match extends React.Component {
                               Jugadores
                               <Button onClick={() => this.reloadGamePublic()} > Refresh </Button>
                             </Typography>
-                            <Players startGame={() => this.props.play(this.props.currentGame.id)} playing={this.props.playing} players={this.props.currentGame.current_players}/>
+                            <Players startGame={() => this.props.play(this.props.currentGame.id)} owner={this.props.currentGame.is_owner} 
+                                      playing={this.props.playing} players={this.props.currentGame.current_players}/>
                           </CardContent>
                         </Card>
                       </Grid>
