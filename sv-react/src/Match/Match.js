@@ -86,7 +86,12 @@ class Match extends React.Component {
                             <Typography gutterBottom variant="h5" component="h2">
                               Jugadores
                             </Typography>
+<<<<<<< HEAD
                               <Players startGame={() => this.startGame()} playing={this.props.playing} players={this.props.currentGame.current_players}/>
+=======
+                            <Players startGame={() => this.props.play(this.props.currentGame.id)} owner={this.props.currentGame.is_owner} 
+                                      playing={this.props.playing} players={this.props.currentGame.current_players}/>
+>>>>>>> e4e0a4291d3db66138151416b453420fbba300f3
                           </CardContent>
                         </Card>
                       </Grid>
@@ -154,6 +159,7 @@ const mapDispatchToProps = dispatch => {
           if(lobby.started){
             dispatch({...updateLobbyStatus, lobby})
             gameService.gameStatus(lobbyId).then( game => {
+                console.log(game)
                 dispatch({...updateGameStatus, game})
                 dispatch(startGame);
               }
