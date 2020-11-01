@@ -19,7 +19,13 @@ class HomePage extends React.Component {
     componentDidMount(){
       this.props.listLobbies();
       this.props.leave();
+      this.intervalLL = setInterval(this.props.listLobbies.bind(this), 1000);
     }
+
+    componentWillUnmount() {
+      clearInterval(this.intervalLL);
+    }
+
     render() {
         const { currentUser, users } = this.state;
         return (

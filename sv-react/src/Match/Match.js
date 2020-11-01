@@ -30,10 +30,13 @@ class Match extends React.Component {
   }
 
   componentDidMount(){
-    console.log(this.props.currentGame);
     this.reloadGamePublic();
+    this.intervalGP = setInterval(this.reloadGamePublic.bind(this), 1000);
   }
 
+  componentWillUnmount() {
+    clearInterval(this.intervalGP);
+  }
   render() {
     return (
       <div className="match">
