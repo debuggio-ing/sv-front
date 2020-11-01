@@ -77,7 +77,6 @@ class Match extends React.Component {
                           <CardContent className="">
                             <Typography gutterBottom variant="h5" component="h2">
                               Jugadores
-                              <Button onClick={() => this.reloadGamePublic()} > Refresh </Button>
                             </Typography>
                             <Players startGame={() => this.props.play(this.props.currentGame.id)} playing={this.props.playing} players={this.props.currentGame.current_players}/>
                           </CardContent>

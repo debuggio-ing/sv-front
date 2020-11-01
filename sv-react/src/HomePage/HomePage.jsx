@@ -31,7 +31,6 @@ class HomePage extends React.Component {
         return (
             <div>
                 <h1>Hi! playing {this.props.currentGame.name}</h1>
-                <Button onClick={() => this.props.listLobbies()}>Refrescar Lobbies</Button>
                 <List>
                   {this.props.lobbies.map((lobby) => (
                     <ListItem key={lobby.id}>
