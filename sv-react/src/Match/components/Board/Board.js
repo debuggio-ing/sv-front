@@ -21,28 +21,28 @@ function Board({proclamacionesMortifagas, proclamacionesFenix}){
   const voidMortifagas = Array(6-proclamacionesMortifagas.length).fill();
   const voidFenix = Array(5-proclamacionesFenix.length).fill();
   return <div>
-      <Grid container className={classes.root, classes.cardList} spacing="1">
-        {proclamacionesMortifagas.map((proclamacion) => (
-          <Grid xs="2" sm="2" md="2">
-            <Card type={"Mortifaga"} portrait={true}/>
+      <Grid container className={classes.root, classes.cardList} spacing={1}>
+        {proclamacionesMortifagas.map((proclamacion, index) => (
+          <Grid xs={2} sm={2} md={2} key={index}>
+            <Card type={"Mortifaga"} portrait={true} key={index}/>
           </Grid>
         ))}
-        {voidMortifagas.map((proclamacion) => (
-          <Grid xs="2" sm="2" md="2">
-            <Card type={"Void"} portrait={true}/>
+        {voidMortifagas.map((proclamacion, index) => (
+          <Grid xs={2} sm={2} md={2} key={index}>
+            <Card type={"Void"} portrait={true} key={index}/>
           </Grid>
         ))}
       </Grid>
       <br/>
-      <Grid container className={classes.root, classes.cardList} spacing="1">
-        {proclamacionesFenix.map((proclamacion) => (
-          <Grid xs="2" sm="2" md="2">
-            <Card type={"Fenix"} portrait={true}/>
+      <Grid container className={classes.root, classes.cardList} spacing={1}>
+        {proclamacionesFenix.map((proclamacion, index) => (
+          <Grid xs={2} sm={2} md={2} key={index}>
+            <Card type={"Fenix"} portrait={true} key={index}/>
           </Grid>
         ))}
-        {voidFenix.map((proclamacion) => (
-          <Grid xs="2" sm="2" md="2">
-            <Card type={"Void"} portrait={true}/>
+        {voidFenix.map((proclamacion, index) => (
+          <Grid xs={2} sm={2} md={2} key={index}>
+            <Card type={"Void"} portrait={true} key={index}/>
           </Grid>
         ))}
       </Grid>

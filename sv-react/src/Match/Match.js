@@ -10,6 +10,7 @@ import Vote from './components/Vote/Vote.js'
 import { gameService, lobbyService } from '@/_services'
 import { history } from '@/_helpers';
 
+let intervalGP;
 
 class Match extends React.Component {
   constructor(props){
@@ -39,11 +40,11 @@ class Match extends React.Component {
 
   componentDidMount(){
     this.reloadGamePublic();
-    this.intervalGP = setInterval(this.reloadGamePublic.bind(this), 1000);
+    intervalGP = setInterval(this.reloadGamePublic.bind(this), 1000);
   }
 
   componentWillUnmount() {
-    clearInterval(this.intervalGP);
+    clearInterval(intervalGP);
   }
   render() {
     return (
@@ -54,7 +55,7 @@ class Match extends React.Component {
               </Typography>
               <Grid container spacing={4}>
 
-                      <Grid item key="chat" md={this.props.playing ? "3" : "6"}>
+                      <Grid item key="chat" md={this.props.playing ? 3 : 6}>
                         <Card className="">
                           <CardContent className="">
                             <Typography gutterBottom variant="h5" component="h2">
@@ -66,7 +67,7 @@ class Match extends React.Component {
                       </Grid>
 
                       {this.props.playing
-                        ? <Grid item key="board" xs="6" sm="6" md="6">
+                        ? <Grid item key="board" xs={6} sm={6} md={6}>
                             <Card className="">
                               <CardContent className="">
                                 <Typography gutterBottom variant="h5" component="h2">
@@ -80,20 +81,20 @@ class Match extends React.Component {
                         : <br/>
                       }
 
-                      <Grid item key="players" md={this.props.playing ? "3" : "6"}>
+                      <Grid item key="players" md={this.props.playing ? 3 : 6}>
                         <Card className="">
                           <CardContent className="">
                             <Typography gutterBottom variant="h5" component="h2">
                               Jugadores
                             </Typography>
-                            <Players startGame={() => this.props.play(this.props.currentGame.id)} owner={this.props.currentGame.is_owner} 
+                            <Players startGame={() => this.props.play(this.props.currentGame.id)} owner={this.props.currentGame.is_owner}
                                       playing={this.props.playing} players={this.props.currentGame.current_players}/>
                           </CardContent>
                         </Card>
                       </Grid>
 
                       {this.props.voting
-                        ? <Grid item key="vote" md={this.props.playing ? "3" : "6"}>
+                        ? <Grid item key="vote" md={this.props.playing ? 3 : 6}>
                             <Card className="">
                               <CardContent className="">
                                 <Typography gutterBottom variant="h5" component="h2">
@@ -147,7 +148,8 @@ const mapDispatchToProps = dispatch => {
           dispatch({...updateGameStatus, game})
         }
       ).catch( err => {
-        alert("No se pudo actualizar el estado de la partida")
+        alert("No se pudo actualizar el estado de la partida");
+        clearInterval(intervalGP);
       })
     },
     lobbyStatus: (lobbyId) => {
@@ -169,7 +171,8 @@ const mapDispatchToProps = dispatch => {
         }
       ).catch( err => {
         console.log(err)
-        alert("No se pudo actualizar el estado del lobby")
+        alert("No se pudo actualizar el estado del lobby");
+        clearInterval(intervalGP);
       })
     }
   }
