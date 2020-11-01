@@ -146,6 +146,7 @@ const mapDispatchToProps = dispatch => {
           console.log(lobby)
           if(lobby.started){
             gameService.gameStatus(lobbyId).then( game => {
+                console.log(game)
                 dispatch({...updateGameStatus, game})
                 dispatch(startGame);
               }
