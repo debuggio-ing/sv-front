@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { authenticationService, lobbyService } from '@/_services';
+import { tokenRefreshException } from '@/_helpers';
 import { List, ListItem, Button } from '@material-ui/core';
 import LobbyCard from './components/LobbyCard/LobbyCard.js'
 import { connect } from 'react-redux'
@@ -19,9 +20,14 @@ class HomePage extends React.Component {
     }
 
     componentDidMount(){
-      this.props.listLobbies();
-      this.props.leave();
-      intervalLL = setInterval(this.props.listLobbies.bind(this), 1000);
+      if(localStorage.getItem("currentUser")){
+        this.props.listLobbies();
+        this.props.leave();
+        intervalLL = setInterval(this.props.listLobbies.bind(this), 1000);
+      }
+      else {
+        history.push("/login")
+      }
     }
 
     componentWillUnmount() {
@@ -54,8 +60,10 @@ const mapDispatchToProps = dispatch => {
   return {
     joinGame: (id) => {
       lobbyService.joinLobby(id).then( lobby => {
-          dispatch({...joinGame, lobby})
-          history.push("/match")
+          if(lobby.id){
+            dispatch({...joinGame, lobby})
+            history.push("/match")
+          }
         }
       ).catch( err => {
         alert("No se pudo unir a la partida")
@@ -63,7 +71,9 @@ const mapDispatchToProps = dispatch => {
     },
     listLobbies: (lobbies) => {
       lobbyService.listLobbies().then( lobbies =>{
-          dispatch({...listLobbies, lobbies})
+          if(Array.isArray(lobbies)){
+            dispatch({...listLobbies, lobbies})
+          }
         }
       ).catch( err => {
           alert("No se pudieron listar los lobbies")

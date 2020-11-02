@@ -1,9 +1,14 @@
 import config from 'config';
-import { authHeader, handleResponse } from '@/_helpers';
+import {
+    authHeader,
+    handleResponse
+} from '@/_helpers';
 
 export const gameService = {
     vote,
     gameStatus,
+    getDirProcCards,
+    postDirProcCards,
 };
 
 // Given 'Nox' or 'Lumos' and a gameId it sends a request to the API with the vote
@@ -16,9 +21,12 @@ function vote(chosen, gameId = 1) { //delete '= 1'
     console.log(gameId);
     const requestOptions = {
         method: 'POST',
-        headers: Object.assign(authHeader(),
-            { 'Content-Type': 'application/json' }),
-        body: JSON.stringify({ vote }),
+        headers: Object.assign(authHeader(), {
+            'Content-Type': 'application/json'
+        }),
+        body: JSON.stringify({
+            vote
+        }),
     };
     return fetch(`${config.apiUrl}/api/games/` + gameId.toString() + `/vote/`, requestOptions)
         // handle errors
@@ -32,35 +40,42 @@ function vote(chosen, gameId = 1) { //delete '= 1'
 
 
 
-// Given a gameId it returns GamePublic which consists of:
-// GamePublic = {
-// player_list : List [PlayerPublic] where PlayerPublic = {
-//                                                          player_id : int,
-//                                                          alive : bool ,
-//                                                          voted : bool,
-//                                                          last_vote : bool,
-//                                                          username: str
-//                                                      }
-// minister : int
-// prev_minister : int
-// director: int
-// prev_director: int
-// semaphore: int
-// score: Score where Score = {good: int, bad:int}
-// end: Optional[bool]
-// winners: Optional[bool]
-// el siguiente probablemente se borre porque esta mal, no tener en cuenta ahora
-// roleReveal: Optional[List[Role]] where Role ={}
-// }
-
+// Given a gameId it returns GamePublic data
 function gameStatus(gameId) {
     const requestOptions = {
         method: 'GET',
         headers: authHeader(),
     };
     return fetch(`${config.apiUrl}/api/games/` + gameId.toString() + '/',
-        requestOptions).then(handleResponse)
+            requestOptions).then(handleResponse)
         .then(game => {
             return game;
         });
+}
+
+
+// Given a gameId it returns to the director the cards selected by the minsiter of the game
+function getDirProcCards(gameId) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader(),
+    };
+    return fetch(`${config.apiUrl}/api/games/` + gameId.toString() + `/dir/proc/`, requestOptions).then(handleResponse).then(procCards => {
+        return procCards;
+    })
+}
+
+
+// Given the cards to proclaim by the director, it returns true or false if the game is over or not
+function postDirProcCards(gameId, election) {
+    const requestOptions = {
+        method: 'POST',
+        headers: Object.assign(authHeader(), {
+            'Content-Type': 'application/json'
+        }),
+        body: JSON.stringify(election),
+    };
+    return fetch(`${config.apiUrl}/api/games/` + gameId.toString() + `/dir/proc/`, requestOptions).then(handleResponse).then(procCards => {
+        return procCards;
+    })
 }

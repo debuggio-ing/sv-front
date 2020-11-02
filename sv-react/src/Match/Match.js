@@ -9,6 +9,7 @@ import { startGame, vote, updateLobbyStatus, updateGameStatus  } from './../redu
 import Vote from './components/Vote/Vote.js'
 import { gameService, lobbyService } from '@/_services'
 import { history } from '@/_helpers';
+import { array } from 'prop-types';
 
 let intervalGP;
 
@@ -87,8 +88,14 @@ class Match extends React.Component {
                             <Typography gutterBottom variant="h5" component="h2">
                               Jugadores
                             </Typography>
-                            <Players startGame={() => this.props.play(this.props.currentGame.id)} owner={this.props.currentGame.is_owner}
-                                      playing={this.props.playing} players={this.props.currentGame.current_players}/>
+                            <Players startGame={() => this.props.play(this.props.currentGame.id)}
+                                                  owner = {this.props.currentGame.is_owner}
+                                                  playing = {this.props.playing}
+                                                  players = {this.props.currentGame.players}
+                                                  minister = {this.props.currentGame.minister}
+                                                  director = {this.props.currentGame.director}
+                                                  voting = {this.props.voting}
+                                                  />
                           </CardContent>
                         </Card>
                       </Grid>
@@ -107,14 +114,14 @@ class Match extends React.Component {
                         : <br/>
                       }
 
-                      {!this.props.voting && this.props.in_session && this.props.minister_proclaimed && this.props.client_director
+                      {!this.props.currentGame.voting && this.props.currentGame.in_session && this.props.currentGame.minister_proclaimed && this.props.client_director
                         ? <Grid item key="dirProc" md={this.props.playing ? 3 : 6}>
                             <Card className="">
                               <CardContent className="">
                                 <Typography gutterBottom variant="h5" component="h2">
                                   Votación
                                 </Typography>
-                                <DirProclaim proclaim={this.props.cardToProclaim}/>
+                                <DirProclaim proclaim={this.props.proclamation}/>
                               </CardContent>
                             </Card>
                           </Grid>
@@ -167,7 +174,18 @@ const mapDispatchToProps = dispatch => {
     },
     gameStatus: (gameId) => {
       gameService.gameStatus(gameId).then( game => {
-          dispatch({...updateGameStatus, game})
+          if(game.player_list){
+            dispatch({...updateGameStatus, game})
+            if(game.in_session && game.client_director && game.minister_proclaimed){
+              gameService.getDirProcCards(gameId).then( proclams => {
+                if(Array.isArray(proclams)){
+                  dispatch(...listProclaim, proclams)
+                }
+              }).catch(err => {
+                alert("No se udieron obtener las proclamaciones");
+              })
+            }
+          }
         }
       ).catch( err => {
         alert("No se pudo actualizar el estado de la partida");
@@ -179,16 +197,19 @@ const mapDispatchToProps = dispatch => {
           if(lobby.started){
             dispatch({...updateLobbyStatus, lobby})
             gameService.gameStatus(lobbyId).then( game => {
-                console.log(game)
-                dispatch({...updateGameStatus, game})
-                dispatch(startGame);
+                if(game.player_list){
+                  dispatch({...updateGameStatus, game})
+                  dispatch(startGame);
+                }
               }
             ).catch( err => {
               alert("No se pudo actualizar el estado de la partida")
             });
           }
           else{
-            dispatch({...updateLobbyStatus, lobby})
+            if(lobby.id){
+              dispatch({...updateLobbyStatus, lobby});
+            }
           }
         }
       ).catch( err => {

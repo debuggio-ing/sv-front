@@ -17,7 +17,9 @@ const initialState = {
   currentGame: {
     name: "default",
     id: -1,
-    current_players: []
+    minister: -1,
+    director: -1,
+    players: []
   }
 }
 
@@ -26,7 +28,7 @@ export default (state=initialState, action) => {
     case "START":
       return {...state, playing: 1};
     case "JOIN":
-      return {...state, currentGame: action.lobby};
+      return {...state, voting: 0, currentGame: {...action.lobby, players: action.lobby.current_players.map((player) => {return {username:player}})}};
     case "LISTLOBBIES":
       return {...state, lobbies: action.lobbies};
     case "VOTE":
@@ -34,14 +36,16 @@ export default (state=initialState, action) => {
     case "LIST_PROCLAIM":
       return {...state, proclams: action.proclams};
     case "UPDATEGAMESTATUS":
-      let players = action.game.player_list.map((player) => player.username);
-      let game = {...state.currentGame, ...action.game, current_players:players};
-      return {...state, voting: action.game.voting, in_session: action.game.in_session,
-        minister_proclaimed: action.game.in_session,
-        client_minister: action.game.client_minister,
-        client_director: action.game.client_director, currentGame: game};
+      if(action.game.player_list){
+        let game = {...action.game, players: action.game.player_list, id: state.currentGame.id}
+        return {...state, voting: action.game.voting, currentGame: game};
+      }
+      return state
     case "UPDATELOBBYSTATUS":
-      return {...state, currentGame: action.lobby};
+      if (action.lobby.id){
+        return {...state, currentGame: {...action.lobby, players: action.lobby.current_players.map((player) => {return {username:player}})}};
+      }
+      return state
     case "LEAVE":
       return {...state, playing: 0, currentGame: {id: -1}};
     default:

@@ -90,10 +90,10 @@ function refreshToken() {
                     if ([401, 403].indexOf(response.status) !== -1) {
                         // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
                         authenticationService.logout();
-                    }            
+                    }
                     return Promise.reject("ERROR");
                 };
-    
+
                 return response.text().then(text => {
                     const access_token = text && JSON.parse(text);
                     // store jwt token in local storage to keep user logged in between page refreshes
@@ -105,7 +105,7 @@ function refreshToken() {
         });
 }
 function RefreshException() {
-    return new Error();
-  }
-  
-  RefreshException.prototype = Object.create(Error.prototype);
+  return new Error();
+}
+
+RefreshException.prototype = Object.create(Error.prototype);

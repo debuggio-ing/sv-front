@@ -31,6 +31,8 @@ const updateGameStatus = {
   game: {
     current_players: [],
     name: "default",
+    director: -1,
+    minister: -1,
     id: -1
   }
 }
