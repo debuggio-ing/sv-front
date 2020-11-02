@@ -115,7 +115,7 @@ class Match extends React.Component {
                         : <br/>
                       }
 
-                      {!this.props.voting
+                      {!this.props.currentGame.voting && this.props.currentGame.client_director && this.props.currentGame.minister_proclaimed && this.props.currentGame.in_session
                         ? <Grid item key="dirProc" md={this.props.playing ? 3 : 6}>
                             <Card className="">
                               <CardContent className="">
@@ -185,7 +185,7 @@ const mapDispatchToProps = dispatch => {
                   dispatch({...listProclaim, proclams})
                 }
               }).catch(err => {
-                alert("No se udieron obtener las proclamaciones");
+                alert("No se pudieron obtener las proclamaciones");
               })
             }
           }
