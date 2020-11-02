@@ -7,6 +7,8 @@ import { connect } from 'react-redux'
 import { joinGame, listLobbies, leaveGame } from './../redux/actions.js'
 import { history } from '@/_helpers';
 
+let intervalLL;
+
 class HomePage extends React.Component {
     constructor(props) {
         super(props);
@@ -19,11 +21,11 @@ class HomePage extends React.Component {
     componentDidMount(){
       this.props.listLobbies();
       this.props.leave();
-      this.intervalLL = setInterval(this.props.listLobbies.bind(this), 1000);
+      intervalLL = setInterval(this.props.listLobbies.bind(this), 1000);
     }
 
     componentWillUnmount() {
-      clearInterval(this.intervalLL);
+      clearInterval(intervalLL);
     }
 
     render() {
@@ -63,8 +65,10 @@ const mapDispatchToProps = dispatch => {
       lobbyService.listLobbies().then( lobbies =>{
           dispatch({...listLobbies, lobbies})
         }
-      ).catch( err =>
-        alert("No se pudieron listar los lobbies")
+      ).catch( err => {
+          alert("No se pudieron listar los lobbies")
+          clearInterval(intervalLL);
+        }
       )
     },
     leave: () => {

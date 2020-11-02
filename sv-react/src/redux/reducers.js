@@ -8,17 +8,7 @@ const initialState = {
   proclamacionesFenix: 2,
   proclamacionesMortifagas: 4,
   voting: 0,
-  lobbies: [
-    {
-      name: "Nombre",
-      id: 1,
-      current_players: [
-          "Juancito",
-          "Pepito"
-      ],
-      playing: 0
-    }
-  ],
+  lobbies: [],
   currentGame: {
     name: "default",
     id: -1,

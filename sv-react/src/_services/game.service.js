@@ -61,7 +61,6 @@ function gameStatus(gameId) {
     return fetch(`${config.apiUrl}/api/games/` + gameId.toString() + '/',
         requestOptions).then(handleResponse)
         .then(game => {
-            console.log(game);
             return game;
         });
 }

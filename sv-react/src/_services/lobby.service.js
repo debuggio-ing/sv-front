@@ -41,8 +41,6 @@ function getLobby(lobby_id) {
         // handle errors
         .then(handleResponse)
         .then(lobby => {
-            // for debugging purposes
-            console.log(lobby);
             return lobby;
         })
 }
@@ -59,14 +57,12 @@ function listLobbies() {
         // handle errors
         .then(handleResponse)
         .then(lobbies => {
-            // for debugging purposes
-            console.log(lobbies);
             return lobbies;
         });
 }
 
 
-// Receives the id of a lobby the user wants to join. 
+// Receives the id of a lobby the user wants to join.
 // If the lobby is full, it returns 409.
 // If the lobby isn't full it adds the user to the lobby and returns the following data:
 // lobby_id, lobby_name, current_players (usernames of the players in the lobby), max_players_allowed
