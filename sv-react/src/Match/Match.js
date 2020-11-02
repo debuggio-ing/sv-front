@@ -114,7 +114,7 @@ class Match extends React.Component {
                                 <Typography gutterBottom variant="h5" component="h2">
                                   Votación
                                 </Typography>
-                                <DirProclaim proclaim={this.props.dirChooseProc}/>
+                                <DirProclaim proclaim={this.props.cardToProclaim}/>
                               </CardContent>
                             </Card>
                           </Grid>
@@ -156,10 +156,10 @@ const mapDispatchToProps = dispatch => {
         alert("No se pudo efectuar el voto")
       })
     },
-    dirChooseProc: (chosen) => {
-      gameService.dirChooseProc(chosen).then( result => {
+    cardToProclaim: (chosen) => {
+      gameService.cardToProclaim(chosen).then( result => {
           alert(chosen)
-          dispatch(dirChooseProc)
+          dispatch(cardToProclaim)
         }
       ).catch( err => {
         alert("No se pudo efectuar la elección")

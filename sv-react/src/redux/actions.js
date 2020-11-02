@@ -23,7 +23,7 @@ const vote = {
 
 const listProclaim = {
   type: "LIST_PROCLAIM",
-  proclams: []
+  proclams: [] //Donde un proclam es {id: int, phoenix: bool}
 }
 
 const updateGameStatus = {

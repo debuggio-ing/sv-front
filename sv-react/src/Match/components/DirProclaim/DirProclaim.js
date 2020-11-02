@@ -19,21 +19,26 @@ const useStyles = makeStyles((theme) => ({
 
 //Get_Cards
 
-function DirProclaim({proc}) {
+function DirProclaim({proclams}) {
     let classes = useStyles();
     return <Grid container className={classes.root, classes.cardList} spacing={1}>
+        
         <Grid xs={6} sm={6} md={6}>
-          <Card type={"Fenix"} portrait={false} clickAction={dirChooseProc}/>
+         proclams[0].phoenix
+           ? <Card type={"Fenix"} portrait={false} clickAction={cardToProclaim}/>
+           : <Card type={"Mortifaga"} portrait={false} clickAction={cardToProclaim}/>
         </Grid>
         <Grid xs={6} sm={6} md={6}>
-          <Card type={"Mortifaga"} portrait={false} clickAction={dirChooseProc}/>
+         proclams[1].phoenix
+           ? <Card type={"Fenix"} portrait={false} clickAction={cardToProclaim}/>
+           : <Card type={"Mortifaga"} portrait={false} clickAction={cardToProclaim}/>
         </Grid>
       </Grid>
 }
 
 
 DirProclaim.propTypes = {
-  dirChooseProc: PropTypes.func.isRequired
+  cardToProclaim: PropTypes.func.isRequired
 }
 
 export default DirProclaim;
