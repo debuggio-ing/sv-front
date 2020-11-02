@@ -32,10 +32,10 @@ function vote(chosen, gameId = 1) { //delete '= 1'
     return fetch(`${config.apiUrl}/api/games/` + gameId.toString() + `/vote/`, requestOptions)
         // handle errors
         .then(handleResponse)
-        .then(lobbies => {
+        .then(response => {
             // for debugging purposes
-            console.log(lobbies);
-            return lobbies;
+            console.log(response);
+            return response;
         });
 }
 

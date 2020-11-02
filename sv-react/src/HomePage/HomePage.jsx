@@ -61,6 +61,7 @@ const mapDispatchToProps = dispatch => {
     joinGame: (id) => {
       lobbyService.joinLobby(id).then( lobby => {
           if(lobby.id){
+            console.log(lobby.id)
             dispatch({...joinGame, lobby})
             history.push("/match")
           }

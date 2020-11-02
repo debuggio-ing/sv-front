@@ -105,7 +105,7 @@ class Match extends React.Component {
                                 <Typography gutterBottom variant="h5" component="h2">
                                   Votación
                                 </Typography>
-                                <Vote vote={this.props.vote}/>
+                                <Vote vote={(chosen) => this.props.vote(chosen, this.props.currentGame.id)}/>
                               </CardContent>
                             </Card>
                           </Grid>
@@ -153,8 +153,8 @@ const mapDispatchToProps = dispatch => {
         alert("No se pudo iniciar la partida")
       })
     },
-    vote: (chosen) => {
-      gameService.vote(chosen).then( result => {
+    vote: (chosen, id) => {
+      gameService.vote(chosen, id).then( result => {
           alert(chosen)
           dispatch(vote)
         }
