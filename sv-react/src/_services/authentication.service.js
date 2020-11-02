@@ -60,12 +60,27 @@ function refreshToken(){
         headers: { 'Authorization': `Bearer ${currentUser.refresh_token}` },
     };
     return fetch(`${config.apiUrl}/api/refresh/`, requestOptions)
-        .then(handleResponse)
-        .then(token => {
-            // store jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('currentUser', JSON.stringify(token));
-            console.log(JSON.parse(localStorage.getItem('currentUser')));
-            currentUserSubject.next(token);
-            return;
+        .then(response => {
+                if (!response.ok) {
+                    if ([401, 403].indexOf(response.status) !== -1) {
+                        // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
+                        authenticationService.logout();
+                    }
+                    return Promise.reject("ERROR");
+                };
+
+                return response.text().then(text => {
+                    const access_token = text && JSON.parse(text);
+                    // store jwt token in local storage to keep user logged in between page refreshes
+                    const tokens = (Object.assign(access_token, {"refresh_token":refresh_token}));
+                    localStorage.setItem('currentUser', JSON.stringify(tokens));
+                    currentUserSubject.next(tokens);
+                    return;
+                })
         });
 }
+function RefreshException() {
+  return new Error();
+}
+
+RefreshException.prototype = Object.create(Error.prototype);
