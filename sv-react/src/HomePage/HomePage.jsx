@@ -20,9 +20,14 @@ class HomePage extends React.Component {
     }
 
     componentDidMount(){
-      this.props.listLobbies();
-      this.props.leave();
-      intervalLL = setInterval(this.props.listLobbies.bind(this), 1000);
+      if(localStorage.getItem("currentUser")){
+        this.props.listLobbies();
+        this.props.leave();
+        intervalLL = setInterval(this.props.listLobbies.bind(this), 1000);
+      }
+      else {
+        history.push("/login")
+      }
     }
 
     componentWillUnmount() {

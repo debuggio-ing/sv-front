@@ -151,7 +151,9 @@ const mapDispatchToProps = dispatch => {
     },
     gameStatus: (gameId) => {
       gameService.gameStatus(gameId).then( game => {
-          dispatch({...updateGameStatus, game})
+          if(game.player_list){
+            dispatch({...updateGameStatus, game})
+          }
         }
       ).catch( err => {
         alert("No se pudo actualizar el estado de la partida");
@@ -163,15 +165,19 @@ const mapDispatchToProps = dispatch => {
           if(lobby.started){
             dispatch({...updateLobbyStatus, lobby})
             gameService.gameStatus(lobbyId).then( game => {
-                dispatch({...updateGameStatus, game})
-                dispatch(startGame);
+                if(game.player_list){
+                  dispatch({...updateGameStatus, game})
+                  dispatch(startGame);
+                }
               }
             ).catch( err => {
               alert("No se pudo actualizar el estado de la partida")
             });
           }
           else{
-            dispatch({...updateLobbyStatus, lobby})
+            if(lobby.id){
+              dispatch({...updateLobbyStatus, lobby});
+            }
           }
         }
       ).catch( err => {
