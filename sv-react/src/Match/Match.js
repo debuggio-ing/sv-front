@@ -107,6 +107,19 @@ class Match extends React.Component {
                         : <br/>
                       }
 
+                      {!this.props.voting && this.props.in_session && this.props.minister_proclaimed && this.props.client_director
+                        ? <Grid item key="dirProc" md={this.props.playing ? 3 : 6}>
+                            <Card className="">
+                              <CardContent className="">
+                                <Typography gutterBottom variant="h5" component="h2">
+                                  Votación
+                                </Typography>
+                                <DirProclaim proclaim={this.props.dirChooseProc}/>
+                              </CardContent>
+                            </Card>
+                          </Grid>
+                        : <br/>
+                      }
               </Grid>
           </Container>
       </div>
@@ -140,7 +153,16 @@ const mapDispatchToProps = dispatch => {
           dispatch(vote)
         }
       ).catch( err => {
-        alert("No se pudo efectual el voto")
+        alert("No se pudo efectuar el voto")
+      })
+    },
+    dirChooseProc: (chosen) => {
+      gameService.dirChooseProc(chosen).then( result => {
+          alert(chosen)
+          dispatch(dirChooseProc)
+        }
+      ).catch( err => {
+        alert("No se pudo efectuar la elección")
       })
     },
     gameStatus: (gameId) => {

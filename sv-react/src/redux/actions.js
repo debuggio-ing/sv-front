@@ -21,6 +21,11 @@ const vote = {
   type: "VOTE"
 }
 
+const listProclaim = {
+  type: "LIST_PROCLAIM",
+  proclams: []
+}
+
 const updateGameStatus = {
   type: "UPDATEGAMESTATUS",
   game: {
@@ -39,4 +44,4 @@ const updateLobbyStatus = {
   }
 }
 
-export { startGame, joinGame, listLobbies, vote, updateLobbyStatus, updateGameStatus, leaveGame }
+export { startGame, joinGame, listLobbies, vote, listProclaim, updateLobbyStatus, updateGameStatus, leaveGame }
