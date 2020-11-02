@@ -87,8 +87,14 @@ class Match extends React.Component {
                             <Typography gutterBottom variant="h5" component="h2">
                               Jugadores
                             </Typography>
-                            <Players startGame={() => this.props.play(this.props.currentGame.id)} owner={this.props.currentGame.is_owner}
-                                      playing={this.props.playing} players={this.props.currentGame.current_players}/>
+                            <Players startGame={() => this.props.play(this.props.currentGame.id)}
+                                                  owner = {this.props.currentGame.is_owner}
+                                                  playing = {this.props.playing}
+                                                  players = {this.props.currentGame.players}
+                                                  minister = {this.props.currentGame.minister}
+                                                  director = {this.props.currentGame.director}
+                                                  voting = {this.props.voting}
+                                                  />
                           </CardContent>
                         </Card>
                       </Grid>
@@ -145,7 +151,9 @@ const mapDispatchToProps = dispatch => {
     },
     gameStatus: (gameId) => {
       gameService.gameStatus(gameId).then( game => {
-          dispatch({...updateGameStatus, game})
+          if(game.player_list){
+            dispatch({...updateGameStatus, game})
+          }
         }
       ).catch( err => {
         alert("No se pudo actualizar el estado de la partida");
@@ -157,16 +165,19 @@ const mapDispatchToProps = dispatch => {
           if(lobby.started){
             dispatch({...updateLobbyStatus, lobby})
             gameService.gameStatus(lobbyId).then( game => {
-                console.log(game)
-                dispatch({...updateGameStatus, game})
-                dispatch(startGame);
+                if(game.player_list){
+                  dispatch({...updateGameStatus, game})
+                  dispatch(startGame);
+                }
               }
             ).catch( err => {
               alert("No se pudo actualizar el estado de la partida")
             });
           }
           else{
-            dispatch({...updateLobbyStatus, lobby})
+            if(lobby.id){
+              dispatch({...updateLobbyStatus, lobby});
+            }
           }
         }
       ).catch( err => {
