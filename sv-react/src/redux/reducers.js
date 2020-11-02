@@ -12,6 +12,8 @@ const initialState = {
   currentGame: {
     name: "default",
     id: -1,
+    minister: -1,
+    director: -1,
     current_players: []
   }
 }
@@ -27,8 +29,11 @@ export default (state=initialState, action) => {
     case "VOTE":
       return {...state, voting: 0};
     case "UPDATEGAMESTATUS":
-      let players = action.game.player_list.map((player) => player.username);
-      let game = {...state.currentGame, ...action.game, current_players:players};
+      let players = action.game.player_list.map((player) => player.player_id);
+      let director = action.game.director;
+      let minister = action.game.minister;
+      let game = {...state.currentGame, ...action.game, current_players : players,
+         director: director, minister: minister}
       return {...state, voting: action.game.voting, currentGame: game};
     case "UPDATELOBBYSTATUS":
       return {...state, currentGame: action.lobby};

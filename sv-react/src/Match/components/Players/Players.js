@@ -1,7 +1,12 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, List, ListItem, ListItemAvatar, Avatar } from '@material-ui/core';
+import { Button,
+         List,
+         ListItem,
+        ListItemAvatar,
+        Avatar} from '@material-ui/core';
 import PropTypes from 'prop-types'
+import { deepOrange, deepPurple } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,17 +19,33 @@ const useStyles = makeStyles((theme) => ({
   },
   playButton: {
     float: 'right'
+  },
+  ministro: {
+    color: theme.palette.getContrastText(deepOrange[500]),
+    width: theme.spacing(9),  
+    backgroundColor: deepOrange[500],
+  },
+  director: {
+    color: theme.palette.getContrastText(deepPurple[500]),
+    width: theme.spacing(9),  
+    backgroundColor: deepPurple[500],
   }
 }));
 
 
-function Players({startGame, playing, players, owner}) {
+function Players({startGame,
+                  playing,
+                  players,
+                  owner,
+                  director,
+                  minister}) {
     const classes = useStyles();
     let button;
     
     if (owner) {
       if(players.length >= 5){
-          button = <Button className={classes.playButton} variant="contained" color="primary" onClick={startGame}>
+          button = <Button className={classes.playButton}
+           variant="contained" color="primary" onClick={startGame}>
                       Jugar
                    </Button>
       }
@@ -37,7 +58,11 @@ function Players({startGame, playing, players, owner}) {
       {players.map((player, index) => (
         <ListItem key={index}>
           <ListItemAvatar key={index}>
-          <Avatar alt={player} src="/static/images/avatar/1.jpg" />
+          {minister === player ? 
+            <Avatar alt={player} variant="rounded" className={classes.ministro}> Ministro </Avatar> :
+            director=== player? 
+            <Avatar alt={player} variant="rounded" className={classes.director}> Director </Avatar> :
+              <Avatar alt={player} src="/static/images/avatar/1.jpg" />}
             </ListItemAvatar>
             {player}
         </ListItem>
