@@ -88,10 +88,8 @@ function nominate_director(gameId, candidateId) {
         method: 'POST',
         headers: authHeader(),
     };
-    return fetch(${config.apiUrl}/api/games/ + gameId.toString() +
-                                  '/director/' + candidateId.toString() + '/',
-        // handle errors
-        requestOptions).then(handleResponse)
+    return fetch(`${config.apiUrl}/api/games/` + gameId.toString() +'/director/' + candidateId.toString() + '/',requestOptions
+                                ).then(handleResponse)
         .then(nomination => {
             // for debugging purposes
             console.log(nomination);
