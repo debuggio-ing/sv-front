@@ -93,6 +93,7 @@ class Match extends React.Component {
                                                   players = {this.props.currentGame.players}
                                                   minister = {this.props.currentGame.minister}
                                                   director = {this.props.currentGame.director}
+                                                  voting = {this.props.voting}
                                                   />
                           </CardContent>
                         </Card>
