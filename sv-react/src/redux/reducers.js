@@ -29,8 +29,11 @@ export default (state=initialState, action) => {
     case "VOTE":
       return {...state, voting: 0};
     case "UPDATEGAMESTATUS":
-      let game = {...action.game, players: action.game.player_list, id: state.currentGame.id}
-      return {...state, voting: action.game.voting, currentGame: game};
+      if(action.game.player_list){
+        let game = {...action.game, players: action.game.player_list, id: state.currentGame.id}
+        return {...state, voting: action.game.voting, currentGame: game};
+      }
+      return state
     case "UPDATELOBBYSTATUS":
       if (action.lobby.id){
         return {...state, currentGame: {...action.lobby, players: action.lobby.current_players.map((player) => {return {username:player}})}};
