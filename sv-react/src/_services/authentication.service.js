@@ -103,7 +103,6 @@ function refreshToken() {
                     return;
                 })
         });
-        
 }
 function RefreshException() {
     return new Error();
