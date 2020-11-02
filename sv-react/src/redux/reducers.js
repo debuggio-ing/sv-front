@@ -31,7 +31,10 @@ export default (state=initialState, action) => {
       let game = {...state.currentGame, ...action.game, current_players:players};
       return {...state, voting: action.game.voting, currentGame: game};
     case "UPDATELOBBYSTATUS":
-      return {...state, currentGame: action.lobby};
+      if (action.lobby.id){
+        return {...state, currentGame: action.lobby};
+      }
+      return state
     case "LEAVE":
       return {...state, playing: 0, currentGame: {id: -1}};
     default:
