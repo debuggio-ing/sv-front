@@ -87,12 +87,12 @@ class Match extends React.Component {
                             <Typography gutterBottom variant="h5" component="h2">
                               Jugadores
                             </Typography>
-                            <Players startGame={() => this.props.play(this.props.currentGame.id)} 
+                            <Players startGame={() => this.props.play(this.props.currentGame.id)}
                                                   owner = {this.props.currentGame.is_owner}
-                                                  playing = {this.props.playing} 
-                                                  players = {this.props.currentGame.current_players} 
+                                                  playing = {this.props.playing}
+                                                  players = {this.props.currentGame.players}
                                                   minister = {this.props.currentGame.minister}
-                                                  director = {1} 
+                                                  director = {this.props.currentGame.director}
                                                   />
                           </CardContent>
                         </Card>

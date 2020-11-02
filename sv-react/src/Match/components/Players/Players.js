@@ -22,12 +22,10 @@ const useStyles = makeStyles((theme) => ({
   },
   ministro: {
     color: theme.palette.getContrastText(deepOrange[500]),
-    width: theme.spacing(9),  
     backgroundColor: deepOrange[500],
   },
   director: {
     color: theme.palette.getContrastText(deepPurple[500]),
-    width: theme.spacing(9),  
     backgroundColor: deepPurple[500],
   }
 }));
@@ -41,7 +39,7 @@ function Players({startGame,
                   minister}) {
     const classes = useStyles();
     let button;
-    
+
     if (owner) {
       if(players.length >= 5){
           button = <Button className={classes.playButton}
@@ -58,13 +56,16 @@ function Players({startGame,
       {players.map((player, index) => (
         <ListItem key={index}>
           <ListItemAvatar key={index}>
-          {minister === player ? 
-            <Avatar alt={player} variant="rounded" className={classes.ministro}> Ministro </Avatar> :
-            director=== player? 
-            <Avatar alt={player} variant="rounded" className={classes.director}> Director </Avatar> :
-              <Avatar alt={player} src="/static/images/avatar/1.jpg" />}
-            </ListItemAvatar>
-            {player}
+            {playing ?
+              (minister === player.player_id) ?
+                <Avatar alt="Ministro" src="/static/images/avatar/1.jpg" className={classes.ministro}/> :
+                (director=== player.player_id)?
+                  <Avatar alt="Director" src="/static/images/avatar/1.jpg" className={classes.director}/> :
+                  <Avatar alt={player.username} src="/static/images/avatar/1.jpg" />
+              : <Avatar alt={player.username} src="/static/images/avatar/1.jpg" />
+            }
+          </ListItemAvatar>
+          {player.username}
         </ListItem>
       ))}
       {!playing ? button : <div/>}
