@@ -9,6 +9,7 @@ export const gameService = {
     gameStatus,
     getDirProcCards,
     postDirProcCards,
+    nominate_director,
 };
 
 // Given 'Nox' or 'Lumos' and a gameId it sends a request to the API with the vote
@@ -78,4 +79,22 @@ function postDirProcCards(gameId, election) {
     return fetch(`${config.apiUrl}/api/games/` + gameId.toString() + `/dir/proc/`, requestOptions).then(handleResponse).then(procCards => {
         return procCards;
     })
+}
+
+
+// Sends a request to the nominate director.
+function nominate_director(gameId, candidateId) {
+    const requestOptions = {
+        method: 'POST',
+        headers: authHeader(),
+    };
+    return fetch(${config.apiUrl}/api/games/ + gameId.toString() +
+                                  '/director/' + candidateId.toString() + '/',
+        // handle errors
+        requestOptions).then(handleResponse)
+        .then(nomination => {
+            // for debugging purposes
+            console.log(nomination);
+            return proclamation;
+        });
 }
