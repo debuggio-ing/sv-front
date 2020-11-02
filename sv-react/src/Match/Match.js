@@ -43,9 +43,9 @@ class Match extends React.Component {
 //const election = {proclamation:[{card_pos:11, to_proclaim: true},{card_pos:2, to_proclaim: false}], expelliarmus:true};
   proclaimCard(index){
 
-    let election = {proclamation: [{card_pos: this.props.proclams[index].card_pos, to_proclaim: true}, {card_pos:this.props.proclams[(index+1)%2], to_proclaim: false}]}
+    let election = {proclamation: [{card_pos: this.props.proclams[index].card_pos, to_proclaim: true}, {card_pos:this.props.proclams[1-index].card_pos, to_proclaim: false}]}
 
-    gameService.postDirProcCards(this.props.currentGame.id, {...election})
+    gameService.postDirProcCards(this.props.currentGame.id, {...election, expelliarmus:true})
   }
 
   componentDidMount(){
