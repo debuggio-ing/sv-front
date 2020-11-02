@@ -25,8 +25,8 @@ function DirProclaim({proclams}) {
         {proclams.map( (proclam, index) =>  (
           <Grid xs={6} sm={6} md={6}>
            {proclams.phoenix
-             ? <Card type={"Fenix"} portrait={false} clickAction={cardToProclaim}/>
-             : <Card type={"Mortifaga"} portrait={false} clickAction={cardToProclaim}/>}
+             ? <Card type={"Fenix"} portrait={false} />
+             : <Card type={"Mortifaga"} portrait={false} />}
           </Grid>
           )
         )}
