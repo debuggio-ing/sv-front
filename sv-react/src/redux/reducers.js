@@ -23,16 +23,16 @@ export default (state=initialState, action) => {
     case "START":
       return {...state, playing: 1};
     case "JOIN":
-      return {...state, currentGame: {...state.currentGame, ...action.lobby, players: action.lobby.current_players.map((player) => {return {username:player}})}};
+      return {...state, voting: 0, currentGame: {...action.lobby, players: action.lobby.current_players.map((player) => {return {username:player}})}};
     case "LISTLOBBIES":
       return {...state, lobbies: action.lobbies};
     case "VOTE":
       return {...state, voting: 0};
     case "UPDATEGAMESTATUS":
-      let game = {...state.currentGame, ...action.game, players: action.game.player_list}
+      let game = {...action.game, players: action.game.player_list, id: state.currentGame.id}
       return {...state, voting: action.game.voting, currentGame: game};
     case "UPDATELOBBYSTATUS":
-      return {...state, currentGame: {...state.currentGame, ...action.lobby, players: action.lobby.current_players.map((player) => {return {username:player}})}};
+      return {...state, currentGame: {...action.lobby, players: action.lobby.current_players.map((player) => {return {username:player}})}};
     case "LEAVE":
       return {...state, playing: 0, currentGame: {id: -1}};
     default:
