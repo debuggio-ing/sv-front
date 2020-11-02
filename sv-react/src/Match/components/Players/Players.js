@@ -3,8 +3,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Button,
          List,
          ListItem,
-        ListItemAvatar,
-        Avatar} from '@material-ui/core';
+         ListItemAvatar,
+         Avatar,
+         Typography
+                        } from '@material-ui/core';
 import PropTypes from 'prop-types'
 import { deepOrange, deepPurple } from '@material-ui/core/colors';
 
@@ -37,14 +39,16 @@ const useStyles = makeStyles((theme) => ({
 
 function Players({startGame,
                   playing,
-                  players,
-                  owner,
-                  director,
-                  minister,
-                  voting}) {
+                  currentGame,
+                  proposeDirector}) {
     const classes = useStyles();
     let button;
-
+    let players = currentGame.players;
+    let owner = currentGame.is_owner;
+    let director = currentGame.director;
+    let minister = currentGame.minister;
+    let voting = currentGame.voting;
+    let canElectDirector = currentGame.client_minister && !currentGame.in_session && !voting;
     if (owner) {
       if(players.length >= 5){
           button = <Button className={classes.playButton}
@@ -58,8 +62,12 @@ function Players({startGame,
     }
 
     return <List className={classes.root}>
+
+      {canElectDirector ? <Typography>Seleccione un candidato a director</Typography>: ""}
       {players.map((player, index) => (
-        <ListItem key={index}>
+        <ListItem key={index}
+                  onClick={canElectDirector ? () => proposeDirector(player.player_id) : undefined}
+                  style={canElectDirector ? {cursor: "pointer"} : undefined}>
           <ListItemAvatar key={index}>
             {playing ?
               (minister === player.player_id) ?
@@ -80,7 +88,8 @@ function Players({startGame,
 
 Players.propTypes = {
   startGame: PropTypes.func.isRequired,
-  playing: PropTypes.number.isRequired
+  playing: PropTypes.number.isRequired,
+  proposeDirector: PropTypes.func
 }
 
 export default Players;
