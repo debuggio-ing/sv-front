@@ -5,7 +5,7 @@ import Players from './components/Players/Players.js'
 import Chat from './components/Chat/Chat.js'
 import Board from './components/Board/Board.js'
 import { connect } from 'react-redux'
-import { startGame, vote, updateLobbyStatus, updateGameStatus  } from './../redux/actions.js'
+import { startGame, vote, updateLobbyStatus, updateGameStatus, listProclaim } from './../redux/actions.js'
 import Vote from './components/Vote/Vote.js'
 import { gameService, lobbyService } from '@/_services'
 import { history } from '@/_helpers';
@@ -179,7 +179,7 @@ const mapDispatchToProps = dispatch => {
             if(game.in_session && game.client_director && game.minister_proclaimed){
               gameService.getDirProcCards(gameId).then( proclams => {
                 if(Array.isArray(proclams)){
-                  dispatch(...listProclaim, proclams)
+                  dispatch({...listProclaim, proclams})
                 }
               }).catch(err => {
                 alert("No se udieron obtener las proclamaciones");
