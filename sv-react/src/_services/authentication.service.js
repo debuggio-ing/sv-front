@@ -105,7 +105,7 @@ function refreshToken() {
         });
 }
 function RefreshException() {
-    return new Error();
-  }
+  return new Error();
+}
 
-  RefreshException.prototype = Object.create(Error.prototype);
+RefreshException.prototype = Object.create(Error.prototype);
