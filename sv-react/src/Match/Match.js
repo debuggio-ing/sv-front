@@ -88,12 +88,10 @@ class Match extends React.Component {
                               Jugadores
                             </Typography>
                             <Players startGame={() => this.props.play(this.props.currentGame.id)}
-                                                  owner = {this.props.currentGame.is_owner}
                                                   playing = {this.props.playing}
-                                                  players = {this.props.currentGame.players}
-                                                  minister = {this.props.currentGame.minister}
-                                                  director = {this.props.currentGame.director}
                                                   voting = {this.props.voting}
+                                                  currentGame = {this.props.currentGame}
+                                                  proposeDirector = {(player_id) => this.props.proposeDirector(player_id)}
                                                   />
                           </CardContent>
                         </Card>
@@ -149,8 +147,12 @@ const mapDispatchToProps = dispatch => {
         alert("No se pudo efectual el voto")
       })
     },
+    proposeDirector: (player_id) => {
+      alert("Falta el servicio")
+    },
     gameStatus: (gameId) => {
       gameService.gameStatus(gameId).then( game => {
+          console.log(game)
           dispatch({...updateGameStatus, game})
         }
       ).catch( err => {
