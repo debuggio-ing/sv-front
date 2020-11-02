@@ -8,6 +8,12 @@ const initialState = {
   proclamacionesFenix: 2,
   proclamacionesMortifagas: 4,
   voting: 0,
+  in_session: 0,
+  minister_proclaimed: 0,
+  client_minister: 0,
+  client_director: 0,
+  proclams: [],
+  //head_list: 0,
   lobbies: [],
   currentGame: {
     name: "default",
@@ -28,6 +34,8 @@ export default (state=initialState, action) => {
       return {...state, lobbies: action.lobbies};
     case "VOTE":
       return {...state, voting: 0};
+    case "LIST_PROCLAIM":
+      return {...state, proclams: action.proclams};
     case "UPDATEGAMESTATUS":
       if(action.game.player_list){
         let game = {...action.game, players: action.game.player_list, id: state.currentGame.id}
