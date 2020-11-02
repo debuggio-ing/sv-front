@@ -12,6 +12,7 @@ const initialState = {
   minister_proclaimed: 0,
   client_minister: 0,
   client_director: 0,
+  proclams: [],
   //head_list: 0,
   lobbies: [],
   currentGame: {

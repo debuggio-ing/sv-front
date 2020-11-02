@@ -7,6 +7,7 @@ import Board from './components/Board/Board.js'
 import { connect } from 'react-redux'
 import { startGame, vote, updateLobbyStatus, updateGameStatus, listProclaim } from './../redux/actions.js'
 import Vote from './components/Vote/Vote.js'
+import DirProclaim from './components/DirProclaim/DirProclaim'
 import { gameService, lobbyService } from '@/_services'
 import { history } from '@/_helpers';
 import { array } from 'prop-types';
@@ -114,14 +115,14 @@ class Match extends React.Component {
                         : <br/>
                       }
 
-                      {!this.props.currentGame.voting && this.props.currentGame.in_session && this.props.currentGame.minister_proclaimed && this.props.client_director
+                      {!this.props.voting
                         ? <Grid item key="dirProc" md={this.props.playing ? 3 : 6}>
                             <Card className="">
                               <CardContent className="">
                                 <Typography gutterBottom variant="h5" component="h2">
-                                  Votación
+                                  Proclamar
                                 </Typography>
-                                <DirProclaim proclaim={this.props.proclamation}/>
+                                <DirProclaim proclams={this.props.proclams}/>
                               </CardContent>
                             </Card>
                           </Grid>
@@ -139,7 +140,8 @@ const mapStateToProps = state => ({
   proclamacionesFenix: state.proclamacionesFenix,
   proclamacionesMortifagas: state.proclamacionesMortifagas,
   voting: state.voting,
-  currentGame: state.currentGame
+  currentGame: state.currentGame,
+  proclams: state.proclams
 })
 
 const mapDispatchToProps = dispatch => {
@@ -179,6 +181,7 @@ const mapDispatchToProps = dispatch => {
             if(game.in_session && game.client_director && game.minister_proclaimed){
               gameService.getDirProcCards(gameId).then( proclams => {
                 if(Array.isArray(proclams)){
+                  console.log(proclams)
                   dispatch({...listProclaim, proclams})
                 }
               }).catch(err => {

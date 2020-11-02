@@ -22,23 +22,20 @@ const useStyles = makeStyles((theme) => ({
 function DirProclaim({proclams}) {
     let classes = useStyles();
     return <Grid container className={classes.root, classes.cardList} spacing={1}>
-        
-        <Grid xs={6} sm={6} md={6}>
-         proclams[0].phoenix
-           ? <Card type={"Fenix"} portrait={false} clickAction={cardToProclaim}/>
-           : <Card type={"Mortifaga"} portrait={false} clickAction={cardToProclaim}/>
+        {proclams.map( (proclam, index) =>  (
+          <Grid xs={6} sm={6} md={6}>
+           {proclams.phoenix
+             ? <Card type={"Fenix"} portrait={false} clickAction={cardToProclaim}/>
+             : <Card type={"Mortifaga"} portrait={false} clickAction={cardToProclaim}/>}
+          </Grid>
+          )
+        )}
         </Grid>
-        <Grid xs={6} sm={6} md={6}>
-         proclams[1].phoenix
-           ? <Card type={"Fenix"} portrait={false} clickAction={cardToProclaim}/>
-           : <Card type={"Mortifaga"} portrait={false} clickAction={cardToProclaim}/>
-        </Grid>
-      </Grid>
 }
 
 
 DirProclaim.propTypes = {
-  cardToProclaim: PropTypes.func.isRequired
+  proclams: PropTypes.array.isRequired
 }
 
 export default DirProclaim;
