@@ -197,8 +197,9 @@ const mapDispatchToProps = dispatch => {
                 alert("No se pudieron obtener las proclamaciones");
               })
             }
-            if(game.end){
-              alert("Juego terminado")
+            if(game.score.good>=5 || game.score.bad>=6){
+              alert("Juego terminado");
+              clearInterval(intervalGP);
             }
           }
         }
