@@ -20,7 +20,6 @@ class Match extends React.Component {
   }
 
   reloadGamePublic(){
-    console.log("refreshing");
     if(this.props.currentGame.id == -1){
       history.push("/")
     }
@@ -101,7 +100,7 @@ class Match extends React.Component {
                                                   playing = {this.props.playing}
                                                   voting = {this.props.voting}
                                                   currentGame = {this.props.currentGame}
-                                                  proposeDirector = {(player_id) => this.props.proposeDirector(player_id)}
+                                                  proposeDirector = {(player_id) => this.props.proposeDirector(this.props.currentGame.id, player_id)}
                                                   />
                           </CardContent>
                         </Card>
@@ -171,8 +170,17 @@ const mapDispatchToProps = dispatch => {
         alert("No se pudo efectuar el voto")
       })
     },
-    proposeDirector: (player_id) => {
-      alert("Falta el servicio")
+    cardToProclaim: (chosen) => {
+      gameService.cardToProclaim(chosen).then( result => {
+          alert(chosen)
+          dispatch(cardToProclaim)
+        }
+      ).catch( err => {
+        alert("No se pudo efectuar la elección")
+      })
+    },
+    proposeDirector: (gameId, player_id) => {
+      gameService.nominate_director(gameId, player_id)
     },
     gameStatus: (gameId) => {
       gameService.gameStatus(gameId).then( game => {
