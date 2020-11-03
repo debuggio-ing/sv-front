@@ -197,6 +197,9 @@ const mapDispatchToProps = dispatch => {
                 alert("No se pudieron obtener las proclamaciones");
               })
             }
+            if(game.end){
+              alert("Juego terminado")
+            }
           }
         }
       ).catch( err => {
