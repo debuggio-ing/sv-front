@@ -5,7 +5,7 @@ import Players from './components/Players/Players.js'
 import Chat from './components/Chat/Chat.js'
 import Board from './components/Board/Board.js'
 import { connect } from 'react-redux'
-import { startGame, vote, updateLobbyStatus, updateGameStatus, listProclaim } from './../redux/actions.js'
+import { startGame, actionvote, updateLobbyStatus, updateGameStatus, listProclaim } from './../redux/actions.js'
 import Vote from './components/Vote/Vote.js'
 import DirProclaim from './components/DirProclaim/DirProclaim'
 import { gameService, lobbyService } from '@/_services'
@@ -37,6 +37,14 @@ class Match extends React.Component {
     if(this.props.currentGame.id != -1){
       this.props.play(this.props.currentGame.id)
     }
+  }
+
+//const election = {proclamation:[{card_pos:11, to_proclaim: true},{card_pos:2, to_proclaim: false}], expelliarmus:true};
+  proclaimCard(index){
+
+    let election = {proclamation: [{card_pos: this.props.proclams[index].card_pos, to_proclaim: true}, {card_pos:this.props.proclams[1-index].card_pos, to_proclaim: false}]}
+
+    gameService.postDirProcCards(this.props.currentGame.id, {...election, expelliarmus:true})
   }
 
   componentDidMount(){
@@ -119,7 +127,7 @@ class Match extends React.Component {
                                 <Typography gutterBottom variant="h5" component="h2">
                                   Proclamar
                                 </Typography>
-                                <DirProclaim proclams={this.props.proclams}/>
+                                <DirProclaim proclams={this.props.proclams} proclaimCard={(chosen) => this.proclaimCard(chosen)} />
                               </CardContent>
                             </Card>
                           </Grid>
@@ -156,7 +164,7 @@ const mapDispatchToProps = dispatch => {
     vote: (chosen) => {
       gameService.vote(chosen).then( result => {
           alert(chosen)
-          dispatch(vote)
+          dispatch(actionvote)
         }
       ).catch( err => {
         alert("No se pudo efectuar el voto")

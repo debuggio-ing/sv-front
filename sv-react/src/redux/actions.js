@@ -17,7 +17,7 @@ const listLobbies = {
   lobbies: []
 }
 
-const vote = {
+const actionvote = {
   type: "VOTE"
 }
 
@@ -46,4 +46,4 @@ const updateLobbyStatus = {
   }
 }
 
-export { startGame, joinGame, listLobbies, vote, listProclaim, updateLobbyStatus, updateGameStatus, leaveGame }
+export { startGame, joinGame, listLobbies, actionvote, listProclaim, updateLobbyStatus, updateGameStatus, leaveGame }

@@ -19,14 +19,14 @@ const useStyles = makeStyles((theme) => ({
 
 //Get_Cards
 
-function DirProclaim({proclams}) {
+function DirProclaim({proclams, proclaimCard}) {
     let classes = useStyles();
     return <Grid container className={classes.root, classes.cardList} spacing={1}>
         {proclams.map( (proclam, index) =>  (
           <Grid xs={6} sm={6} md={6}>
            {proclams.phoenix
-             ? <Card type={"Fenix"} portrait={false} />
-             : <Card type={"Mortifaga"} portrait={false} />}
+             ? <Card type={"Fenix"} portrait={false} clickAction={() => proclaimCard(index)}/>
+             : <Card type={"Mortifaga"} portrait={false} clickAction={() => proclaimCard(index)}/>}
           </Grid>
           )
         )}
