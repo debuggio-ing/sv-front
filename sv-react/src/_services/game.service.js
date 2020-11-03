@@ -18,8 +18,6 @@ function vote(chosen, gameId = 1) { //delete '= 1'
     if (chosen == 'Nox') {
         vote = false;
     };
-    console.log(chosen);
-    console.log(gameId);
     const requestOptions = {
         method: 'POST',
         headers: Object.assign(authHeader(), {
@@ -29,7 +27,8 @@ function vote(chosen, gameId = 1) { //delete '= 1'
             vote
         }),
     };
-    return fetch(`${config.apiUrl}/api/games/` + gameId.toString() + `/vote/`, requestOptions)
+    return fetch(`${config.apiUrl}/api/games/` + gameId.toString() + `/vote/`,
+            requestOptions)
         // handle errors
         .then(handleResponse)
         .then(response => {
@@ -48,10 +47,11 @@ function gameStatus(gameId) {
         headers: authHeader(),
     };
     return fetch(`${config.apiUrl}/api/games/` + gameId.toString() + '/',
-            requestOptions).then(handleResponse)
-        .then(game => {
-            return game;
-        });
+            requestOptions)
+            .then(handleResponse)
+            .then(game => {
+                return game;
+            });
 }
 
 
@@ -61,9 +61,12 @@ function getDirProcCards(gameId) {
         method: 'GET',
         headers: authHeader(),
     };
-    return fetch(`${config.apiUrl}/api/games/` + gameId.toString() + `/dir/proc/`, requestOptions).then(handleResponse).then(procCards => {
-        return procCards;
-    })
+    return fetch(`${config.apiUrl}/api/games/` + gameId.toString() + `/dir/proc/`,
+            requestOptions)
+            .then(handleResponse)
+            .then(procCards => {
+                return procCards;
+            })
 }
 
 
@@ -76,9 +79,12 @@ function postDirProcCards(gameId, election) {
         }),
         body: JSON.stringify(election),
     };
-    return fetch(`${config.apiUrl}/api/games/` + gameId.toString() + `/dir/proc/`, requestOptions).then(handleResponse).then(procCards => {
-        return procCards;
-    })
+    return fetch(`${config.apiUrl}/api/games/` + gameId.toString() + `/dir/proc/`,
+            requestOptions)
+            .then(handleResponse)
+            .then(procCards => {
+                return procCards;
+            })
 }
 
 // Sends a request to the nominate director.
@@ -87,11 +93,13 @@ function nominate_director(gameId, candidateId) {
         method: 'POST',
         headers: authHeader(),
     };
-    return fetch(`${config.apiUrl}/api/games/` + gameId.toString() +'/director/' + candidateId.toString() + '/',requestOptions
-                                ).then(handleResponse)
-        .then(nomination => {
-            // for debugging purposes
-            console.log(nomination);
-            return proclamation;
-        });
+    return fetch(`${config.apiUrl}/api/games/` + 
+                    gameId.toString() +'/director/' + candidateId.toString() + '/',
+                    requestOptions)
+            .then(handleResponse)
+            .then(nomination => {
+                // for debugging purposes
+                console.log(nomination);
+                return proclamation;
+            });
 }
