@@ -162,6 +162,7 @@ const mapDispatchToProps = dispatch => {
       })
     },
     vote: (chosen, id) => {
+      console.log(id)
       gameService.vote(chosen, id).then( result => {
           alert(chosen)
           dispatch(actionvote)

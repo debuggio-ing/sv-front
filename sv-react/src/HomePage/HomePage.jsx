@@ -38,7 +38,7 @@ class HomePage extends React.Component {
         const { currentUser, users } = this.state;
         return (
             <div>
-                <h1>Hi! playing {this.props.currentGame.name}</h1>
+                <h1>Hi!</h1>
                 <List>
                   {this.props.lobbies.map((lobby) => (
                     <ListItem key={lobby.id}>

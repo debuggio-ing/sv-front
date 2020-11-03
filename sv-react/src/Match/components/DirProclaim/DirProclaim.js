@@ -24,9 +24,9 @@ function DirProclaim({proclams, proclaimCard}) {
     return <Grid container className={classes.root, classes.cardList} spacing={1}>
         {proclams.map( (proclam, index) =>  (
           <Grid xs={6} sm={6} md={6}>
-           {proclams.phoenix
-             ? <Card type={"Fenix"} portrait={false} clickAction={() => proclaimCard(index)}/>
-             : <Card type={"Mortifaga"} portrait={false} clickAction={() => proclaimCard(index)}/>}
+           {proclam.phoenix
+             ? <Card type={"Fenix"} portrait={true} clickAction={() => proclaimCard(index)}/>
+             : <Card type={"Mortifaga"} portrait={true} clickAction={() => proclaimCard(index)}/>}
           </Grid>
           )
         )}
