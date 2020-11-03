@@ -69,6 +69,7 @@ class LoginPage extends React.Component {
                                             <Link to="register" className="btn btn-link">Registrarme</Link>
                                         </div>
                                   </div>
+                                  {status=="Unauthorized" ? <p style={{color: "red"}}>Credenciales invalidas</p> : ""}
                               </Form>
                           )}
                       />

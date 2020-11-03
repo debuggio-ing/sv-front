@@ -3,11 +3,11 @@ import { TextField, List, ListItem, ListItemAvatar, Avatar } from '@material-ui/
 
 const messages = [
     {
-        "text": "Que onda muchcahos",
+        "text": "Que bonita implementación del clasico juego Secret Voldemort!",
         "from": "Maw"
     },
     {
-        "text": "Callate",
+        "text": "Cierto! La mejor del condado",
         "from": "Lau"
     }
 ]

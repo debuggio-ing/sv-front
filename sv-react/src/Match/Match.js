@@ -162,6 +162,7 @@ const mapDispatchToProps = dispatch => {
       })
     },
     vote: (chosen, id) => {
+      console.log(id)
       gameService.vote(chosen, id).then( result => {
           alert(chosen)
           dispatch(actionvote)
@@ -195,6 +196,10 @@ const mapDispatchToProps = dispatch => {
               }).catch(err => {
                 alert("No se pudieron obtener las proclamaciones");
               })
+            }
+            if(game.score.good>=5 || game.score.bad>=6){
+              alert("Juego terminado");
+              clearInterval(intervalGP);
             }
           }
         }

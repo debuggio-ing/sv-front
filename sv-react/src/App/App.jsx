@@ -16,7 +16,8 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            currentUser: null
+            currentUser: null,
+            currentMail: ""
         };
     }
 
@@ -46,7 +47,7 @@ class App extends React.Component {
                                 Secret Voldemort
                               </Typography>
                               <Button color="inherit" onClick={this.logout}>
-                                Log out
+                                Cerrar Sesión
                               </Button>
                               <Grid container justify="flex-end">
                                 < CreateRoom />
