@@ -81,7 +81,6 @@ function postDirProcCards(gameId, election) {
     })
 }
 
-
 // Sends a request to the nominate director.
 function nominate_director(gameId, candidateId) {
     const requestOptions = {
