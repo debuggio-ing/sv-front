@@ -46,11 +46,12 @@ class App extends React.Component {
                               <img src="public/sv-logo.jpg" onClick={this.goHome} style={{width: "80px"}} alt="logo" />
                               <Typography variant="h6" color="inherit">
                                 Secret Voldemort
+
                               </Typography> 
                               <Typography variant="h6" color="inherit">
                                 {currentMail}
                               </Typography> 
-
+        
                               <Grid container justify="flex-end">
                                 < CreateRoom />
                                 <Button color="inherit" onClick={this.logout}>
