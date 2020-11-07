@@ -23,6 +23,7 @@ class App extends React.Component {
 
     componentDidMount() {
         authenticationService.currentUser.subscribe(x => this.setState({ currentUser: x }));
+        this.setState({currentMail: authenticationService.userInfo().email})
     }
 
     logout() {
@@ -35,7 +36,7 @@ class App extends React.Component {
     }
 
     render() {
-        const { currentUser } = this.state;
+        const { currentUser, currentMail } = this.state;
         return (
                 <Router history={history}>
                     <div>
@@ -45,12 +46,17 @@ class App extends React.Component {
                               <img src="public/sv-logo.jpg" onClick={this.goHome} style={{width: "80px"}} alt="logo" />
                               <Typography variant="h6" color="inherit">
                                 Secret Voldemort
-                              </Typography>
-                              <Button color="inherit" onClick={this.logout}>
-                                Cerrar Sesión
-                              </Button>
+
+                              </Typography> 
+                              <Typography variant="h6" color="inherit">
+                                {currentMail}
+                              </Typography> 
+        
                               <Grid container justify="flex-end">
                                 < CreateRoom />
+                                <Button color="inherit" onClick={this.logout}>
+                                Cerrar Sesión
+                              </Button>
                               </Grid>
                             </Toolbar>
                           </AppBar>
