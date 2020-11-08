@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { List,
-         ListItem,
+import { GridList,
+         GridListTile,
          Typography
                         } from '@material-ui/core';
 import Card from './../Card/Card.js'
@@ -9,12 +9,8 @@ import Card from './../Card/Card.js'
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    maxWidth: '36ch',
     backgroundColor: theme.palette.background.paper,
   },
-  inline: {
-    display: 'inline',
-  }
 }));
 
 
@@ -24,19 +20,24 @@ function Results({currentGame}) {
     let voting = currentGame.voting;
     let chaos = currentGame.semaphore != 0;
 
-    return <List className={classes.root}>
-      {chaos ? <Typography>El ministro no fue elegido</Typography> : <Typography>El ministro fue elegido</Typography>}
+    return <GridList cellHeight={110} className={classes.root} cols={5}>
       {players.map((player, index) => (
-        <ListItem>
-          <ListItem>
-            {player.username}
-          </ListItem>
-          <ListItem>
-            {player.last_vote ? <Card type={"Lumos"} portrait={false}/> : <Card type={"Nox"} portrait={false}/> }
-          </ListItem>
-        </ListItem>
+        <GridListTile cols={1}>
+          <div style={{display: 'flex'}}>
+            <div style={{margin: 'auto'}}>
+              <div style={{textAlign: 'center'}}>
+                {player.username}
+              </div>
+              <div>
+                {player.last_vote ? 
+                          <Card type={"Lumos"} portrait={false}/> 
+                          : <Card type={"Nox"} portrait={false}/> }
+              </div>
+            </div>
+          </div>
+        </GridListTile>
       ))}
-    </List>
+    </GridList>
 }
 
 export default Results;
