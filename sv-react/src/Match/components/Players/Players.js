@@ -7,7 +7,7 @@ import { Button,
          Avatar,
          Typography
                         } from '@material-ui/core';
-import ClearIcon from '@material-ui/icons/Clear';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import CheckIcon from '@material-ui/icons/Check';
 import PropTypes from 'prop-types'
 import { deepOrange, deepPurple } from '@material-ui/core/colors';
@@ -84,7 +84,7 @@ function Players({startGame,
             {player.username}
           </ListItem>
           <ListItem>
-            {voting ? (player.voted ? <CheckIcon/> : <ClearIcon/>) : <div/>}
+            {voting ? (player.voted ? <CheckIcon/> : <MoreHorizIcon/>) : <div/>}
           </ListItem>
         </ListItem>
       ))}
