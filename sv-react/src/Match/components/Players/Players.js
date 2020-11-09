@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     maxWidth: '36ch',
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.paper
   },
   inline: {
     display: 'inline',
@@ -83,6 +83,14 @@ function Players({startGame,
           <ListItem>
             {player.username}
           </ListItem>
+          {player.role ?
+            <ListItem>
+              {player.role=="Death Eater" ? <img src={"public/img/mortifago_lealtad.png"} style={{height:"50px"}}/> :
+                                          [player.role=="voldemort" ? <img src={"public/img/voldemort.png"} style={{height:"50px"}}/> :
+                                                                      <img src={"public/img/fenix_lealtad.png"} style={{height:"50px"}}/>]}
+            </ListItem> :
+            undefined
+          }
           <ListItem>
             {voting ? (player.voted ? <CheckIcon/> : <MoreHorizIcon/>) : <div/>}
           </ListItem>
