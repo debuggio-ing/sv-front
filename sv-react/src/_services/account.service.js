@@ -13,6 +13,7 @@ const currentDataSubject = new BehaviorSubject(null);
 export const accountService = {
     userInfo,
     currentData: currentDataSubject.asObservable(),
+    logout,
     get currentDataValue () {
         return currentDataSubject.value
     }
@@ -28,9 +29,14 @@ function userInfo() {
             requestOptions)
             .then(handleResponse)
             .then(x => {
+                console.log(x)
                 if (x != 'Token refreshed'){
                     currentDataSubject.next(x)
                     return x
                 }   
            });
+}
+
+function logout (){
+    currentDataSubject.next(null)
 }

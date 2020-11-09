@@ -28,8 +28,8 @@ function CreateRoom(props) {
 
   return (
     <React.Fragment>
-      <Button variant="outlined" color="inherit" onClick={handleClickOpen}>
-          Nueva Partida
+      <Button variant="contained" color="primary" onClick={handleClickOpen}>
+        Nueva Partida
           </Button>
       <Dialog
         open={open}
