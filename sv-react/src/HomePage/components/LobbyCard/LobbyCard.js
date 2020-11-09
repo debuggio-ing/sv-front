@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
 function LobbyCard({lobby, joinGame}) {
     const classes = useStyles();
-    return (
+    return ( 
     <Card className={classes.card}>
       <CardContent className="">
         <Typography gutterBottom variant="h5" component="h2">
@@ -48,15 +48,10 @@ function LobbyCard({lobby, joinGame}) {
          <Typography align="right" gutterBottom variant="body" component="p">
             ({lobby.current_players.length} / {lobby.max_players})
           </Typography>
-        {!lobby.playing
-          ? <Button className={classes.joinButton} variant="contained" color="primary"
+        <Button className={classes.joinButton} variant="contained" color="primary"
                     onClick={() => joinGame(lobby.id)}>
               Unirse
             </Button>
-          : <Button className={classes.joinButton} variant="contained" color="primary"
-          onClick={() => joinGame(lobby.id)}>
-            Observar  
-          </Button>}
           
       </CardContent>
     </Card>

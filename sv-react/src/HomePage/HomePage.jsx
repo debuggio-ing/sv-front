@@ -2,13 +2,15 @@ import React from 'react';
 
 import { authenticationService, lobbyService } from '@/_services';
 import { tokenRefreshException } from '@/_helpers';
-import { List, ListItem, Button } from '@material-ui/core';
+import { List, ListItem, Button, Grid } from '@material-ui/core';
 import LobbyCard from './components/LobbyCard/LobbyCard.js'
 import { connect } from 'react-redux'
-import { joinGame, listLobbies, leaveGame } from './../redux/actions.js'
+import { joinGame, listLobbies, listGames, leaveGame, toggleListing } from './../redux/actions.js'
 import { history } from '@/_helpers';
 
 let intervalLL;
+
+
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -39,6 +41,16 @@ class HomePage extends React.Component {
         return (
             <div>
                 <h2>¡Bienvenido! Crea una nueva sala o elige alguna disponible para jugar</h2>
+                <Grid container justify="flex-end">
+                  {this.props.listingLobbies
+                  ?<Button variant="contained" color="secondary" onClick={() => this.props.toggleListing()}>
+                    Listar Juegos
+                  </Button>
+                  :<Button variant="contained" color="secondary" onClick={() => this.props.toggleListing()}>
+                    Listar Salas
+                </Button>}
+                </Grid>
+                
                 <List>
                   {this.props.lobbies.map((lobby) => (
                     <ListItem key={lobby.id}>
@@ -53,7 +65,8 @@ class HomePage extends React.Component {
 
 const mapStateToProps = state => ({
   lobbies: state.lobbies,
-  currentGame: state.currentGame
+  currentGame: state.currentGame,
+  listingLobbies: state.listingLobbies
 })
 
 const mapDispatchToProps = dispatch => {
@@ -70,6 +83,9 @@ const mapDispatchToProps = dispatch => {
         alert("No se pudo unir a la partida")
       })
     },
+    toggleListing: () => {
+      dispatch(toggleListing)
+    },
     listLobbies: (lobbies) => {
       lobbyService.listLobbies().then( lobbies =>{
           if(Array.isArray(lobbies)){
@@ -82,11 +98,20 @@ const mapDispatchToProps = dispatch => {
         }
       )
     },
+    listGames: (games) => {
+      lobbyService.listGames().then( games =>{
+          if(Array.isArray(games)){
+            dispatch({...listGames, games})
+          }
+        }
+      ).catch( err => {
+          alert("No se pudieron listar los games")
+          clearInterval(intervalLL);
+        }
+      )
+    },
     leave: () => {
       dispatch(leaveGame)
-    },
-    getLobbyNumPlayers: (id) => {
-
     }
   }
 }
