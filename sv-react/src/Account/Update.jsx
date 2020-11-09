@@ -9,15 +9,12 @@ function Update({ history }) {
     const { path } = history;
     const user = accountService.currentDataValue
     const initialValues = {
-        email: user.email,
         username: user.username,
         password: '',
         confirmPassword: ''
     };
 
     const validationSchema = Yup.object().shape({
-        email: Yup.string()
-            .email('Email invalido'),
         username: Yup.string()
             .max(20, 'No mas de 20 caracteres estan permitidos')
     });
@@ -41,11 +38,6 @@ function Update({ history }) {
                 <Form>
                     <h1>Actualizar Perfil</h1>
                     <div className="form-group">
-                        <label>Email</label>
-                        <Field name="email" type="text" className={'form-control' + (errors.email && touched.email ? ' is-invalid' : '')} />
-                        <ErrorMessage name="email" component="div" className="invalid-feedback" />
-                    </div>
-                    <div className="form-group">
                         <label>Nombre de Usuario</label>
                         <Field name="username" type="text" className={'form-control' + (errors.username && touched.username ? ' is-invalid' : '')} />
                         <ErrorMessage name="username" component="div" className="invalid-feedback" />
@@ -55,7 +47,7 @@ function Update({ history }) {
                             {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
                             Actualizar
                         </button>
-                        <Link to="." className="btn btn-link">Cancel</Link>
+                        <Link to="." className="btn btn-link">Cancelar</Link>
                     </div>
                 </Form>
             )}
