@@ -8,11 +8,14 @@ const useStyles = makeStyles((theme) => ({
   },
   sidewaysLists:  {
     display: 'flex',
+    '& > *': {
+      margin: theme.spacing(2),
+    },
     flexDirection: 'row',
     padding: 0,
   },
   listItem: {
-    width: "0px"
+    width: "10px"
   },
   avatarColor: {
     backgroundColor: "#12312"
@@ -34,13 +37,16 @@ function LobbyCard({lobby, joinGame}) {
         <List className={classes.sidewaysLists}>
           {lobby.current_players.map((player, index) => (
             <ListItem key={index} className={classes.listItem}>
-              <ListItemAvatar>
-                
+              
+              
+              
+              <li>
               <Avatar alt={player} src="/static/images/avatar/1.jpg" className={classes.avatarColor} />
               <Typography align="center" gutterBottom variant="body" component="p">
                   {player}
                 </Typography>
-              </ListItemAvatar>
+                </li>
+
               
             </ListItem>
           ))}

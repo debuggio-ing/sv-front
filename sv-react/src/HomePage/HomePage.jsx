@@ -21,6 +21,23 @@ class HomePage extends React.Component {
         };
     }
 
+
+    toggleListing1(){
+      this.props.toggleListing()
+        if(this.props.listingLobbies){
+          this.props.listGames();
+          this.props.leave();
+          clearInterval(intervalLL);
+          intervalLL = setInterval(this.props.listGames.bind(this), 1000);
+        }
+        else {
+          this.props.listLobbies();
+          this.props.leave();
+          clearInterval(intervalLL);
+          intervalLL = setInterval(this.props.listLobbies.bind(this), 1000);
+        }
+      }
+
     componentDidMount(){
       if(localStorage.getItem("currentUser")){
         this.props.listLobbies();
@@ -43,13 +60,18 @@ class HomePage extends React.Component {
                 <h2>¡Bienvenido! Crea una nueva sala o elige alguna disponible para jugar</h2>
                 <Grid container justify="flex-end">
                   {this.props.listingLobbies
-                  ?<Button variant="contained" color="secondary" onClick={() => this.props.toggleListing()}>
+                  ?<Button variant="contained" color="secondary" onClick={() => this.toggleListing1()}>
                     Listar Juegos
                   </Button>
-                  :<Button variant="contained" color="secondary" onClick={() => this.props.toggleListing()}>
+                  :<Button variant="contained" color="secondary" onClick={() => this.toggleListing1()}>
                     Listar Salas
-                </Button>}
+                </Button>
+                }
                 </Grid>
+                {this.props.listingLobbies
+                  ?<h2>Lista de Salas</h2>
+                  :<h2>Lista de Juegos</h2>
+                }
                 
                 <List>
                   {this.props.lobbies.map((lobby) => (
@@ -65,6 +87,7 @@ class HomePage extends React.Component {
 
 const mapStateToProps = state => ({
   lobbies: state.lobbies,
+  games: state.games,
   currentGame: state.currentGame,
   listingLobbies: state.listingLobbies
 })
@@ -85,6 +108,7 @@ const mapDispatchToProps = dispatch => {
     },
     toggleListing: () => {
       dispatch(toggleListing)
+      
     },
     listLobbies: (lobbies) => {
       lobbyService.listLobbies().then( lobbies =>{

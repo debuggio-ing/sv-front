@@ -5,7 +5,7 @@ import { lobbyService } from '@/_services';
 
 const initialState = {
   listingLobbies: true,
-  playing: 0,
+  playing: 0, //is client in /match
   proclamacionesFenix: 2,
   proclamacionesMortifagas: 4,
   voting: 0,
@@ -36,7 +36,7 @@ export default (state=initialState, action) => {
     case "LISTLOBBIES":
       return {...state, lobbies: action.lobbies};
     case "LISTGAMES":
-        return {...state, games: action.games};
+        return {...state, lobbies: action.games};
     case "VOTE":
       return {...state, voting: 0};
     case "LIST_PROCLAIM":

@@ -6,6 +6,7 @@ import {
 
 export const lobbyService = {
     listLobbies,
+    listGames,
     joinLobby,
     startMatch,
     getLobby,
