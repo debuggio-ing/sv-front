@@ -28,7 +28,7 @@ function Update({ history }) {
 
     function onSubmit(fields, { setStatus, setSubmitting }) {
         setStatus();
-        accountService.update(fields.username)
+        accountService.update(fields.username,fields.password)
             .then(() => {
                 alertService.success('Actualizado exitosamente', { keepAfterRouteChange: true });
                 history.push('.');

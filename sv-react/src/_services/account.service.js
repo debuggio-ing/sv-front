@@ -51,7 +51,7 @@ function update(username = null, password = null) {
     }else if(!username && password){
         requestBody = JSON.stringify({password})
     }else if (username && password){
-        requestBody = JSON.strigify({username, password})
+        requestBody = JSON.stringify({username, password})
     }
     const requestOptions = {
         method: 'POST',
