@@ -2,6 +2,7 @@ import React from 'react';
 //import logo from '../sv-logo.jpg';
 import { Typography, Toolbar, AppBar, Card, CardContent, Grid, Container, Button } from '@material-ui/core';
 import Players from './components/Players/Players.js'
+import Results from './components/Results/Results.js'
 import Chat from './components/Chat/Chat.js'
 import Board from './components/Board/Board.js'
 import { connect } from 'react-redux'
@@ -128,6 +129,23 @@ class Match extends React.Component {
                                   Proclamar
                                 </Typography>
                                 <DirProclaim proclams={this.props.proclams} proclaimCard={(chosen) => this.proclaimCard(chosen)} />
+                              </CardContent>
+                            </Card>
+                          </Grid>
+                        : <br/>
+                      }
+
+                      {this.props.playing && !this.props.currentGame.voting && (this.props.currentGame.in_session || (this.props.currentGame.semaphore != 0)) 
+                        ? <Grid item key="results" xs={12}>
+                            <Card className="">
+                              <CardContent className="">
+                                <Typography gutterBottom variant="h5" component="h2">
+                                  Resultados
+                                </Typography>
+                                {(this.props.semaphore != 0) ? 
+                                        <Typography>El ministro no fue elegido.</Typography>
+                                        : <Typography>El ministro fue elegido.</Typography>}
+                                <Results currentGame = {this.props.currentGame} />
                               </CardContent>
                             </Card>
                           </Grid>

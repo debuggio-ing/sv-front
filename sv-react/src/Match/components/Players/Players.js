@@ -7,6 +7,8 @@ import { Button,
          Avatar,
          Typography
                         } from '@material-ui/core';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import CheckIcon from '@material-ui/icons/Check';
 import PropTypes from 'prop-types'
 import { deepOrange, deepPurple } from '@material-ui/core/colors';
 
@@ -78,7 +80,12 @@ function Players({startGame,
               : <Avatar alt={player.username} src="/static/images/avatar/1.jpg" />
             }
           </ListItemAvatar>
-          {player.username}
+          <ListItem>
+            {player.username}
+          </ListItem>
+          <ListItem>
+            {voting ? (player.voted ? <CheckIcon/> : <MoreHorizIcon/>) : <div/>}
+          </ListItem>
         </ListItem>
       ))}
       {!playing ? button : <div/>}
