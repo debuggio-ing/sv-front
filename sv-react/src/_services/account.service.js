@@ -34,7 +34,7 @@ function userInfo() {
                 if (x != 'Token refreshed'){
                     currentDataSubject.next(x)
                     return x
-                }   
+                }
            });
 }
 

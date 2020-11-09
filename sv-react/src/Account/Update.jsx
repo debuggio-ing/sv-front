@@ -16,12 +16,19 @@ function Update({ history }) {
 
     const validationSchema = Yup.object().shape({
         username: Yup.string()
-            .max(20, 'No mas de 20 caracteres estan permitidos')
+            .max(20, 'No mas de 20 caracteres estan permitidos'),
+        password: Yup.string()
+            .min(8, 'La longitud minima es de 8 caracteres'),
+        confirmPassword: Yup.string()
+            .when('password', (password, schema) => {
+                if (password) return schema.required('La contraseña es obligatoria');
+            })
+            .oneOf([Yup.ref('password')], 'Las contraseñas deben coincidir')
     });
 
     function onSubmit(fields, { setStatus, setSubmitting }) {
         setStatus();
-        accountService.update(fields.username)
+        accountService.update(user.id, fields)
             .then(() => {
                 alertService.success('Actualizado exitosamente', { keepAfterRouteChange: true });
                 history.push('.');
@@ -47,6 +54,20 @@ function Update({ history }) {
                             {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
                             Actualizar
                         </button>
+                    <h3 className="pt-3">Cambiar contraseña</h3>
+                    <p>Deja los siguientes campos vacíos si solo quieres modificar tu nombre de usuario</p>
+                    <div className="form-row">
+                        <div className="form-group col">
+                            <label>Contraseña</label>
+                            <Field name="password" type="password" className={'form-control' + (errors.password && touched.password ? ' is-invalid' : '')} />
+                            <ErrorMessage name="password" component="div" className="invalid-feedback" />
+                        </div>
+                        <div className="form-group col">
+                            <label>Confirma tu contraseña</label>
+                            <Field name="confirmPassword" type="password" className={'form-control' + (errors.confirmPassword && touched.confirmPassword ? ' is-invalid' : '')} />
+                            <ErrorMessage name="confirmPassword" component="div" className="invalid-feedback" />
+                        </div>
+                    </div>
                         <Link to="." className="btn btn-link">Cancelar</Link>
                     </div>
                 </Form>
