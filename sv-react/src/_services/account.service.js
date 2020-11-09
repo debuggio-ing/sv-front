@@ -31,7 +31,7 @@ function userInfo() {
             .then(handleResponse)
             .then(x => {
                 console.log(x)
-                if (x != 'Token refreshed'){
+                if (x != 'Token refreshed' && x != 'OK' && x != "Signature has expired") {
                     currentDataSubject.next(x)
                     return x
                 }
@@ -44,17 +44,25 @@ function logout (){
 
 
 // update username with new value and returns an UserPublic schema.
-function update(username) {
+function update(username = null, password = null) {
+    var requestBody = {}
+    if (username && !password){
+        requestBody = JSON.stringify({username})
+    }else if(!username && password){
+        requestBody = JSON.stringify({password})
+    }else if (username && password){
+        requestBody = JSON.strigify({username, password})
+    }
     const requestOptions = {
         method: 'POST',
-        headers: authHeader(),
+        headers: Object.assign(authHeader(), {"Content-type":"application/json"}),
+        body: requestBody
     };
-
-    return fetch(`${config.apiUrl}/api/users/info/modify/?username=` + username,
+    return fetch(`${config.apiUrl}/api/users/info/modify/`,
         requestOptions)
         .then(handleResponse)
         .then(userPublic => {
-            currentDataSubject.next(userPublic)
+            accountService.userInfo()
             return userPublic;
         })
 }

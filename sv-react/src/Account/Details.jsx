@@ -9,7 +9,9 @@ function Details({ match }) {
     if(accountService.currentDataValue){
         data = JSON.parse(JSON.stringify(accountService.currentDataValue))
     }
-    
+    else {
+        console.log('fuck entre aca')
+    }
     return (
         <div>
             <h1>Mi Perfil</h1>

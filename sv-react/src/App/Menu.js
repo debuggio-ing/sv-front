@@ -52,9 +52,9 @@ export default function SimpleMenu(props) {
       <Button 
         aria-controls="customized-menu" 
         aria-haspopup="true"
-        variant="contained"
+        variant="outlined"
         onClick={handleClick}
-        color='primary'
+        color='inherit'
         >
         Opciones
       </Button>
