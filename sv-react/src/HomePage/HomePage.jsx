@@ -84,6 +84,9 @@ const mapDispatchToProps = dispatch => {
     },
     leave: () => {
       dispatch(leaveGame)
+    },
+    getLobbyNumPlayers: (id) => {
+
     }
   }
 }

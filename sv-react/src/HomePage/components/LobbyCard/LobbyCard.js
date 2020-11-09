@@ -35,20 +35,32 @@ function LobbyCard({lobby, joinGame}) {
           {lobby.current_players.map((player, index) => (
             <ListItem key={index} className={classes.listItem}>
               <ListItemAvatar>
+                
               <Avatar alt={player} src="/static/images/avatar/1.jpg" className={classes.avatarColor} />
+              <Typography align="center" gutterBottom variant="body" component="p">
+                  {player}
+                </Typography>
               </ListItemAvatar>
+              
             </ListItem>
           ))}
         </List>
+         <Typography align="right" gutterBottom variant="body" component="p">
+            ({lobby.current_players.length} / {lobby.max_players})
+          </Typography>
         {!lobby.playing
           ? <Button className={classes.joinButton} variant="contained" color="primary"
                     onClick={() => joinGame(lobby.id)}>
               Unirse
             </Button>
-          : <div/>}
+          : <Button className={classes.joinButton} variant="contained" color="primary"
+          onClick={() => joinGame(lobby.id)}>
+            Observar  
+          </Button>}
+          
       </CardContent>
     </Card>
     )
 }
-
+//Aca debería ir el "Spectate"
 export default LobbyCard;
