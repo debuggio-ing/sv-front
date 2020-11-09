@@ -4,7 +4,8 @@ import {
 
 import config from 'config';
 import {
-    handleResponse
+    handleResponse,
+    authHeader
 } from '@/_helpers';
 
 const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
@@ -13,6 +14,7 @@ export const authenticationService = {
     register,
     login,
     logout,
+    userInfo,
     refreshToken,
     RefreshException,
     currentUser: currentUserSubject.asObservable(),
@@ -72,6 +74,21 @@ function login(email, password) {
         });
 }
 
+function userInfo() {
+    const requestOptions = {
+        method: 'GET',
+        headers: Object.assign(authHeader(),
+            {'Content-Type': 'application/json'})
+    };
+    return fetch(`${config.apiUrl}/api/users/info/`,
+            requestOptions)
+            .then(userinfo => {
+                console.log(userinfo)
+                localStorage.setItem('userInfo', JSON.stringify(userInfo));
+                console.log(JSON.parse(localStorage.getItem('userInfo')));
+                return userinfo
+            });
+}
 
 // Refresh Token, be careful with raising exceptions
 function refreshToken() {
@@ -94,16 +111,18 @@ function refreshToken() {
                     return Promise.reject("ERROR");
                 };
 
-                return response.text().then(text => {
-                    const access_token = text && JSON.parse(text);
-                    // store jwt token in local storage to keep user logged in between page refreshes
-                    const tokens = (Object.assign(access_token, {"refresh_token":refresh_token}));
-                    localStorage.setItem('currentUser', JSON.stringify(tokens));
-                    currentUserSubject.next(tokens);
-                    return;
-                })
+                return response.text()
+                        .then(text => {
+                            const access_token = text && JSON.parse(text);
+                            // store jwt token in local storage to keep user logged in between page refreshes
+                            const tokens = (Object.assign(access_token, {"refresh_token":refresh_token}));
+                            localStorage.setItem('currentUser', JSON.stringify(tokens));
+                            currentUserSubject.next(tokens);
+                            return;
+                        })
         });
 }
+
 function RefreshException() {
   return new Error();
 }

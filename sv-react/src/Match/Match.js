@@ -2,12 +2,13 @@ import React from 'react';
 //import logo from '../sv-logo.jpg';
 import { Typography, Toolbar, AppBar, Card, CardContent, Grid, Container, Button } from '@material-ui/core';
 import Players from './components/Players/Players.js'
+import Results from './components/Results/Results.js'
 import Chat from './components/Chat/Chat.js'
 import Board from './components/Board/Board.js'
 import { connect } from 'react-redux'
 import { startGame, actionvote, updateLobbyStatus, updateGameStatus, listProclaim } from './../redux/actions.js'
 import Vote from './components/Vote/Vote.js'
-import DirProclaim from './components/DirProclaim/DirProclaim'
+import Proclaim from './components/Proclaim/Proclaim'
 import { gameService, lobbyService } from '@/_services'
 import { history } from '@/_helpers';
 import { array } from 'prop-types';
@@ -39,12 +40,9 @@ class Match extends React.Component {
     }
   }
 
-//const election = {proclamation:[{card_pos:11, to_proclaim: true},{card_pos:2, to_proclaim: false}], expelliarmus:true};
   proclaimCard(index){
-
-    let election = {proclamation: [{card_pos: this.props.proclams[index].card_pos, to_proclaim: true}, {card_pos:this.props.proclams[1-index].card_pos, to_proclaim: false}]}
-
-    gameService.postDirProcCards(this.props.currentGame.id, {...election, expelliarmus:true})
+    const election = this.props.proclams[index].card_pos
+    gameService.postProcCards(this.props.currentGame.id, election)
   }
 
   componentDidMount(){
@@ -120,14 +118,33 @@ class Match extends React.Component {
                         : <br/>
                       }
 
-                      {!this.props.currentGame.voting && this.props.currentGame.client_director && this.props.currentGame.minister_proclaimed && this.props.currentGame.in_session
+                      {(((this.props.currentGame.client_director && this.props.currentGame.minister_proclaimed)
+                      ||(this.props.currentGame.client_minister && !this.props.currentGame.minister_proclaimed))
+                      && this.props.currentGame.in_session)
                         ? <Grid item key="dirProc" md={this.props.playing ? 3 : 6}>
                             <Card className="">
                               <CardContent className="">
                                 <Typography gutterBottom variant="h5" component="h2">
                                   Proclamar
                                 </Typography>
-                                <DirProclaim proclams={this.props.proclams} proclaimCard={(chosen) => this.proclaimCard(chosen)} />
+                                <Proclaim proclams={this.props.proclams} proclaimCard={(chosen) => this.proclaimCard(chosen)} />
+                              </CardContent>
+                            </Card>
+                          </Grid>
+                        : <br/>
+                      }
+
+                      {this.props.playing && !this.props.currentGame.voting && (this.props.currentGame.in_session || (this.props.currentGame.semaphore != 0)) 
+                        ? <Grid item key="results" xs={12}>
+                            <Card className="">
+                              <CardContent className="">
+                                <Typography gutterBottom variant="h5" component="h2">
+                                  Resultados
+                                </Typography>
+                                {(this.props.semaphore != 0) ? 
+                                        <Typography>El ministro no fue elegido.</Typography>
+                                        : <Typography>El ministro fue elegido.</Typography>}
+                                <Results currentGame = {this.props.currentGame} />
                               </CardContent>
                             </Card>
                           </Grid>
@@ -187,8 +204,8 @@ const mapDispatchToProps = dispatch => {
       gameService.gameStatus(gameId).then( game => {
           if(game.player_list){
             dispatch({...updateGameStatus, game})
-            if(game.in_session && game.client_director && game.minister_proclaimed){
-              gameService.getDirProcCards(gameId).then( proclams => {
+            if(game.in_session && ((game.client_director && game.minister_proclaimed)||(game.client_minister && !game.minister_proclaimed))){
+              gameService.getProcCards(gameId).then( proclams => {
                 if(Array.isArray(proclams)){
                   console.log(proclams)
                   dispatch({...listProclaim, proclams})
