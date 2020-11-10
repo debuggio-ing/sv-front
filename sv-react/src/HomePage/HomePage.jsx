@@ -55,15 +55,19 @@ class HomePage extends React.Component {
                   />
                 <FormControlLabel
                   control={<Checkbox color="primary" checked={true} onChange={() => {}} name="FilterStarted" />}
-                  label="Game Started"
+                  label="Partidas Comenzadas"
                 />
                 <FormControlLabel
                   control={<Checkbox color="primary" checked={true} onChange={() => {}} name="FilterFinished" />}
-                  label="Game Finished"
+                  label="Partidas Terminadas"
                 />
                 <FormControlLabel
                   control={<Checkbox color="primary" checked={true} onChange={() => {}} name="FilterUser" />}
-                  label="Games you are in"
+                  label="Tus Partidas"
+                />
+                <FormControlLabel
+                  control={<Checkbox color="primary" checked={true} onChange={() => {}} name="FilterUser" />}
+                  label="Todas las Partidas"
                 />
                 </FormGroup>
                   </Grid>   
