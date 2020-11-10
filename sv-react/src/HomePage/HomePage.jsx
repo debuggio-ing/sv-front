@@ -2,15 +2,13 @@ import React from 'react';
 
 import { authenticationService, lobbyService } from '@/_services';
 import { tokenRefreshException } from '@/_helpers';
-import { List, ListItem, Button, Grid } from '@material-ui/core';
+import { Typography, Label, Grid, List, ListItem, FormGroup, Checkbox, FormControlLabel } from '@material-ui/core';
 import LobbyCard from './components/LobbyCard/LobbyCard.js'
 import { connect } from 'react-redux'
-import { joinGame, listLobbies, listGames, leaveGame, toggleListing } from './../redux/actions.js'
+import { joinGame, listLobbies, leaveGame } from './../redux/actions.js'
 import { history } from '@/_helpers';
 
 let intervalLL;
-
-
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -20,23 +18,6 @@ class HomePage extends React.Component {
             users: null
         };
     }
-
-
-    toggleListing1(){
-      this.props.toggleListing()
-        if(this.props.listingLobbies){
-          this.props.listGames();
-          this.props.leave();
-          clearInterval(intervalLL);
-          intervalLL = setInterval(this.props.listGames.bind(this), 1000);
-        }
-        else {
-          this.props.listLobbies();
-          this.props.leave();
-          clearInterval(intervalLL);
-          intervalLL = setInterval(this.props.listLobbies.bind(this), 1000);
-        }
-      }
 
     componentDidMount(){
       if(localStorage.getItem("currentUser")){
@@ -57,22 +38,36 @@ class HomePage extends React.Component {
         const { currentUser, users } = this.state;
         return (
             <div>
-                <h2>¡Bienvenido! Crea una nueva sala o elige alguna disponible para jugar</h2>
-                <Grid container justify="flex-end">
-                  {this.props.listingLobbies
-                  ?<Button variant="contained" color="secondary" onClick={() => this.toggleListing1()}>
-                    Listar Juegos
-                  </Button>
-                  :<Button variant="contained" color="secondary" onClick={() => this.toggleListing1()}>
-                    Listar Salas
-                </Button>
-                }
-                </Grid>
-                {this.props.listingLobbies
-                  ?<h2>Lista de Salas</h2>
-                  :<h2>Lista de Juegos</h2>
-                }
+              
+                <Typography gutterBottom variant="h5" component="h2">
+                ¡Bienvenido! Crea una nueva sala o elige alguna disponible para jugar
+                </Typography>
+
                 
+                  <Grid container justify="flex-end">
+                  
+                  <FormGroup row alignItems='right'>
+                  <FormControlLabel
+                  control={<br/>}
+                  label={<Typography gutterBottom variant="body" component="h5">
+                     Filtros: 
+                    </Typography>}
+                  />
+                <FormControlLabel
+                  control={<Checkbox color="primary" checked={true} onChange={() => {}} name="FilterStarted" />}
+                  label="Game Started"
+                />
+                <FormControlLabel
+                  control={<Checkbox color="primary" checked={true} onChange={() => {}} name="FilterFinished" />}
+                  label="Game Finished"
+                />
+                <FormControlLabel
+                  control={<Checkbox color="primary" checked={true} onChange={() => {}} name="FilterUser" />}
+                  label="Games you are in"
+                />
+                </FormGroup>
+                  </Grid>   
+
                 <List>
                   {this.props.lobbies.map((lobby) => (
                     <ListItem key={lobby.id}>
@@ -87,9 +82,7 @@ class HomePage extends React.Component {
 
 const mapStateToProps = state => ({
   lobbies: state.lobbies,
-  games: state.games,
-  currentGame: state.currentGame,
-  listingLobbies: state.listingLobbies
+  currentGame: state.currentGame
 })
 
 const mapDispatchToProps = dispatch => {
@@ -106,10 +99,6 @@ const mapDispatchToProps = dispatch => {
         alert("No se pudo unir a la partida")
       })
     },
-    toggleListing: () => {
-      dispatch(toggleListing)
-      
-    },
     listLobbies: (lobbies) => {
       lobbyService.listLobbies().then( lobbies =>{
           if(Array.isArray(lobbies)){
@@ -118,18 +107,6 @@ const mapDispatchToProps = dispatch => {
         }
       ).catch( err => {
           alert("No se pudieron listar los lobbies")
-          clearInterval(intervalLL);
-        }
-      )
-    },
-    listGames: (games) => {
-      lobbyService.listGames().then( games =>{
-          if(Array.isArray(games)){
-            dispatch({...listGames, games})
-          }
-        }
-      ).catch( err => {
-          alert("No se pudieron listar los games")
           clearInterval(intervalLL);
         }
       )

@@ -6,7 +6,6 @@ import {
 
 export const lobbyService = {
     listLobbies,
-    listGames,
     joinLobby,
     startMatch,
     getLobby,
@@ -62,19 +61,6 @@ function listLobbies() {
         });
 }
 
-// Returns a list of objects() with the data of all the games in the server
-function listGames() {
-    const requestOptions = {
-        method: 'GET',
-        headers: authHeader(),
-    };
-    return fetch(`${config.apiUrl}/api/games/`, requestOptions)
-        // handle errors
-        .then(handleResponse)
-        .then(games => {
-            return games;
-        });
-}
 
 // Receives the id of a lobby the user wants to join.
 // If the lobby is full, it returns 409.

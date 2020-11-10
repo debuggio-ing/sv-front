@@ -4,7 +4,6 @@ import startGame from './actions.js'
 import { lobbyService } from '@/_services';
 
 const initialState = {
-  listingLobbies: true,
   playing: 0, //is client in /match
   proclamacionesFenix: 2,
   proclamacionesMortifagas: 4,
@@ -31,12 +30,9 @@ export default (state=initialState, action) => {
       return {...state, playing: 1};
     case "JOIN":
       return {...state, voting: 0, currentGame: {...action.lobby, players: action.lobby.current_players.map((player) => {return {username:player}})}};
-    case "TOGGLELISTING":
-      return {...state, listingLobbies: !state.listingLobbies};
+
     case "LISTLOBBIES":
       return {...state, lobbies: action.lobbies};
-    case "LISTGAMES":
-        return {...state, lobbies: action.games};
     case "VOTE":
       return {...state, voting: 0};
     case "LIST_PROCLAIM":
