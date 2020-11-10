@@ -34,15 +34,11 @@ class App extends React.Component {
           accountService.currentData.subscribe(x => this.setState({ username: x.username }));
           this.setState({ currentMail: x.email })
         }
-        else {
-          console.log(x)
-        }
       })
   }
 
   logout() {
     authenticationService.logout();
-    accountService.userInfo()
     history.push('/login');
   }
 

@@ -30,12 +30,11 @@ function userInfo() {
             requestOptions)
             .then(handleResponse)
             .then(x => {
-                console.log(x)
                 if (x != 'Token refreshed' && x != 'OK' && x != "Signature has expired"
-                    && x != 'Internal Server Error') {
+                    && x != 'Internal Server Error' && x != 'Missing Authorization Header') {
                     currentDataSubject.next(x)
                     return x
-                }
+                    }
            });
 }
 
