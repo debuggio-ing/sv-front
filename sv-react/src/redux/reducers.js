@@ -9,11 +9,11 @@ const initialState = {
   proclamacionesMortifagas: 4,
   voting: 0,
   in_session: 0,
-  listAvailable: true,
-  listStarted: false,
-  listFinished: false,
-  listOwnGames: false,
-  listAll: false,
+  listAvailable: 1,
+  listStarted: 0,
+  listFinished: 0,
+  listOwnGames: 0,
+  listAll: 0,
   minister_proclaimed: 0,
   client_minister: 0,
   client_director: 0,
@@ -38,44 +38,44 @@ export default (state=initialState, action) => {
 
       
       case "TOGGLEAVAILABLE":{
-        if(state.listAvailable == false){
-          return {...state, listAvailable: true, listStarted: false, listFinished: false, listAll: false}
+        if(state.listAvailable == 0){
+          return {...state, listAvailable: 1, listStarted: 0, listFinished: 0, listAll: 0}
         }
         else{
-          return {...state, listAvailable: false}
+          return {...state, listAvailable: 0}
         }
       }
       case "TOGGLESTARTED":{
-        if(state.listStarted == false){
-          return {...state, listStarted: true, listAvailable: false }
+        if(state.listStarted == 0){
+          return {...state, listStarted: 1, listAvailable: 0 }
         }
         else{
-          return {...state, listStarted: false, listFinished: false }
+          return {...state, listStarted: 0, listFinished: 0 }
         }
       }
       case "TOGGLEFINISHED":{
-        if(state.listFinished == false){
-          return {...state, listFinished: true, listStarted: true, listAvailable: false }
+        if(state.listFinished == 0){
+          return {...state, listFinished: 1, listStarted: 1, listAvailable: 0 }
         }
         else{
-          return {...state, listFinished: false}
+          return {...state, listFinished: 0}
         }
       }
       case "TOGGLEOWNGAMES":{
-        if(state.listOwnGames == false){
-          return {...state, listOwnGames: true, listAll: false}
+        if(state.listOwnGames == 0){
+          return {...state, listOwnGames: 1, listAll: 0}
         }
         else{
-          return {...state, listOwnGames: false}
+          return {...state, listOwnGames: 0}
         }
       }
         
       case "TOGGLEALLGAMES":{
-        if(state.listAll == false){
-          return {...state, listAll: true, listStarted: true, listFinished: true, listAvailable: false}
+        if(state.listAll == 0){
+          return {...state, listAll: 1, listStarted: 1, listFinished: 1, listAvailable: 0}
         }
         else{
-          return {...state, listAll: false}
+          return {...state, listAll: 0}
         }
       } 
     case "LISTLOBBIES":

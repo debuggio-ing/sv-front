@@ -13,7 +13,7 @@ export const gameService = {
 };
 
 // Given 'Nox' or 'Lumos' and a gameId it sends a request to the API with the vote
-function vote(chosen, gameId = 1) { //delete '= 1'
+function vote(chosen, gameId) { 
     var vote = true;
     if (chosen == 'Nox') {
         vote = false;

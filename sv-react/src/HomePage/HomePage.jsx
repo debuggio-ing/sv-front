@@ -24,20 +24,62 @@ class HomePage extends React.Component {
 
     componentDidMount(){
       if(localStorage.getItem("currentUser")){
-        this.props.listLobbies();
-        this.props.leave();
-        intervalLL = setInterval(this.props.listLobbies.bind(this), 1000);
+        this.props.leave()
+        
+        this.refresher()
       }
       else {
         history.push("/login")
       }
     }
 
+    refresher(){
+      console.log("refresher", this.props.listAvailable)
+
+      
+      clearInterval(intervalLL);
+
+      intervalLL = setInterval(this.listLobbiesWrapper.bind(this), 1000);
+    }
+
+    listLobbiesWrapper(){
+      this.props.listLobbies(this.props.listAvailable,
+        this.props.listStarted,
+        this.props.listFinished,
+        this.props.listOwnGames,
+        this.props.listAll);
+    }
+
     componentWillUnmount() {
       clearInterval(intervalLL);
     }
 
-  
+    toggleAvailable(){
+      this.props.toggleAvailable()
+      this.refresher()
+    }
+
+    toggleStarted(){
+      this.props.toggleStarted()
+      this.refresher()
+    }
+
+    toggleFinished(){
+      this.props.toggleFinished()
+      this.refresher()
+    }
+
+    toggleOwnGames(){
+      this.props.toggleOwnGames()
+      this.refresher()
+    }
+
+    toggleAllGames(){
+      this.props.toggleAllGames()
+      this.refresher()
+    }
+
+
 
     render() {
         const { currentUser, users } = this.state;
@@ -60,24 +102,24 @@ class HomePage extends React.Component {
                   />
 
                 <FormControlLabel
-                  control={<Checkbox color="primary" checked={this.props.listAvailable} onChange={this.props.toggleAvailable} name="FilterAvailable" />}
+                  control={<Checkbox color="primary" checked={this.props.listAvailable} onChange={() => this.toggleAvailable()} name="FilterAvailable" />}
                   label="Partidas Disponibles"
                 />
                 
                 <FormControlLabel
-                  control={<Checkbox color="primary" checked={this.props.listStarted} onChange={this.props.toggleStarted} name="FilterStarted" />}
+                  control={<Checkbox color="primary" checked={this.props.listStarted} onChange={() => this.toggleStarted()} name="FilterStarted" />}
                   label="Partidas Comenzadas"
                 />
                 <FormControlLabel
-                  control={<Checkbox color="primary" checked={this.props.listFinished} onChange={this.props.toggleFinished} name="FilterFinished" />}
+                  control={<Checkbox color="primary" checked={this.props.listFinished} onChange={() => this.toggleFinished()} name="FilterFinished" />}
                   label="Partidas Terminadas"
                 />
                 <FormControlLabel
-                  control={<Checkbox color="primary" checked={this.props.listOwnGames} onChange={this.props.toggleOwnGames} name="FilterUser" />}
+                  control={<Checkbox color="primary" checked={this.props.listOwnGames} onChange={() => this.toggleOwnGames()} name="FilterUser" />}
                   label="Tus Partidas"
                 />
                 <FormControlLabel
-                  control={<Checkbox color="primary" checked={this.props.listAll} onChange={this.props.toggleAllGames} name="NoFilter" />}
+                  control={<Checkbox color="primary" checked={this.props.listAll} onChange={() => this.toggleAllGames()} name="NoFilter" />}
                   label="Todas las Partidas"
                 />
                 </FormGroup>
@@ -100,7 +142,7 @@ const mapStateToProps = state => ({
   currentGame: state.currentGame,
 
   listAvailable: state.listAvailable,
-  listAvailable: state.listAvailable,
+  listOwnGames: state.listOwnGames,
   listStarted: state.listStarted,
   listFinished: state.listFinished,
   listAll: state.listAll
@@ -112,7 +154,7 @@ const mapDispatchToProps = dispatch => {
     joinGame: (id) => {
       lobbyService.joinLobby(id).then( lobby => {
           if(lobby.id){
-            console.log(lobby.id)
+              console.log(lobby.id)
             dispatch({...joinGame, lobby})
             history.push("/match")
           }
@@ -121,8 +163,9 @@ const mapDispatchToProps = dispatch => {
         alert("No se pudo unir a la partida")
       })
     },
-    listLobbies: (lobbies) => {
-      lobbyService.listLobbies().then( lobbies =>{
+    listLobbies: (available, started, finished, ownGames, allGames) => {
+                                                console.log("map to dispatch", available )
+      lobbyService.listLobbies(available, started, finished, ownGames, allGames).then( lobbies =>{
           if(Array.isArray(lobbies)){
             dispatch({...listLobbies, lobbies})
           }
