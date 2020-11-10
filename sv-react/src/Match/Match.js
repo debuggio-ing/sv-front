@@ -8,6 +8,7 @@ import Board from './components/Board/Board.js'
 import { connect } from 'react-redux'
 import { startGame, actionvote, updateLobbyStatus, updateGameStatus, listProclaim } from './../redux/actions.js'
 import Vote from './components/Vote/Vote.js'
+import Deck from './components/Deck/Deck.js'
 import Proclaim from './components/Proclaim/Proclaim'
 import { gameService, lobbyService } from '@/_services'
 import { history } from '@/_helpers';
@@ -103,7 +104,20 @@ class Match extends React.Component {
                           </CardContent>
                         </Card>
                       </Grid>
-
+                      {this.props.playing
+                        ? <Grid item key="deck">
+                            <Card className="">
+                              <CardContent className="">
+                                <Typography gutterBottom variant="h5" component="h2">
+                                  Estado de mazo
+                                </Typography>
+                                <Deck proclaimed={
+                                  this.props.currentGame.score.good + this.props.currentGame.score.bad}/>
+                              </CardContent>
+                            </Card>
+                          </Grid>
+                        : <br/>
+                      }
                       {this.props.voting
                         ? <Grid item key="vote" md={this.props.playing ? 3 : 6}>
                             <Card className="">
