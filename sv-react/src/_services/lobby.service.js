@@ -48,7 +48,7 @@ function getLobby(lobby_id) {
 
 
 // Returns a list of objects() with the data of all the lobbies in the server
-function listLobbies() {
+function listLobbies(avaible, started, finished, ownGames, allGames) {
     const requestOptions = {
         method: 'GET',
         headers: authHeader(),

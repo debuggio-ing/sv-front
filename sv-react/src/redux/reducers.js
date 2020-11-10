@@ -9,6 +9,11 @@ const initialState = {
   proclamacionesMortifagas: 4,
   voting: 0,
   in_session: 0,
+  listAvailable: true,
+  listStarted: false,
+  listFinished: false,
+  listOwnGames: false,
+  listAll: false,
   minister_proclaimed: 0,
   client_minister: 0,
   client_director: 0,
@@ -31,6 +36,48 @@ export default (state=initialState, action) => {
     case "JOIN":
       return {...state, voting: 0, currentGame: {...action.lobby, players: action.lobby.current_players.map((player) => {return {username:player}})}};
 
+      
+      case "TOGGLEAVAILABLE":{
+        if(state.listAvailable == false){
+          return {...state, listAvailable: true, listStarted: false, listFinished: false, listAll: false}
+        }
+        else{
+          return {...state, listAvailable: false}
+        }
+      }
+      case "TOGGLESTARTED":{
+        if(state.listStarted == false){
+          return {...state, listStarted: true, listAvailable: false }
+        }
+        else{
+          return {...state, listStarted: false, listFinished: false }
+        }
+      }
+      case "TOGGLEFINISHED":{
+        if(state.listFinished == false){
+          return {...state, listFinished: true, listStarted: true, listAvailable: false }
+        }
+        else{
+          return {...state, listFinished: false}
+        }
+      }
+      case "TOGGLEOWNGAMES":{
+        if(state.listOwnGames == false){
+          return {...state, listOwnGames: true, listAll: false}
+        }
+        else{
+          return {...state, listOwnGames: false}
+        }
+      }
+        
+      case "TOGGLEALLGAMES":{
+        if(state.listAll == false){
+          return {...state, listAll: true, listStarted: true, listFinished: true, listAvailable: false}
+        }
+        else{
+          return {...state, listAll: false}
+        }
+      } 
     case "LISTLOBBIES":
       return {...state, lobbies: action.lobbies};
     case "VOTE":
