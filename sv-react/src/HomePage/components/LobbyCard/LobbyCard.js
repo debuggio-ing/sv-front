@@ -8,11 +8,14 @@ const useStyles = makeStyles((theme) => ({
   },
   sidewaysLists:  {
     display: 'flex',
+    '& > *': {
+      margin: theme.spacing(2),
+    },
     flexDirection: 'row',
     padding: 0,
   },
   listItem: {
-    width: "0px"
+    width: "10px"
   },
   avatarColor: {
     backgroundColor: "#12312"
@@ -25,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 function LobbyCard({lobby, joinGame}) {
     const classes = useStyles();
-    return (
+    return ( 
     <Card className={classes.card}>
       <CardContent className="">
         <Typography gutterBottom variant="h5" component="h2">
@@ -34,21 +37,31 @@ function LobbyCard({lobby, joinGame}) {
         <List className={classes.sidewaysLists}>
           {lobby.current_players.map((player, index) => (
             <ListItem key={index} className={classes.listItem}>
-              <ListItemAvatar>
+              
+              
+              
+              <li>
               <Avatar alt={player} src="/static/images/avatar/1.jpg" className={classes.avatarColor} />
-              </ListItemAvatar>
+              <Typography align="center" gutterBottom variant="body" component="p">
+                  {player}
+                </Typography>
+                </li>
+
+              
             </ListItem>
           ))}
         </List>
-        {!lobby.playing
-          ? <Button className={classes.joinButton} variant="contained" color="primary"
+         <Typography align="right" gutterBottom variant="body" component="p">
+            ({lobby.current_players.length} / {lobby.max_players})
+          </Typography>
+        <Button className={classes.joinButton} variant="contained" color="primary"
                     onClick={() => joinGame(lobby.id)}>
               Unirse
             </Button>
-          : <div/>}
+          
       </CardContent>
     </Card>
     )
 }
-
+//Aca debería ir el "Spectate"
 export default LobbyCard;
