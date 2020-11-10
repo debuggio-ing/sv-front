@@ -5,12 +5,9 @@ import PictureUpload from './Picture'
 
 function Details({ match }) {
     const { path } = match;
-    var data = "Cargando..."
+    var data = ""
     if(accountService.currentDataValue){
         data = JSON.parse(JSON.stringify(accountService.currentDataValue))
-    }
-    else {
-        console.log('fuck entre aca')
     }
     return (
         <div>

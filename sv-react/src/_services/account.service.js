@@ -31,7 +31,8 @@ function userInfo() {
             .then(handleResponse)
             .then(x => {
                 console.log(x)
-                if (x != 'Token refreshed' && x != 'OK' && x != "Signature has expired") {
+                if (x != 'Token refreshed' && x != 'OK' && x != "Signature has expired"
+                    && x != 'Internal Server Error') {
                     currentDataSubject.next(x)
                     return x
                 }

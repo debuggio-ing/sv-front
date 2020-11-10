@@ -11,7 +11,6 @@ import { PrivateRoute } from '@/_components';
 import { RegisterPage, LoginPage, Profile } from '@/Account';
 import { HomePage } from '@/HomePage';
 import { Match } from '@/Match';
-import { lobbyService } from '../_services';
 import CreateRoom from './CreateRoom'
 import SimpleMenu from './Menu'
 
@@ -32,14 +31,18 @@ class App extends React.Component {
     accountService.userInfo()
       .then(x => {
         if (x) {
-          this.setState({ currentMail: x.email })
           accountService.currentData.subscribe(x => this.setState({ username: x.username }));
+          this.setState({ currentMail: x.email })
+        }
+        else {
+          console.log(x)
         }
       })
   }
 
   logout() {
     authenticationService.logout();
+    accountService.userInfo()
     history.push('/login');
   }
 

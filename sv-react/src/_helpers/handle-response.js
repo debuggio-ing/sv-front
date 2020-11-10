@@ -1,5 +1,6 @@
 import {
-    authenticationService
+    authenticationService,
+    accountService
 } from '@/_services';
 
 export function handleResponse(response) {
