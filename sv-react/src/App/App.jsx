@@ -32,10 +32,8 @@ class App extends React.Component {
       .then(x => {
         if (x != null) {
           accountService.currentData.subscribe(x => {
-            console.log(x)
-            this.setState({ username: x.username })});
+          this.setState({ username: x.username })});
           this.setState({ currentMail: x.email })
-        }
       })
   }
 

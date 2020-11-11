@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 
 import { accountService } from '@/_services';
 
+
 function Update({ history }) {
     const { path } = history;
     const user = accountService.currentDataValue
