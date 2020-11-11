@@ -11,19 +11,26 @@ const joinGame = {
   lobby: { name: "def" }
 };
 
-const toggleListing = {
-  type: "TOGGLELISTING"
-
-}
-
-const listGames = {
-  type: "LISTGAMES",
-  lobbies: []
-}
-
 const listLobbies = {
   type: "LISTLOBBIES",
   lobbies: []
+}
+
+const toggleAvailable = {
+  type: "TOGGLEAVAILABLE"
+}
+
+
+const toggleStarted = {
+  type: "TOGGLESTARTED"
+}
+
+const toggleFinished = {
+  type: "TOGGLEFINISHED"
+}
+
+const toggleOwnGames = {
+  type: "TOGGLEOWNGAMES"
 }
 
 const actionvote = {
@@ -55,4 +62,8 @@ const updateLobbyStatus = {
   }
 }
 
-export { startGame, joinGame, listLobbies, listGames, toggleListing, actionvote, listProclaim, updateLobbyStatus, updateGameStatus, leaveGame }
+export {
+  startGame, joinGame, listLobbies, actionvote, toggleStarted, toggleAvailable,
+  toggleFinished,
+  toggleOwnGames, listProclaim, updateLobbyStatus, updateGameStatus, leaveGame
+}
