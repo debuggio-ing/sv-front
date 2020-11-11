@@ -5,6 +5,10 @@ import {
 } from '@/_helpers';
 
 import {
+    authenticationService
+} from './authentication.service'
+
+import {
     BehaviorSubject
 } from 'rxjs';
 
@@ -15,7 +19,7 @@ export const accountService = {
     currentData: currentDataSubject.asObservable(),
     logout,
     update,
-    get currentDataValue () {
+    get currentDataValue() {
         return currentDataSubject.value
     }
 }
@@ -28,17 +32,17 @@ function userInfo() {
     };
     return fetch(`${config.apiUrl}/api/users/info/`,
             requestOptions)
-            .then(handleResponse)
-            .then(x => {
-                if (x != 'Token refreshed' && x != 'OK' && x != "Signature has expired"
-                    && x != 'Internal Server Error' && x != 'Missing Authorization Header') {
-                    currentDataSubject.next(x)
-                    return x
-                    }
-           });
+        .then(handleResponse)
+        .then(x => {
+            if (x != 'Token refreshed' && x != 'OK' && x != "Signature has expired" &&
+                x != 'Internal Server Error' && x != 'Missing Authorization Header') {
+                currentDataSubject.next(x)
+                return x
+            }
+        });
 }
 
-function logout (){
+function logout() {
     currentDataSubject.next(null)
 }
 
@@ -46,27 +50,36 @@ function logout (){
 // update username with new value and returns an UserPublic schema.
 function update(username = null, password = null) {
     var requestBody = {}
-    if (username && !password){
-        requestBody = JSON.stringify({username})
-    }else if(!username && password){
-        requestBody = JSON.stringify({password})
-    }else if (username && password){
-        requestBody = JSON.stringify({username, password})
+    let currentUser = accountService.currentDataValue.username
+    if ((username != currentUser) && !password) {
+        requestBody = JSON.stringify({
+            username
+        })
+    } else if ((username == currentUser) && password) {
+        requestBody = JSON.stringify({
+            password
+        })
+    } else if ((username != currentUser) && password) {
+        requestBody = JSON.stringify({
+            username,
+            password
+        })
     }
     const requestOptions = {
         method: 'POST',
-        headers: Object.assign(authHeader(), {"Content-type":"application/json"}),
+        headers: Object.assign(authHeader(), {
+            "Content-type": "application/json"
+        }),
         body: requestBody
     };
     return fetch(`${config.apiUrl}/api/users/info/modify/`,
-        requestOptions)
+            requestOptions)
         .then(handleResponse)
         .then(x => {
-            if (x != 'Conflict'){
+            if (x != 'Conflict') {
                 accountService.userInfo()
                 return x;
-            }
-            else {
+            } else {
                 return new Error()
             }
         })
