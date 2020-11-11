@@ -6,7 +6,7 @@ import Results from './components/Results/Results.js'
 import Chat from './components/Chat/Chat.js'
 import Board from './components/Board/Board.js'
 import { connect } from 'react-redux'
-import { startGame, actionvote, updateLobbyStatus, updateGameStatus, listProclaim } from './../redux/actions.js'
+import { startGame, actionvote, updateLobbyStatus, updateGameStatus, listProclaim, joinGame } from './../redux/actions.js'
 import Vote from './components/Vote/Vote.js'
 import Deck from './components/Deck/Deck.js'
 import Proclaim from './components/Proclaim/Proclaim'
@@ -19,6 +19,10 @@ let intervalGP;
 class Match extends React.Component {
   constructor(props){
     super(props);
+    if(props.location.search && props.location.search.includes("id=")){
+      let query = new URLSearchParams(window.location.search);
+      this.props.joinGame(query.get("id"));
+    }
   }
 
   reloadGamePublic(){
@@ -148,14 +152,14 @@ class Match extends React.Component {
                         : <br/>
                       }
 
-                      {this.props.playing && !this.props.currentGame.voting && (this.props.currentGame.in_session || (this.props.currentGame.semaphore != 0)) 
+                      {this.props.playing && !this.props.currentGame.voting && (this.props.currentGame.in_session || (this.props.currentGame.semaphore != 0))
                         ? <Grid item key="results" xs={12}>
                             <Card className="">
                               <CardContent className="">
                                 <Typography gutterBottom variant="h5" component="h2">
                                   Resultados
                                 </Typography>
-                                {(this.props.semaphore != 0) ? 
+                                {(this.props.semaphore != 0) ?
                                         <Typography>El ministro no fue elegido.</Typography>
                                         : <Typography>El ministro fue elegido.</Typography>}
                                 <Results currentGame = {this.props.currentGame} />
@@ -182,6 +186,19 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
+    joinGame: (id) => {
+      lobbyService.joinLobby(id).then( lobby => {
+        console.log(lobby)
+          if(lobby.id){
+            console.log(lobby.id)
+            dispatch({...joinGame, lobby})
+            history.push("/match")
+          }
+        }
+      ).catch( err => {
+        alert("No se pudo unir a la partida")
+      })
+    },
     play: (lobbyId) => {
       lobbyService.startMatch(lobbyId).then( result => {
           if(result.startConfirmation){
