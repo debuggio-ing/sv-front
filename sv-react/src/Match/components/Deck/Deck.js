@@ -37,7 +37,7 @@ function Deck({proclaimed}) {
         <Grid xs={6} sm={6} md={6}>
           <Typography align="center">Robo</Typography>
           <div align="center">
-            <Card type={"Pila-Robo"} portrait={true} />
+            <Card type={"Pila-Robo"} portrait={true}/>
           </div>
           <Typography align="center"> {cards_left}</Typography>
         </Grid>
@@ -46,7 +46,7 @@ function Deck({proclaimed}) {
 
 
 Deck.propTypes = {
-  proclaimed_cards: PropTypes.number.isRequired
+  proclaimed: PropTypes.number.isRequired
 }
 
 export default Deck;
