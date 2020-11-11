@@ -42,6 +42,11 @@ const listProclaim = {
   proclams: [] //Donde un proclam es {id: int, phoenix: bool}
 }
 
+const listCards = {
+  type: "LIST_CARDS",
+  cards: [] // [{id: int, phoenix: bool}]
+}
+
 const updateGameStatus = {
   type: "UPDATEGAMESTATUS",
   game: {
@@ -64,6 +69,6 @@ const updateLobbyStatus = {
 
 export {
   startGame, joinGame, listLobbies, actionvote, toggleStarted, toggleAvailable,
-  toggleFinished,
+  toggleFinished, listCards,
   toggleOwnGames, listProclaim, updateLobbyStatus, updateGameStatus, leaveGame
 }

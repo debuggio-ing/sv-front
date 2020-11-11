@@ -6,10 +6,11 @@ import Results from './components/Results/Results.js'
 import Chat from './components/Chat/Chat.js'
 import Board from './components/Board/Board.js'
 import { connect } from 'react-redux'
-import { startGame, actionvote, updateLobbyStatus, updateGameStatus, listProclaim, joinGame } from './../redux/actions.js'
+import { startGame, actionvote, updateLobbyStatus, updateGameStatus, listCards, listProclaim, joinGame } from './../redux/actions.js'
 import Vote from './components/Vote/Vote.js'
 import Deck from './components/Deck/Deck.js'
-import Proclaim from './components/Proclaim/Proclaim'
+import Spell from './components/Spells/Spell.js'
+import Proclaim from './components/Proclaim/Proclaim.js'
 import { gameService, lobbyService } from '@/_services'
 import { history } from '@/_helpers';
 import { array } from 'prop-types';
@@ -135,6 +136,10 @@ class Match extends React.Component {
                           </Grid>
                         : <br/>
                       }
+                      {this.props.currentGame.in_session && this.props.currentGame.director_proclaimed ?
+                        <Spell cards={this.props.cards}  spell={this.props.spell} id={this.props.currentGame.id} />
+                        : <br />
+                      }
 
                       {(((this.props.currentGame.client_director && this.props.currentGame.minister_proclaimed)
                       ||(this.props.currentGame.client_minister && !this.props.currentGame.minister_proclaimed))
@@ -181,7 +186,8 @@ const mapStateToProps = state => ({
   proclamacionesMortifagas: state.proclamacionesMortifagas,
   voting: state.voting,
   currentGame: state.currentGame,
-  proclams: state.proclams
+  proclams: state.proclams,
+  cards: state.cards,
 })
 
 const mapDispatchToProps = dispatch => {
@@ -209,6 +215,13 @@ const mapDispatchToProps = dispatch => {
         alert("No se pudo iniciar la partida")
       })
     },
+    spell: (id) => {
+      gameService.getSpell(id).then( cards=> {
+        dispatch({...listCards, cards})
+      }).catch(err => {
+        alert("No se pudo lanzar el hechizo.")
+      })
+    },
     vote: (chosen, id) => {
       console.log(id)
       gameService.vote(chosen, id).then( result => {
@@ -229,7 +242,7 @@ const mapDispatchToProps = dispatch => {
       })
     },
     proposeDirector: (gameId, player_id) => {
-      gameService.nominate_director(gameId, player_id)
+      gameService.nominateDirector(gameId, player_id)
     },
     gameStatus: (gameId) => {
       gameService.gameStatus(gameId).then( game => {
