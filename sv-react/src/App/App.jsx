@@ -8,7 +8,7 @@ import {
   accountService
 } from '@/_services';
 import { PrivateRoute } from '@/_components';
-import { RegisterPage, LoginPage, Profile } from '@/Account';
+import { RegisterPage, LoginPage, Profile, VerifyPage } from '@/Account';
 import { HomePage } from '@/HomePage';
 import { Match } from '@/Match';
 import { lobbyService } from '../_services';
@@ -86,6 +86,7 @@ class App extends React.Component {
               <PrivateRoute path="/profile" component={Profile} />
               <Route path="/match" component={Match} />
               <Route path="/register" component={RegisterPage} />
+              <Route path="/verify" component={VerifyPage} />
             </div>
           </div>
         </div>

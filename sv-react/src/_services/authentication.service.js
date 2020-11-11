@@ -17,6 +17,7 @@ export const authenticationService = {
     logout,
     refreshToken,
     RefreshException,
+    verify,
     currentUser: currentUserSubject.asObservable(),
     get currentUserValue() {
         return currentUserSubject.value
@@ -106,6 +107,22 @@ function refreshToken() {
                             currentUserSubject.next(tokens);
                             return;
                         })
+        });
+}
+
+// Verify email service
+function verify(user_email, input_code) {
+    const requestOptions = {
+        method: 'POST',
+    };
+
+    let int_input_code = parseInt(input_code)
+
+    return fetch(`${config.apiUrl}/api/verify/?user_email=` + user_email + "&input_code=" + int_input_code, requestOptions)
+        // handle errors
+        .then(handleResponse)
+        .then(userVerified => {
+            console.log(userVerified) // debugging purposes
         });
 }
 
