@@ -196,7 +196,7 @@ const mapDispatchToProps = dispatch => {
           }
         }
       ).catch( err => {
-        alert("No se pudo unir a la partida")
+        alert("Id incorrecto")
       })
     },
     play: (lobbyId) => {
