@@ -1,5 +1,6 @@
 import {
-    authenticationService
+    authenticationService,
+    accountService
 } from '@/_services';
 
 export function handleResponse(response) {
@@ -8,6 +9,7 @@ export function handleResponse(response) {
 
         if (data.detail == "Signature has expired") {
             authenticationService.refreshToken();
+            accountService.userInfo()
             return "Token refreshed";
         }
 

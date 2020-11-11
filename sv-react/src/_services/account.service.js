@@ -5,6 +5,10 @@ import {
 } from '@/_helpers';
 
 import {
+    authenticationService
+} from './authentication.service'
+
+import {
     BehaviorSubject
 } from 'rxjs';
 
@@ -15,7 +19,7 @@ export const accountService = {
     currentData: currentDataSubject.asObservable(),
     logout,
     update,
-    get currentDataValue () {
+    get currentDataValue() {
         return currentDataSubject.value
     }
 }
@@ -28,33 +32,55 @@ function userInfo() {
     };
     return fetch(`${config.apiUrl}/api/users/info/`,
             requestOptions)
-            .then(handleResponse)
-            .then(x => {
-                console.log(x)
-                if (x != 'Token refreshed'){
-                    currentDataSubject.next(x)
-                    return x
-                }   
-           });
+        .then(handleResponse)
+        .then(x => {
+            if (x != 'Token refreshed' && x != 'OK' && x != "Signature has expired" &&
+                x != 'Internal Server Error' && x != 'Missing Authorization Header') {
+                currentDataSubject.next(x)
+                return x
+            }
+        });
 }
 
-function logout (){
+function logout() {
     currentDataSubject.next(null)
 }
 
 
 // update username with new value and returns an UserPublic schema.
-function update(username) {
+function update(username = null, password = null) {
+    var requestBody = {}
+    let currentUser = accountService.currentDataValue.username
+    if ((username != currentUser) && !password) {
+        requestBody = JSON.stringify({
+            username
+        })
+    } else if ((username == currentUser) && password) {
+        requestBody = JSON.stringify({
+            password
+        })
+    } else if ((username != currentUser) && password) {
+        requestBody = JSON.stringify({
+            username,
+            password
+        })
+    }
     const requestOptions = {
         method: 'POST',
-        headers: authHeader(),
+        headers: Object.assign(authHeader(), {
+            "Content-type": "application/json"
+        }),
+        body: requestBody
     };
-
-    return fetch(`${config.apiUrl}/api/users/info/modify/?username=` + username,
-        requestOptions)
+    return fetch(`${config.apiUrl}/api/users/info/modify/`,
+            requestOptions)
         .then(handleResponse)
-        .then(userPublic => {
-            currentDataSubject.next(userPublic)
-            return userPublic;
+        .then(x => {
+            if (x != 'Conflict') {
+                accountService.userInfo()
+                return x;
+            } else {
+                return new Error()
+            }
         })
 }

@@ -11,7 +11,6 @@ import { PrivateRoute } from '@/_components';
 import { RegisterPage, LoginPage, Profile, VerifyPage } from '@/Account';
 import { HomePage } from '@/HomePage';
 import { Match } from '@/Match';
-import { lobbyService } from '../_services';
 import CreateRoom from './CreateRoom'
 import SimpleMenu from './Menu'
 
@@ -22,7 +21,6 @@ class App extends React.Component {
 
     this.state = {
       currentUser: null,
-      currentMail: "",
       username: "",
     };
   }
@@ -31,10 +29,8 @@ class App extends React.Component {
     authenticationService.currentUser.subscribe(x => this.setState({ currentUser: x }));
     accountService.userInfo()
       .then(x => {
-        if (x) {
-          console.log(x.username)
-          this.setState({ currentMail: x.email })
-          this.setState({ username: x.username })
+        if (x != null) {
+          accountService.currentData.subscribe(x => this.setState({ username: x.username }))
         }
       })
   }
@@ -64,9 +60,6 @@ class App extends React.Component {
                 <img src="public/sv-logo.jpg" onClick={this.goHome} style={{ width: "80px" }} alt="logo" />
                 <Typography variant="h6" color="inherit">
                   Secret Voldemort
-                </Typography>
-                <Typography variant="h6" color="inherit">
-                  {this.state.username}
                 </Typography>
                 <Grid container justify="flex-end">
                   < CreateRoom />

@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
-import { accountService, alertService } from '@/_services';
+import { accountService } from '@/_services';
+import { authenticationService } from '../_services/authentication.service';
+
 
 function Update({ history }) {
     const { path } = history;
@@ -16,19 +18,31 @@ function Update({ history }) {
 
     const validationSchema = Yup.object().shape({
         username: Yup.string()
-            .max(20, 'No mas de 20 caracteres estan permitidos')
+            .max(20, 'No mas de 20 caracteres estan permitidos'),
+        password: Yup.string()
+            .min(8, 'La longitud minima es de 8 caracteres'),
+        confirmPassword: Yup.string()
+            .when('password', (password, schema) => {
+                if (password) return schema.required('La contraseña es obligatoria');
+            })
+            .oneOf([Yup.ref('password')], 'Las contraseñas deben coincidir')
     });
 
     function onSubmit(fields, { setStatus, setSubmitting }) {
         setStatus();
-        accountService.update(fields.username)
+        accountService.update(fields.username, fields.password)
             .then(() => {
-                alertService.success('Actualizado exitosamente', { keepAfterRouteChange: true });
-                history.push('.');
+                accountService.userInfo()
+                if (fields.password) {
+                    authenticationService.logout()
+                    history.push('/');
+                }
+                else
+                    history.push('/');
             })
             .catch(error => {
+                alert('El nombre de Usuario esta en uso')
                 setSubmitting(false);
-                alertService.error('Error al actualizar', error);
             });
     }
 
@@ -41,6 +55,20 @@ function Update({ history }) {
                         <label>Nombre de Usuario</label>
                         <Field name="username" type="text" className={'form-control' + (errors.username && touched.username ? ' is-invalid' : '')} />
                         <ErrorMessage name="username" component="div" className="invalid-feedback" />
+                    </div>
+                    <h3 className="pt-3">Cambiar contraseña</h3>
+                    <p>Deja los siguientes campos vacíos si solo quieres modificar tu nombre de usuario</p>
+                    <div className="form-row">
+                        <div className="form-group col">
+                            <label>Contraseña Nueva</label>
+                            <Field name="password" type="password" className={'form-control' + (errors.password && touched.password ? ' is-invalid' : '')} />
+                            <ErrorMessage name="password" component="div" className="invalid-feedback" />
+                        </div>
+                        <div className="form-group col">
+                            <label>Confirma tu contraseña nueva</label>
+                            <Field name="confirmPassword" type="password" className={'form-control' + (errors.confirmPassword && touched.confirmPassword ? ' is-invalid' : '')} />
+                            <ErrorMessage name="confirmPassword" component="div" className="invalid-feedback" />
+                        </div>
                     </div>
                     <div className="form-group">
                         <button type="submit" disabled={isSubmitting} className="btn btn-primary mr-2">
