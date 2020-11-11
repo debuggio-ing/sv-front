@@ -153,15 +153,15 @@ class Match extends React.Component {
                       }
 
                       {this.props.playing && !this.props.currentGame.voting && (this.props.currentGame.in_session || (this.props.currentGame.semaphore != 0))
-                        ? <Grid item key="results" xs={12}>
+                        ? <Grid item key="results" xs={9}>
                             <Card className="">
                               <CardContent className="">
                                 <Typography gutterBottom variant="h5" component="h2">
                                   Resultados
                                 </Typography>
-                                {(this.props.semaphore != 0) ?
-                                        <Typography>El ministro no fue elegido.</Typography>
-                                        : <Typography>El ministro fue elegido.</Typography>}
+                                {this.props.currentGame.in_session ? 
+                                        <Typography>El gobierno fue elegido.</Typography>
+                                        : <Typography>El gobierno NO fue elegido.</Typography>}
                                 <Results currentGame = {this.props.currentGame} />
                               </CardContent>
                             </Card>
