@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { List, ListItem, ListItemAvatar, Avatar, Card, CardContent, Typography, Button } from '@material-ui/core';
+import { Box, List, ListItem, ListItemAvatar, Avatar, Card, CardContent, Typography, Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -51,9 +51,25 @@ function LobbyCard({lobby, joinGame}) {
             </ListItem>
           ))}
         </List>
-         <Typography align="right" gutterBottom variant="body" component="p">
+
+        {lobby.finished 
+        ?<Box align="right" gutterBottom variant="body" component="p" fontFamily="Segoe UI Emoji">
+             Finished
+          </Box>
+        :<Box align="right" gutterBottom variant="body" component="p" fontFamily="Segoe UI Emoji">
+            
+          </Box>}
+        {!lobby.finished && lobby.started
+        ?<Box align="right" gutterBottom variant="body" component="p" fontFamily="Segoe UI Emoji">
+             Started
+          </Box>
+        :<Box align="right" gutterBottom variant="body" component="p" fontFamily="Segoe UI Emoji">
+           Not Started
+          </Box>}
+
+         <Box align="right" gutterBottom variant="body" component="p" fontFamily="Segoe UI Emoji">
             ({lobby.current_players.length} / {lobby.max_players})
-          </Typography>
+          </Box>
         <Button className={classes.joinButton} variant="contained" color="primary"
                     onClick={() => joinGame(lobby.id)}>
               Unirse
