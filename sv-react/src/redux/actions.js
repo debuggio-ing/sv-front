@@ -11,6 +11,15 @@ const joinGame = {
   lobby: { name: "def" }
 };
 
+const toggleListing = {
+  type: "TOGGLELISTING"
+
+}
+
+const listGames = {
+  type: "LISTGAMES",
+  lobbies: []
+}
 
 const listLobbies = {
   type: "LISTLOBBIES",
@@ -46,4 +55,4 @@ const updateLobbyStatus = {
   }
 }
 
-export { startGame, joinGame, listLobbies, actionvote, listProclaim, updateLobbyStatus, updateGameStatus, leaveGame }
+export { startGame, joinGame, listLobbies, listGames, toggleListing, actionvote, listProclaim, updateLobbyStatus, updateGameStatus, leaveGame }
