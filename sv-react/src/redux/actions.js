@@ -33,10 +33,6 @@ const toggleOwnGames = {
   type: "TOGGLEOWNGAMES"
 }
 
-const toggleAllGames = {
-  type: "TOGGLEALLGAMES"
-}
-
 const actionvote = {
   type: "VOTE"
 }
@@ -68,5 +64,4 @@ const updateLobbyStatus = {
 
 export { startGame, joinGame, listLobbies, actionvote, toggleStarted, toggleAvailable,
   toggleFinished,
-  toggleOwnGames,
-  toggleAllGames, listProclaim, updateLobbyStatus, updateGameStatus, leaveGame }
+  toggleOwnGames, listProclaim, updateLobbyStatus, updateGameStatus, leaveGame }

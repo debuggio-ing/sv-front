@@ -7,8 +7,7 @@ import LobbyCard from './components/LobbyCard/LobbyCard.js'
 import { connect } from 'react-redux'
 import { joinGame, listLobbies, leaveGame, toggleStarted, toggleAvailable,
   toggleFinished,
-  toggleOwnGames,
-  toggleAllGames } from './../redux/actions.js'
+  toggleOwnGames } from './../redux/actions.js'
 import { history } from '@/_helpers';
 
 let intervalLL;
@@ -47,7 +46,7 @@ class HomePage extends React.Component {
         this.props.listStarted,
         this.props.listFinished,
         this.props.listOwnGames,
-        this.props.listAll);
+        !this.props.listOwnGames);
     }
 
     componentWillUnmount() {
@@ -74,13 +73,6 @@ class HomePage extends React.Component {
       this.refresher()
     }
 
-    toggleAllGames(){
-      this.props.toggleAllGames()
-      this.refresher()
-    }
-
-
-
     render() {
         const { currentUser, users } = this.state;
         return (
@@ -93,14 +85,8 @@ class HomePage extends React.Component {
                 
                   <Grid container justify="flex-end">
                   
-                  <FormGroup row alignItems='right'>
-                  <FormControlLabel
-                  control={<br/>}
-                  label={<Typography gutterBottom variant="body" component="h5">
-                     Filtros: 
-                    </Typography>}
-                  />
 
+                <FormGroup>
                 <FormControlLabel
                   control={<Checkbox color="primary" checked={this.props.listAvailable} onChange={() => this.toggleAvailable()} name="FilterAvailable" />}
                   label="Partidas Disponibles"
@@ -114,12 +100,14 @@ class HomePage extends React.Component {
                   control={<Checkbox color="primary" checked={this.props.listFinished} onChange={() => this.toggleFinished()} name="FilterFinished" />}
                   label="Partidas Terminadas"
                 />
+                </FormGroup>
+                <FormGroup>
                 <FormControlLabel
                   control={<Checkbox color="primary" checked={this.props.listOwnGames} onChange={() => this.toggleOwnGames()} name="FilterUser" />}
                   label="Tus Partidas"
                 />
                 <FormControlLabel
-                  control={<Checkbox color="primary" checked={this.props.listAll} onChange={() => this.toggleAllGames()} name="NoFilter" />}
+                  control={<Checkbox color="primary" checked={!this.props.listOwnGames} onChange={() => this.toggleOwnGames()} name="NoFilter" />}
                   label="Todas las Partidas"
                 />
                 </FormGroup>
@@ -190,9 +178,6 @@ const mapDispatchToProps = dispatch => {
     },
     toggleOwnGames: () => {
       dispatch(toggleOwnGames)
-    },
-    toggleAllGames: () => {
-      dispatch(toggleAllGames)
     }
   }
 }

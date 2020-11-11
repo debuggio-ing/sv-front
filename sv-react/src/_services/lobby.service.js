@@ -48,14 +48,14 @@ function getLobby(lobby_id) {
 
 
 // Returns a list of objects() with the data of all the lobbies in the server
-function listLobbies(available, started, finished, user_games, all) {
+function listLobbies(available, started, finished, user_games, all_games) {
 
                                     console.log("servicio", available);
     const requestOptions = {
         method: 'POST',
         headers: Object.assign(authHeader(),
             {'Content-Type': 'application/json'}),
-        body: JSON.stringify({available, started, finished, user_games, all}),
+        body: JSON.stringify({available, started, finished, user_games, all_games}),
             
     };
     return fetch(`${config.apiUrl}/api/lobbies/`, requestOptions)

@@ -13,7 +13,6 @@ const initialState = {
   listStarted: 0,
   listFinished: 0,
   listOwnGames: 0,
-  listAll: 0,
   minister_proclaimed: 0,
   client_minister: 0,
   client_director: 0,
@@ -39,7 +38,7 @@ export default (state=initialState, action) => {
       
       case "TOGGLEAVAILABLE":{
         if(state.listAvailable == 0){
-          return {...state, listAvailable: 1, listStarted: 0, listFinished: 0, listAll: 0}
+          return {...state, listAvailable: 1, listStarted: 0, listFinished: 0}
         }
         else{
           return {...state, listAvailable: 0}
@@ -47,37 +46,24 @@ export default (state=initialState, action) => {
       }
       case "TOGGLESTARTED":{
         if(state.listStarted == 0){
-          return {...state, listStarted: 1, listAvailable: 0 }
+          return {...state, listStarted: 1, listAvailable: 0}
         }
         else{
-          return {...state, listStarted: 0, listFinished: 0 }
+          return {...state, listStarted: 0, listFinished: 0,  listAvailable: 1}
         }
       }
       case "TOGGLEFINISHED":{
         if(state.listFinished == 0){
-          return {...state, listFinished: 1, listStarted: 1, listAvailable: 0 }
+          return {...state, listFinished: 1, listStarted: 1, listAvailable: 0}
         }
         else{
           return {...state, listFinished: 0}
         }
       }
-      case "TOGGLEOWNGAMES":{
-        if(state.listOwnGames == 0){
-          return {...state, listOwnGames: 1, listAll: 0}
-        }
-        else{
-          return {...state, listOwnGames: 0}
-        }
-      }
+      case "TOGGLEOWNGAMES":
+          return {...state, listOwnGames: !state.listOwnGames}
+
         
-      case "TOGGLEALLGAMES":{
-        if(state.listAll == 0){
-          return {...state, listAll: 1, listStarted: 1, listFinished: 1, listAvailable: 0}
-        }
-        else{
-          return {...state, listAll: 0}
-        }
-      } 
     case "LISTLOBBIES":
       return {...state, lobbies: action.lobbies};
     case "VOTE":
