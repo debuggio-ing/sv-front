@@ -89,7 +89,9 @@ function Players({startGame,
                                           [player.role=="voldemort" ? <img src={"public/img/voldemort.png"} style={{height:"50px"}}/> :
                                                                       <img src={"public/img/fenix_lealtad.png"} style={{height:"50px"}}/>]}
             </ListItem> :
-            undefined
+            <ListItem>
+              <img src={"public/img/unknown_lealtad.png"} style={{height:"50px"}}/>
+            </ListItem>
           }
           <ListItem>
             {voting ? (player.voted ? <CheckIcon/> : <MoreHorizIcon/>) : <div/>}
