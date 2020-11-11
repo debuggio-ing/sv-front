@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
   card: {
     width: "100%"
   },
-  sidewaysLists:  {
+  sidewaysLists: {
     display: 'flex',
     '& > *': {
       margin: theme.spacing(2),
@@ -26,9 +26,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function LobbyCard({lobby, joinGame}) {
-    const classes = useStyles();
-    return ( 
+function LobbyCard({ lobby, joinGame }) {
+  const classes = useStyles();
+  return (
     <Card className={classes.card}>
       <CardContent className="">
         <Typography gutterBottom variant="h5" component="h2">
@@ -37,47 +37,42 @@ function LobbyCard({lobby, joinGame}) {
         <List className={classes.sidewaysLists}>
           {lobby.current_players.map((player, index) => (
             <ListItem key={index} className={classes.listItem}>
-              
-              
-              
               <li>
-              <Avatar alt={player} src="/static/images/avatar/1.jpg" className={classes.avatarColor} />
-              <Typography align="center" gutterBottom variant="body" component="p">
+                <Avatar alt={player} src="/static/images/avatar/1.jpg" className={classes.avatarColor} />
+                <Typography align="center" gutterBottom variant="body1" component="p">
                   {player}
                 </Typography>
-                </li>
-
-              
+              </li>
             </ListItem>
           ))}
         </List>
 
-        {lobby.finished 
-        ?<Box align="right" gutterBottom variant="body" component="p" fontFamily="Segoe UI Emoji">
-             Finished
+        {lobby.finished
+          ? <Box align="right" gutterBottom variant="body1" component="p" fontFamily="Segoe UI Emoji">
+            Finished
           </Box>
-        :<Box align="right" gutterBottom variant="body" component="p" fontFamily="Segoe UI Emoji">
-            
+          : <Box align="right" gutterBottom variant="body1" component="p" fontFamily="Segoe UI Emoji">
+
           </Box>}
         {!lobby.finished && lobby.started
-        ?<Box align="right" gutterBottom variant="body" component="p" fontFamily="Segoe UI Emoji">
-             Started
+          ? <Box align="right" gutterBottom variant="body1" component="p" fontFamily="Segoe UI Emoji">
+            Started
           </Box>
-        :<Box align="right" gutterBottom variant="body" component="p" fontFamily="Segoe UI Emoji">
-           Not Started
+          : <Box align="right" gutterBottom variant="body1" component="p" fontFamily="Segoe UI Emoji">
+            Not Started
           </Box>}
 
-         <Box align="right" gutterBottom variant="body" component="p" fontFamily="Segoe UI Emoji">
-            ({lobby.current_players.length} / {lobby.max_players})
+        <Box align="right" gutterBottom variant="body1" component="p" fontFamily="Segoe UI Emoji">
+          ({lobby.current_players.length} / {lobby.max_players})
           </Box>
         <Button className={classes.joinButton} variant="contained" color="primary"
-                    onClick={() => joinGame(lobby.id)}>
-              Unirse
+          onClick={() => joinGame(lobby.id)}>
+          Unirse
             </Button>
-          
+
       </CardContent>
     </Card>
-    )
+  )
 }
 //Aca debería ir el "Spectate"
 export default LobbyCard;

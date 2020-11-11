@@ -5,124 +5,126 @@ import { tokenRefreshException } from '@/_helpers';
 import { Typography, Label, Grid, List, ListItem, FormGroup, Checkbox, FormControlLabel } from '@material-ui/core';
 import LobbyCard from './components/LobbyCard/LobbyCard.js'
 import { connect } from 'react-redux'
-import { joinGame, listLobbies, leaveGame, toggleStarted, toggleAvailable,
+import {
+  joinGame, listLobbies, leaveGame, toggleStarted, toggleAvailable,
   toggleFinished,
-  toggleOwnGames } from './../redux/actions.js'
+  toggleOwnGames
+} from './../redux/actions.js'
 import { history } from '@/_helpers';
 
 let intervalLL;
 
 class HomePage extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            currentUser: authenticationService.currentUserValue,
-            users: null
-        };
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentUser: authenticationService.currentUserValue,
+      users: null
+    };
+  }
 
-    componentDidMount(){
-      if(localStorage.getItem("currentUser")){
-        this.props.leave()
-        
-        this.refresher()
-      }
-      else {
-        history.push("/login")
-      }
-    }
+  componentDidMount() {
+    if (localStorage.getItem("currentUser")) {
+      this.props.leave()
 
-    refresher(){
-      console.log("refresher", this.props.listAvailable)
-
-      
-      clearInterval(intervalLL);
-
-      intervalLL = setInterval(this.listLobbiesWrapper.bind(this), 1000);
-    }
-
-    listLobbiesWrapper(){
-      this.props.listLobbies(this.props.listAvailable,
-        this.props.listStarted,
-        this.props.listFinished,
-        this.props.listOwnGames,
-        !this.props.listOwnGames);
-    }
-
-    componentWillUnmount() {
-      clearInterval(intervalLL);
-    }
-
-    toggleAvailable(){
-      this.props.toggleAvailable()
       this.refresher()
     }
-
-    toggleStarted(){
-      this.props.toggleStarted()
-      this.refresher()
+    else {
+      history.push("/login")
     }
+  }
 
-    toggleFinished(){
-      this.props.toggleFinished()
-      this.refresher()
-    }
+  refresher() {
+    console.log("refresher", this.props.listAvailable)
 
-    toggleOwnGames(){
-      this.props.toggleOwnGames()
-      this.refresher()
-    }
 
-    render() {
-        const { currentUser, users } = this.state;
-        return (
-            <div>
-              
-                <Typography gutterBottom variant="h5" component="h2">
-                ¡Bienvenido! Crea una nueva sala o elige alguna disponible para jugar
+    clearInterval(intervalLL);
+
+    intervalLL = setInterval(this.listLobbiesWrapper.bind(this), 1000);
+  }
+
+  listLobbiesWrapper() {
+    this.props.listLobbies(this.props.listAvailable,
+      this.props.listStarted,
+      this.props.listFinished,
+      this.props.listOwnGames,
+      !this.props.listOwnGames);
+  }
+
+  componentWillUnmount() {
+    clearInterval(intervalLL);
+  }
+
+  toggleAvailable() {
+    this.props.toggleAvailable()
+    this.refresher()
+  }
+
+  toggleStarted() {
+    this.props.toggleStarted()
+    this.refresher()
+  }
+
+  toggleFinished() {
+    this.props.toggleFinished()
+    this.refresher()
+  }
+
+  toggleOwnGames() {
+    this.props.toggleOwnGames()
+    this.refresher()
+  }
+
+  render() {
+    const { currentUser, users } = this.state;
+    return (
+      <div>
+
+        <Typography gutterBottom variant="h5" component="h2">
+          ¡Bienvenido! Crea una nueva sala o elige alguna disponible para jugar
                 </Typography>
 
-                
-                  <Grid container justify="flex-end">
-                  
 
-                <FormGroup>
-                <FormControlLabel
-                  control={<Checkbox color="primary" checked={this.props.listAvailable} onChange={() => this.toggleAvailable()} name="FilterAvailable" />}
-                  label="Partidas Disponibles"
-                />
-                
-                <FormControlLabel
-                  control={<Checkbox color="primary" checked={this.props.listStarted} onChange={() => this.toggleStarted()} name="FilterStarted" />}
-                  label="Partidas Comenzadas"
-                />
-                <FormControlLabel
-                  control={<Checkbox color="primary" checked={this.props.listFinished} onChange={() => this.toggleFinished()} name="FilterFinished" />}
-                  label="Partidas Terminadas"
-                />
-                </FormGroup>
-                <FormGroup>
-                <FormControlLabel
-                  control={<Checkbox color="primary" checked={this.props.listOwnGames} onChange={() => this.toggleOwnGames()} name="FilterUser" />}
-                  label="Tus Partidas"
-                />
-                <FormControlLabel
-                  control={<Checkbox color="primary" checked={!this.props.listOwnGames} onChange={() => this.toggleOwnGames()} name="NoFilter" />}
-                  label="Todas las Partidas"
-                />
-                </FormGroup>
-                  </Grid>   
+        <Grid container justify="flex-end">
 
-                <List>
-                  {this.props.lobbies.map((lobby) => (
-                    <ListItem key={lobby.id}>
-                      <LobbyCard lobby={lobby} joinGame={this.props.joinGame}/>
-                    </ListItem>
-                  ))}
-                </List>
-            </div>
-        );
-    }
+
+          <FormGroup>
+            <FormControlLabel
+              control={<Checkbox color="primary" checked={this.props.listAvailable} onChange={() => this.toggleAvailable()} name="FilterAvailable" />}
+              label="Partidas Disponibles"
+            />
+
+            <FormControlLabel
+              control={<Checkbox color="primary" checked={this.props.listStarted} onChange={() => this.toggleStarted()} name="FilterStarted" />}
+              label="Partidas Comenzadas"
+            />
+            <FormControlLabel
+              control={<Checkbox color="primary" checked={this.props.listFinished} onChange={() => this.toggleFinished()} name="FilterFinished" />}
+              label="Partidas Terminadas"
+            />
+          </FormGroup>
+          <FormGroup>
+            <FormControlLabel
+              control={<Checkbox color="primary" checked={this.props.listOwnGames} onChange={() => this.toggleOwnGames()} name="FilterUser" />}
+              label="Tus Partidas"
+            />
+            <FormControlLabel
+              control={<Checkbox color="primary" checked={!this.props.listOwnGames} onChange={() => this.toggleOwnGames()} name="NoFilter" />}
+              label="Todas las Partidas"
+            />
+          </FormGroup>
+        </Grid>
+
+        <List>
+          {this.props.lobbies.map((lobby) => (
+            <ListItem key={lobby.id}>
+              <LobbyCard lobby={lobby} joinGame={this.props.joinGame} />
+            </ListItem>
+          ))}
+        </List>
+      </div>
+    );
+  }
 }
 
 const mapStateToProps = state => ({
@@ -140,28 +142,28 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   return {
     joinGame: (id) => {
-      lobbyService.joinLobby(id).then( lobby => {
-          if(lobby.id){
-              console.log(lobby.id)
-            dispatch({...joinGame, lobby})
-            history.push("/match")
-          }
+      lobbyService.joinLobby(id).then(lobby => {
+        if (lobby.id) {
+          console.log(lobby.id)
+          dispatch({ ...joinGame, lobby })
+          history.push("/match")
         }
-      ).catch( err => {
+      }
+      ).catch(err => {
         alert("No se pudo unir a la partida")
       })
     },
     listLobbies: (available, started, finished, ownGames, allGames) => {
-                                                console.log("map to dispatch", available )
-      lobbyService.listLobbies(available, started, finished, ownGames, allGames).then( lobbies =>{
-          if(Array.isArray(lobbies)){
-            dispatch({...listLobbies, lobbies})
-          }
+      console.log("map to dispatch", available)
+      lobbyService.listLobbies(available, started, finished, ownGames, allGames).then(lobbies => {
+        if (Array.isArray(lobbies)) {
+          dispatch({ ...listLobbies, lobbies })
         }
-      ).catch( err => {
-          alert("No se pudieron listar los lobbies")
-          clearInterval(intervalLL);
-        }
+      }
+      ).catch(err => {
+        alert("No se pudieron listar los lobbies")
+        clearInterval(intervalLL);
+      }
       )
     },
     leave: () => {

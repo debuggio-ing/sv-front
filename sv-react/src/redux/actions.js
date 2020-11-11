@@ -62,6 +62,8 @@ const updateLobbyStatus = {
   }
 }
 
-export { startGame, joinGame, listLobbies, actionvote, toggleStarted, toggleAvailable,
+export {
+  startGame, joinGame, listLobbies, actionvote, toggleStarted, toggleAvailable,
   toggleFinished,
-  toggleOwnGames, listProclaim, updateLobbyStatus, updateGameStatus, leaveGame }
+  toggleOwnGames, listProclaim, updateLobbyStatus, updateGameStatus, leaveGame
+}
