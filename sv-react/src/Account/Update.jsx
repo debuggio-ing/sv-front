@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
-import { accountService, alertService } from '@/_services';
+import { accountService } from '@/_services';
 
 function Update({ history }) {
     const { path } = history;
@@ -30,12 +30,12 @@ function Update({ history }) {
         setStatus();
         accountService.update(fields.username,fields.password)
             .then(() => {
-                alertService.success('Actualizado exitosamente', { keepAfterRouteChange: true });
+                accountService.userInfo()
                 history.push('.');
             })
             .catch(error => {
+                alert('El nombre de Usuario esta en uso')
                 setSubmitting(false);
-                alertService.error('Error al actualizar', error);
             });
     }
 

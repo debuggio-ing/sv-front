@@ -30,8 +30,10 @@ class App extends React.Component {
     authenticationService.currentUser.subscribe(x => this.setState({ currentUser: x }));
     accountService.userInfo()
       .then(x => {
-        if (x) {
-          accountService.currentData.subscribe(x => this.setState({ username: x.username }));
+        if (x != null) {
+          accountService.currentData.subscribe(x => {
+            console.log(x)
+            this.setState({ username: x.username })});
           this.setState({ currentMail: x.email })
         }
       })
@@ -62,9 +64,6 @@ class App extends React.Component {
                 <img src="public/sv-logo.jpg" onClick={this.goHome} style={{ width: "80px" }} alt="logo" />
                 <Typography variant="h6" color="inherit">
                   Secret Voldemort
-                </Typography>
-                <Typography variant="h6" color="inherit">
-                  {this.state.username}
                 </Typography>
                 <Grid container justify="flex-end">
                   < CreateRoom />

@@ -61,8 +61,13 @@ function update(username = null, password = null) {
     return fetch(`${config.apiUrl}/api/users/info/modify/`,
         requestOptions)
         .then(handleResponse)
-        .then(userPublic => {
-            accountService.userInfo()
-            return userPublic;
+        .then(x => {
+            if (x != 'Conflict'){
+                accountService.userInfo()
+                return x;
+            }
+            else {
+                return new Error()
+            }
         })
 }
