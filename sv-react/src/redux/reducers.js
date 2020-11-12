@@ -17,6 +17,7 @@ const initialState = {
   client_minister: 0,
   client_director: 0,
   proclams: [],
+  cards: [],
   //head_list: 0,
   lobbies: [],
   currentGame: {
@@ -62,14 +63,14 @@ export default (state = initialState, action) => {
     }
     case "TOGGLEOWNGAMES":
       return { ...state, listOwnGames: !state.listOwnGames }
-
-
     case "LISTLOBBIES":
       return { ...state, lobbies: action.lobbies };
     case "VOTE":
       return { ...state, voting: 0 };
     case "LIST_PROCLAIM":
       return { ...state, proclams: action.proclams };
+    case "LIST_CARDS":
+      return {...state, cards: action.cards };
     case "UPDATEGAMESTATUS":
       if (action.game.player_list) {
         let game = { ...action.game, players: action.game.player_list, id: state.currentGame.id }

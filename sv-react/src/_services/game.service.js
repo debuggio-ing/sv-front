@@ -9,11 +9,13 @@ export const gameService = {
     gameStatus,
     getProcCards,
     postProcCards,
-    nominate_director,
+    nominateDirector,
+    getSpell,
+    postSpell,
 };
 
 // Given 'Nox' or 'Lumos' and a gameId it sends a request to the API with the vote
-function vote(chosen, gameId) { 
+function vote(chosen, gameId) {
     var vote = true;
     if (chosen == 'Nox') {
         vote = false;
@@ -55,6 +57,38 @@ function gameStatus(gameId) {
 }
 
 
+// Returns the spell appropriate to the game's status
+function getSpell(gameId) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader(),
+    };
+    return fetch(`${config.apiUrl}/api/games/` + gameId.toString() + '/spell/',
+        requestOptions)
+        .then(handleResponse)
+        .then(spell_response=> {
+            return spell_response;
+        });
+}
+
+
+// Returns the spell appropriate to the game's status
+function postSpell(gameId, target = 1) {
+    const requestOptions = {
+        method: 'POST',
+        headers: Object.assign(authHeader(), {
+            'Content-Type': 'application/json'
+        }),
+        body: JSON.stringify({target})
+    };
+    return fetch(`${config.apiUrl}/api/games/` + gameId.toString() + '/spell/', requestOptions)
+        .then(handleResponse)
+        .then(response=> {
+            return response;
+        });
+}
+
+
 // Given a gameId it returns to the director the cards selected by the minsiter of the game
 function getProcCards(gameId) {
     const requestOptions = {
@@ -85,7 +119,7 @@ function postProcCards(gameId, election) {
 }
 
 // Sends a request to the nominate director.
-function nominate_director(gameId, candidateId) {
+function nominateDirector(gameId, candidateId) {
     const requestOptions = {
         method: 'POST',
         headers: authHeader(),
