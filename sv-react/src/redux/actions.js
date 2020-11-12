@@ -20,7 +20,6 @@ const toggleAvailable = {
   type: "TOGGLEAVAILABLE"
 }
 
-
 const toggleStarted = {
   type: "TOGGLESTARTED"
 }

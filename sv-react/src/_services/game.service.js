@@ -11,6 +11,7 @@ export const gameService = {
     postProcCards,
     nominateDirector,
     getSpell,
+    postSpell,
 };
 
 // Given 'Nox' or 'Lumos' and a gameId it sends a request to the API with the vote
@@ -56,7 +57,7 @@ function gameStatus(gameId) {
 }
 
 
-// Returns
+// Returns the spell appropriate to the game's status
 function getSpell(gameId) {
     const requestOptions = {
         method: 'GET',
@@ -67,6 +68,23 @@ function getSpell(gameId) {
         .then(handleResponse)
         .then(spell_response=> {
             return spell_response;
+        });
+}
+
+
+// Returns the spell appropriate to the game's status
+function postSpell(gameId, target = 1) {
+    const requestOptions = {
+        method: 'POST',
+        headers: Object.assign(authHeader(), {
+            'Content-Type': 'application/json'
+        }),
+        body: JSON.stringify({target})
+    };
+    return fetch(`${config.apiUrl}/api/games/` + gameId.toString() + '/spell/', requestOptions)
+        .then(handleResponse)
+        .then(response=> {
+            return response;
         });
 }
 
