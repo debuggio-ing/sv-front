@@ -14,6 +14,7 @@ import Proclaim from './components/Proclaim/Proclaim.js'
 import { gameService, lobbyService } from '@/_services'
 import { history } from '@/_helpers';
 import { array } from 'prop-types';
+import { backgroundGray, phoenixRed } from '@/Styles'
 
 let intervalGP;
 
@@ -24,6 +25,11 @@ class Match extends React.Component {
       let query = new URLSearchParams(window.location.search);
       this.props.joinGame(query.get("id"));
     }
+    this.classes = {
+      card:  {
+        backgroundColor: backgroundGray
+      }
+    };
   }
 
   reloadGamePublic() {
@@ -68,12 +74,14 @@ class Match extends React.Component {
           </Typography>
           <Grid container spacing={4}>
 
+
             <Grid item key="chat" md={this.props.playing ? 3 : 6}>
               <Card className="">
                 <CardContent className="">
                   <Typography gutterBottom variant="h5" component="h2">
                     Chat
-                            </Typography>
+
+                  </Typography>
                   <Chat />
                 </CardContent>
               </Card>
