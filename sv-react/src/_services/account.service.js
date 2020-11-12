@@ -24,7 +24,7 @@ export const accountService = {
     }
 }
 
-// returns {username, email, id} when possible
+// returns {nickname, email, id} when possible
 function userInfo() {
     const requestOptions = {
         method: 'GET',
@@ -47,21 +47,21 @@ function logout() {
 }
 
 
-// update username with new value and returns an UserPublic schema.
-function update(username = null, password = null) {
+// update nickname with new value and returns an UserPublic schema.
+function update(nickname = null, password = null) {
     var requestBody = {}
-    let currentUser = accountService.currentDataValue.username
-    if ((username != currentUser) && !password) {
+    let currentUser = accountService.currentDataValue.nickname
+    if ((nickname != currentUser) && !password) {
         requestBody = JSON.stringify({
-            username
+            nickname
         })
-    } else if ((username == currentUser) && password) {
+    } else if ((nickname == currentUser) && password) {
         requestBody = JSON.stringify({
             password
         })
-    } else if ((username != currentUser) && password) {
+    } else if ((nickname != currentUser) && password) {
         requestBody = JSON.stringify({
-            username,
+            nickname,
             password
         })
     }

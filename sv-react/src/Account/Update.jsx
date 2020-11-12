@@ -11,13 +11,13 @@ function Update({ history }) {
     const { path } = history;
     const user = accountService.currentDataValue
     const initialValues = {
-        username: user.username,
+        nickname: user.nickname,
         password: '',
         confirmPassword: ''
     };
 
     const validationSchema = Yup.object().shape({
-        username: Yup.string()
+        nickname: Yup.string()
             .max(20, 'No mas de 20 caracteres estan permitidos'),
         password: Yup.string()
             .min(8, 'La longitud minima es de 8 caracteres'),
@@ -30,7 +30,7 @@ function Update({ history }) {
 
     function onSubmit(fields, { setStatus, setSubmitting }) {
         setStatus();
-        accountService.update(fields.username, fields.password)
+        accountService.update(fields.nickname, fields.password)
             .then(() => {
                 accountService.userInfo()
                 if (fields.password) {
@@ -41,7 +41,7 @@ function Update({ history }) {
                     history.push('/');
             })
             .catch(error => {
-                alert('El nombre de Usuario esta en uso')
+                alert('El Alias esta en uso')
                 setSubmitting(false);
             });
     }
@@ -52,12 +52,12 @@ function Update({ history }) {
                 <Form>
                     <h1>Actualizar Perfil</h1>
                     <div className="form-group">
-                        <label>Nombre de Usuario</label>
-                        <Field name="username" type="text" className={'form-control' + (errors.username && touched.username ? ' is-invalid' : '')} />
-                        <ErrorMessage name="username" component="div" className="invalid-feedback" />
+                        <label>Alias:</label>
+                        <Field name="nickname" type="text" className={'form-control' + (errors.nickname && touched.nickname ? ' is-invalid' : '')} />
+                        <ErrorMessage name="nickname" component="div" className="invalid-feedback" />
                     </div>
                     <h3 className="pt-3">Cambiar contraseña</h3>
-                    <p>Deja los siguientes campos vacíos si solo quieres modificar tu nombre de usuario</p>
+                    <p>Deja los siguientes campos vacíos si solo quieres modificar tu Alias</p>
                     <div className="form-row">
                         <div className="form-group col">
                             <label>Contraseña Nueva</label>

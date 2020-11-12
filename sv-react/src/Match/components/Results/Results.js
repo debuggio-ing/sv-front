@@ -26,7 +26,7 @@ function Results({currentGame}) {
           <div style={{display: 'flex'}}>
             <div style={{margin: 'auto'}}>
               <div style={{textAlign: 'center'}}>
-                {player.username}
+                {player.nickname}
               </div>
               <div>
                 {player.last_vote ? 

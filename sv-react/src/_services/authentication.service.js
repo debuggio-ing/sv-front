@@ -24,14 +24,14 @@ export const authenticationService = {
     }
 };
 
-function register(username, email, password) {
+function register(nickname, email, password) {
     const requestOptions = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            username,
+            nickname,
             email,
             password
         })

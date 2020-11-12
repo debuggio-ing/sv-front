@@ -22,7 +22,7 @@ class VerifyPage extends React.Component {
                     <div>
                         <Formik
                             initialValues={{
-                                username: '',
+                                nickname: '',
                                 email: '',
                                 password: '',
                                 acceptTerms: false

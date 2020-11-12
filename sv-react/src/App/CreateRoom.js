@@ -56,8 +56,8 @@ function CreateRoom(props) {
                     .typeError("Esto no es un numero"),
                     lobbyName: Yup.string()
                     .required('Este campo es obligatorio')
-                    .min(1,'El nombre no puede ser vacio')
-                    .max(20,'El nombre excede los 20 caracteres')
+                    .min(1,'El Alias no puede ser vacio')
+                    .max(20,'El Alias excede los 20 caracteres')
                     .typeError("Esto no es un string")
                 })}
                 onSubmit={({ lobbyName, players }, { setStatus, setSubmitting }) => {
@@ -98,7 +98,7 @@ function CreateRoom(props) {
                         margin="normal"
                       />
                       <TextField
-                        label="Nombre"
+                        label="Alias"
                         name="lobbyName"
                         className={classes.textField}
                         value={values.name}
