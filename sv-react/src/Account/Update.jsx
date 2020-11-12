@@ -40,10 +40,6 @@ function Update({ history }) {
                 else
                     history.push('/');
             })
-            .catch(error => {
-                alert('El Alias esta en uso')
-                setSubmitting(false);
-            });
     }
 
     return (
