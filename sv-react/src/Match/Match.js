@@ -160,7 +160,7 @@ class Match extends React.Component {
                                   Resultados
                                 </Typography>
                                 {this.props.currentGame.in_session ? 
-                                        <Typography>El gobierno fue elegido.</Typography>
+                                        <Typography>{this.props.currentGame.minister} y {this.props.currentGame.director} fueron elegidos.</Typography>
                                         : <Typography>El gobierno NO fue elegido.</Typography>}
                                 <Results currentGame = {this.props.currentGame} />
                               </CardContent>
