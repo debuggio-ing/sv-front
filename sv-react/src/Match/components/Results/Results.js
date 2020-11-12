@@ -22,7 +22,7 @@ function Results({currentGame}) {
 
     return <GridList cellHeight={110} className={classes.root} cols={5}>
       {players.map((player, index) => (
-        <GridListTile cols={1}>
+        <GridListTile cols={1} key={index}>
           <div style={{display: 'flex'}}>
             <div style={{margin: 'auto'}}>
               <div style={{textAlign: 'center'}}>
