@@ -47,7 +47,7 @@ const listCards = {
 }
 
 const startAvadaKedavra = {
-  type: "AVADAKEDAVRA"
+  type: "AVADAKEDAVRA",
 }
 
 const updateGameStatus = {
@@ -73,5 +73,6 @@ const updateLobbyStatus = {
 export {
   startGame, joinGame, listLobbies, actionvote, toggleStarted, toggleAvailable,
   toggleFinished, listCards,
-  toggleOwnGames, listProclaim, updateLobbyStatus, updateGameStatus, leaveGame
+  toggleOwnGames, listProclaim, updateLobbyStatus, updateGameStatus, leaveGame,
+  startAvadaKedavra
 }

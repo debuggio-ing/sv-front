@@ -152,7 +152,7 @@ class Match extends React.Component {
               <Spell cards={this.props.cards}
               spell={this.props.spell}
               currentGame={this.props.currentGame}
-              spellType={this.props.spell}  />
+              spellType={this.props.spellType}  />
               : <br />
             }
 
@@ -206,7 +206,7 @@ const mapStateToProps = state => ({
   proclams: state.proclams,
   currentGame: state.currentGame,
   cards: state.cards,
-  spell: state.spell
+  spellType: state.spellType
 })
 
 const mapDispatchToProps = dispatch => {
@@ -239,14 +239,14 @@ const mapDispatchToProps = dispatch => {
         console.log(spell);
         switch (typeof(spell)) {
           case "number":
-            dispatch({ ...startAvadaKedavra })
+            dispatch(startAvadaKedavra)
             break;
           default:
             dispatch({ ...listCards, cards })
             break;
         }
       }).catch(err => {
-        console.log("No se pudo obtener el hechizo")
+        console.log(err)
         // alert("No se pudo lanzar el hechizo.")
       })
     },
@@ -274,7 +274,6 @@ const mapDispatchToProps = dispatch => {
     gameStatus: (gameId) => {
       gameService.gameStatus(gameId).then(game => {
         if (game.player_list) {
-          console.log(game);
           dispatch({ ...updateGameStatus, game })
           if (game.in_session && ((game.client_director && game.minister_proclaimed) || (game.client_minister && !game.minister_proclaimed))) {
             gameService.getProcCards(gameId).then(proclams => {

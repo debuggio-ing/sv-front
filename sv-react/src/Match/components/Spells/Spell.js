@@ -39,7 +39,7 @@ function Spell({cards, spell, currentGame, spellType}) {
         <React.Fragment>
           <DialogTitle id="form-dialog-title"></DialogTitle>
           <DialogContent>
-            <DialogContentText align="center">HECHIZO</DialogContentText>
+            <DialogContentText align="center">{spellType}</DialogContentText>
             {spellType=="Divination" ?
               <Divination cards={cards}/>
             :
