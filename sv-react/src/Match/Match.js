@@ -182,9 +182,12 @@ class Match extends React.Component {
                     <Typography gutterBottom variant="h5" component="h2">
                       Resultados
                                 </Typography>
-                    {(this.props.semaphore != 0) ?
-                      <Typography>El ministro no fue elegido.</Typography>
-                      : <Typography>El ministro fue elegido.</Typography>}
+                    {this.props.currentGame.in_session ?
+                      <Typography>{this.props.currentGame.player_list.filter((player) => player.player_id==this.props.currentGame.minister)[0].nickname} y
+                                  {" "+ this.props.currentGame.player_list.filter((player) => player.player_id==this.props.currentGame.director)[0].nickname} fueron elegidos
+                      </Typography>
+                      : <Typography>El gobierno NO fue elegido.</Typography>
+                    }
                     <Results currentGame={this.props.currentGame} />
                   </CardContent>
                 </Card>
