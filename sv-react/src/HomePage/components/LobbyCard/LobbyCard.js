@@ -31,7 +31,7 @@ function LobbyCard({ lobby, joinGame }) {
   return (
     <Card className={classes.card}>
       <CardContent className="">
-        <Typography gutterBottom variant="h5" component="h2">
+        <Typography gutterbottom="true" variant="h5" component="h2">
           {lobby.name}
         </Typography>
         <List className={classes.sidewaysLists}>
@@ -39,7 +39,7 @@ function LobbyCard({ lobby, joinGame }) {
             <ListItem key={index} className={classes.listItem}>
               <li>
                 <Avatar alt={player} src="/static/images/avatar/1.jpg" className={classes.avatarColor} />
-                <Typography align="center" gutterBottom variant="body1" component="p">
+                <Typography align="center" gutterbottom="true" variant="body1" component="p">
                   {player}
                 </Typography>
               </li>
@@ -48,21 +48,21 @@ function LobbyCard({ lobby, joinGame }) {
         </List>
 
         {lobby.finished
-          ? <Box align="right" gutterBottom variant="body1" component="p" fontFamily="Segoe UI Emoji">
+          ? <Box align="right" gutterbottom="true" variant="body1" component="p" fontFamily="Segoe UI Emoji">
             Finished
           </Box>
-          : <Box align="right" gutterBottom variant="body1" component="p" fontFamily="Segoe UI Emoji">
+          : <Box align="right" gutterbottom="true" variant="body1" component="p" fontFamily="Segoe UI Emoji">
 
           </Box>}
         {!lobby.finished && lobby.started
-          ? <Box align="right" gutterBottom variant="body1" component="p" fontFamily="Segoe UI Emoji">
+          ? <Box align="right" gutterbottom="true" variant="body1" component="p" fontFamily="Segoe UI Emoji">
             Started
           </Box>
-          : <Box align="right" gutterBottom variant="body1" component="p" fontFamily="Segoe UI Emoji">
+          : <Box align="right" gutterbottom="true" variant="body1" component="p" fontFamily="Segoe UI Emoji">
             Not Started
           </Box>}
 
-        <Box align="right" gutterBottom variant="body1" component="p" fontFamily="Segoe UI Emoji">
+        <Box align="right" gutterbottom="true" variant="body1" component="p" fontFamily="Segoe UI Emoji">
           ({lobby.current_players.length} / {lobby.max_players})
           </Box>
         <Button className={classes.joinButton} variant="contained" color="primary"

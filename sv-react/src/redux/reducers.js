@@ -9,10 +9,10 @@ const initialState = {
   proclamacionesMortifagas: 4,
   voting: 0,
   in_session: 0,
-  listAvailable: 1,
-  listStarted: 0,
-  listFinished: 0,
-  listOwnGames: 0,
+  listAvailable: true,
+  listStarted: false,
+  listFinished: false,
+  listOwnGames: false,
   minister_proclaimed: 0,
   client_minister: 0,
   client_director: 0,
@@ -38,27 +38,27 @@ export default (state = initialState, action) => {
 
 
     case "TOGGLEAVAILABLE": {
-      if (state.listAvailable == 0) {
-        return { ...state, listAvailable: 1, listStarted: 0, listFinished: 0 }
+      if (!state.listAvailable) {
+        return { ...state, listAvailable: true, listStarted: false, listFinished: false }
       }
       else {
-        return { ...state, listAvailable: 0 }
+        return { ...state, listAvailable: false }
       }
     }
     case "TOGGLESTARTED": {
-      if (state.listStarted == 0) {
-        return { ...state, listStarted: 1, listAvailable: 0 }
+      if (!state.listStarted) {
+        return { ...state, listStarted: true, listAvailable: false }
       }
       else {
-        return { ...state, listStarted: 0, listFinished: 0, listAvailable: 1 }
+        return { ...state, listStarted: false, listFinished: false, listAvailable: true }
       }
     }
     case "TOGGLEFINISHED": {
-      if (state.listFinished == 0) {
-        return { ...state, listFinished: 1, listStarted: 1, listAvailable: 0 }
+      if (!state.listFinished) {
+        return { ...state, listFinished: true, listStarted: true, listAvailable: false }
       }
       else {
-        return { ...state, listFinished: 0 }
+        return { ...state, listFinished: false }
       }
     }
     case "TOGGLEOWNGAMES":
