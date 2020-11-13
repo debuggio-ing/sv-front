@@ -70,7 +70,7 @@ function listLobbies(available, started, finished, user_games, all_games) {
 // Receives the id of a lobby the user wants to join.
 // If the lobby is full, it returns 409.
 // If the lobby isn't full it adds the user to the lobby and returns the following data:
-// lobby_id, lobby_name, current_players (usernames of the players in the lobby), max_players_allowed
+// lobby_id, lobby_name, current_players (nicknames of the players in the lobby), max_players_allowed
 function joinLobby(lobby_id) {
     const requestOptions = {
         method: 'POST',

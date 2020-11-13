@@ -34,7 +34,7 @@ export default (state = initialState, action) => {
     case "START":
       return { ...state, playing: 1 };
     case "JOIN":
-      return { ...state, voting: 0, currentGame: { ...action.lobby, players: action.lobby.current_players.map((player) => { return { username: player } }) } };
+      return { ...state, voting: 0, currentGame: { ...action.lobby, players: action.lobby.current_players.map((player) => { return { nickname: player } }) } };
 
 
     case "TOGGLEAVAILABLE": {
@@ -79,7 +79,7 @@ export default (state = initialState, action) => {
       return state
     case "UPDATELOBBYSTATUS":
       if (action.lobby.id) {
-        return { ...state, currentGame: { ...action.lobby, players: action.lobby.current_players.map((player) => { return { username: player } }) } };
+        return { ...state, currentGame: { ...action.lobby, players: action.lobby.current_players.map((player) => { return { nickname: player } }) } };
       }
       return state
     case "LEAVE":
