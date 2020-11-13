@@ -67,7 +67,7 @@ function Players({startGame=()=>{},
     return <List className={classes.root}>
 
       {canElectDirector ? <Typography>Seleccione un candidato a director</Typography>: ""}
-      {castKedavra ? <Typography>Matate un flaco</Typography>: ""}
+      {castKedavra ? <Typography>¿Quien debe morir?</Typography>: ""}
       {players.map((player, index) => (
         <ListItem key={index}
                   onClick={!player.alive ? () => {} : castKedavra ? () => castKedavra(player.player_id) : canElectDirector ? () => proposeDirector(player.player_id): () => {}}
