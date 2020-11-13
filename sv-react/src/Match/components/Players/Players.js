@@ -10,7 +10,7 @@ import { Button,
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import CheckIcon from '@material-ui/icons/Check';
 import PropTypes from 'prop-types'
-import { primaryLightgreen, secondaryLightblue } from '@/Styles'
+import { primaryLightgreen, secondaryLightblue, backgroundGray } from '@/Styles'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,11 +39,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function Players({startGame,
-                  playing,
+function Players({startGame=()=>{},
+                  playing=0,
                   currentGame,
                   proposeDirector,
-                  selected,
                   castKedavra}) {
     const classes = useStyles();
     let button;
@@ -71,8 +70,8 @@ function Players({startGame,
       {castKedavra ? <Typography>Matate un flaco</Typography>: ""}
       {players.map((player, index) => (
         <ListItem key={index}
-                  onClick={castKedavra ? () => castKedavra(player.player_id) : canElectDirector ? () => proposeDirector(player.player_id): undefined}
-                  style={castKedavra ? {cursor: "pointer"} :canElectDirector ? {cursor: "pointer"} : undefined}>
+                  onClick={!player.alive ? () => {} : castKedavra ? () => castKedavra(player.player_id) : canElectDirector ? () => proposeDirector(player.player_id): () => {}}
+                  style={!player.alive ? {opacity: 0.5} : castKedavra ? {cursor: "pointer"} :canElectDirector ? {cursor: "pointer"} : undefined}>
           <ListItemAvatar key={index}>
             {playing ?
               (parseInt(minister) === player.player_id) ?
@@ -83,20 +82,20 @@ function Players({startGame,
               : <Avatar alt={player.nickname} src="/static/images/avatar/1.jpg" />
             }
           </ListItemAvatar>
-          <ListItem>
+          <ListItem key={index+"name"}>
             {player.nickname}
           </ListItem>
           {player.role ?
-            <ListItem>
-              {player.role=="Death Eater" ? <img src={"public/img/mortifago_lealtad.png"} style={{height:"50px"}}/> :
-                                          [player.role=="voldemort" ? <img src={"public/img/voldemort.png"} style={{height:"50px"}}/> :
-                                                                      <img src={"public/img/fenix_lealtad.png"} style={{height:"50px"}}/>]}
+            <ListItem key={index+"loyalty"}>
+              {player.role=="Death Eater" ? <img key={index} src={"public/img/mortifago_lealtad.png"} style={{height:"50px"}}/> :
+                                          [player.role=="voldemort" ? <img key={index} src={"public/img/voldemort.png"} style={{height:"50px"}}/> :
+                                                                      <img key={index} src={"public/img/fenix_lealtad.png"} style={{height:"50px"}}/>]}
             </ListItem> :
-            <ListItem>
+            <ListItem key={index+"loyalty"}>
               <img src={"public/img/unknown_lealtad.png"} style={{height:"50px"}}/>
             </ListItem>
           }
-          <ListItem>
+          <ListItem key={index+"voting"}>
             {voting ? (player.voted ? <CheckIcon/> : <MoreHorizIcon/>) : <div/>}
           </ListItem>
         </ListItem>
@@ -107,9 +106,7 @@ function Players({startGame,
 
 
 Players.propTypes = {
-  startGame: PropTypes.func.isRequired,
-  playing: PropTypes.number.isRequired,
-  proposeDirector: PropTypes.func
+  currentGame: PropTypes.object.isRequired
 }
 
 export default Players;
