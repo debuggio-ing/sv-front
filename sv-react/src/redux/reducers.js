@@ -7,6 +7,7 @@ const initialState = {
   playing: 0, //is client in /match
   proclamacionesFenix: 2,
   proclamacionesMortifagas: 4,
+  spell: 0,
   voting: 0,
   in_session: 0,
   listAvailable: 1,
@@ -69,8 +70,10 @@ export default (state = initialState, action) => {
       return { ...state, voting: 0 };
     case "LIST_PROCLAIM":
       return { ...state, proclams: action.proclams };
+    case "AVADAKEDAVRA":
+      return {...state, spell: "AvadaKedavra" };
     case "LIST_CARDS":
-      return {...state, cards: action.cards };
+      return {...state, cards: action.cards, spell: "Divination" };
     case "UPDATEGAMESTATUS":
       if (action.game.player_list) {
         let game = { ...action.game, players: action.game.player_list, id: state.currentGame.id }

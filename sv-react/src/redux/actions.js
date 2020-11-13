@@ -46,6 +46,10 @@ const listCards = {
   cards: [] // [{id: int, phoenix: bool}]
 }
 
+const startAvadaKedavra = {
+  type: "AVADAKEDAVRA"
+}
+
 const updateGameStatus = {
   type: "UPDATEGAMESTATUS",
   game: {

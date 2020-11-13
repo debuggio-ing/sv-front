@@ -6,7 +6,7 @@ import Results from './components/Results/Results.js'
 import Chat from './components/Chat/Chat.js'
 import Board from './components/Board/Board.js'
 import { connect } from 'react-redux'
-import { startGame, actionvote, updateLobbyStatus, updateGameStatus, listCards, listProclaim, joinGame } from './../redux/actions.js'
+import { startGame, actionvote, updateLobbyStatus, updateGameStatus, listCards, listProclaim, joinGame, startAvadaKedavra } from './../redux/actions.js'
 import Vote from './components/Vote/Vote.js'
 import Deck from './components/Deck/Deck.js'
 import Spell from './components/Spells/Spell.js'
@@ -144,20 +144,22 @@ class Match extends React.Component {
               </Grid>
               : <br />
             }
-            {this.props.currentGame.in_session && 
-            this.props.currentGame.director_proclaimed && 
+            {this.props.currentGame.in_session &&
+            this.props.currentGame.director_proclaimed &&
             this.props.currentGame.client_minister &&
-            this.props.currentGame.last_proc_negative ?
-              <Spell cards={this.props.cards} 
-              spell={this.props.spell} 
-              id={this.props.currentGame.id} />
+            this.props.currentGame.last_proc_negative
+            ?
+              <Spell cards={this.props.cards}
+              spell={this.props.spell}
+              currentGame={this.props.currentGame}
+              spellType={this.props.spell}  />
               : <br />
             }
 
-            {(((this.props.currentGame.client_director && 
-            this.props.currentGame.minister_proclaimed && 
+            {(((this.props.currentGame.client_director &&
+            this.props.currentGame.minister_proclaimed &&
             !this.props.currentGame.director_proclaimed)
-            || (this.props.currentGame.client_minister && 
+            || (this.props.currentGame.client_minister &&
               !this.props.currentGame.minister_proclaimed))
             && this.props.currentGame.in_session)
               ? <Grid item key="Proc" md={this.props.playing ? 3 : 6}>
@@ -201,9 +203,10 @@ const mapStateToProps = state => ({
   proclamacionesFenix: state.proclamacionesFenix,
   proclamacionesMortifagas: state.proclamacionesMortifagas,
   voting: state.voting,
-  currentGame: state.currentGame,
   proclams: state.proclams,
+  currentGame: state.currentGame,
   cards: state.cards,
+  spell: state.spell
 })
 
 const mapDispatchToProps = dispatch => {
@@ -232,8 +235,16 @@ const mapDispatchToProps = dispatch => {
       })
     },
     spell: (id) => {
-      gameService.getSpell(id).then(cards => {
-        dispatch({ ...listCards, cards })
+      gameService.getSpell(id).then(spell => {
+        console.log(spell);
+        switch (typeof(spell)) {
+          case "number":
+            dispatch({ ...startAvadaKedavra })
+            break;
+          default:
+            dispatch({ ...listCards, cards })
+            break;
+        }
       }).catch(err => {
         console.log("No se pudo obtener el hechizo")
         // alert("No se pudo lanzar el hechizo.")
@@ -264,6 +275,7 @@ const mapDispatchToProps = dispatch => {
     gameStatus: (gameId) => {
       gameService.gameStatus(gameId).then(game => {
         if (game.player_list) {
+          console.log(game);
           dispatch({ ...updateGameStatus, game })
           if (game.in_session && ((game.client_director && game.minister_proclaimed) || (game.client_minister && !game.minister_proclaimed))) {
             gameService.getProcCards(gameId).then(proclams => {

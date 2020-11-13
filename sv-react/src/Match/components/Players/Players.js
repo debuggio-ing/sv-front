@@ -42,7 +42,9 @@ const useStyles = makeStyles((theme) => ({
 function Players({startGame,
                   playing,
                   currentGame,
-                  proposeDirector}) {
+                  proposeDirector,
+                  selected,
+                  castKedavra}) {
     const classes = useStyles();
     let button;
     let players = currentGame.players;
@@ -66,15 +68,16 @@ function Players({startGame,
     return <List className={classes.root}>
 
       {canElectDirector ? <Typography>Seleccione un candidato a director</Typography>: ""}
+      {castKedavra ? <Typography>Matate un flaco</Typography>: ""}
       {players.map((player, index) => (
         <ListItem key={index}
-                  onClick={canElectDirector ? () => proposeDirector(player.player_id) : undefined}
-                  style={canElectDirector ? {cursor: "pointer"} : undefined}>
+                  onClick={castKedavra ? () => castKedavra(player.player_id) : [canElectDirector ? () => proposeDirector(player.player_id): undefined]}
+                  style={castKedavra ? {cursor: "pointer"} :canElectDirector ? {cursor: "pointer"} : undefined}>
           <ListItemAvatar key={index}>
             {playing ?
-              (minister === player.player_id) ?
+              (parseInt(minister) === player.player_id) ?
                 <Avatar alt="Ministro" src="/static/images/avatar/1.jpg" className={voting ? [classes.voting, classes.ministro] : classes.ministro}/> :
-                (director=== player.player_id)?
+                (parseInt(director)=== player.player_id)?
                   <Avatar alt="Director" src="/static/images/avatar/1.jpg" className={voting ? [classes.voting, classes.director] : classes.director}/> :
                   <Avatar alt={player.username} src="/static/images/avatar/1.jpg" />
               : <Avatar alt={player.username} src="/static/images/avatar/1.jpg" />
