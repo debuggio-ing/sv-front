@@ -11,8 +11,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function killSomeone(player_id){
-  gameService.postSpell(id).then( response=> {
+function killSomeone(gameId, playerId){
+  gameService.postSpell(gameId, playerId).then( response=> {
     console.log("TERMINADO EL SPELL")
   }).catch(err => {
     console.log("No se pudo lanzar el hechizo.")
@@ -22,7 +22,7 @@ function killSomeone(player_id){
 function AvadaKedavra({currentGame}) {
   const styles = useStyles;
   return <Grid container xs={12} spacing={2}>
-    <Players currentGame={currentGame} castKedavra={(id) => killSomeone(id)} />
+    <Players currentGame={currentGame} castKedavra={(id) => killSomeone(currentGame.id, id)} />
   </Grid>
 }
 

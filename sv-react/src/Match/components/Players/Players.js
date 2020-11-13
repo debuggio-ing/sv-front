@@ -71,7 +71,7 @@ function Players({startGame,
       {castKedavra ? <Typography>Matate un flaco</Typography>: ""}
       {players.map((player, index) => (
         <ListItem key={index}
-                  onClick={castKedavra ? () => castKedavra(player.player_id) : [canElectDirector ? () => proposeDirector(player.player_id): undefined]}
+                  onClick={castKedavra ? () => castKedavra(player.player_id) : canElectDirector ? () => proposeDirector(player.player_id): undefined}
                   style={castKedavra ? {cursor: "pointer"} :canElectDirector ? {cursor: "pointer"} : undefined}>
           <ListItemAvatar key={index}>
             {playing ?
