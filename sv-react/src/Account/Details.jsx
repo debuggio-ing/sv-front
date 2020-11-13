@@ -14,7 +14,7 @@ function Details({ match }) {
             <h1>Mi Perfil</h1>
             < PictureUpload />
             <p>
-                <strong>Nombre de usuario: </strong> {data.username}<br />
+                <strong>Alias: </strong> {data.nickname}<br />
                 <strong>Email: </strong> {data.email}
             </p>
             <p><Link to={`${path}/update`}>Actualizar mi perfil</Link></p>

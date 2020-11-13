@@ -22,13 +22,13 @@ class RegisterPage extends React.Component {
                     <div>
                         <Formik
                             initialValues={{
-                                username: '',
+                                nickname: '',
                                 email: '',
                                 password: '',
                                 acceptTerms: false
                             }}
                             validationSchema={Yup.object().shape({
-                                username: Yup.string()
+                                nickname: Yup.string()
                                 .required('Este campo es obligatorio'),
                             email: Yup.string()
                                 .email('Email invalido')
@@ -40,9 +40,9 @@ class RegisterPage extends React.Component {
                             acceptTerms: Yup.bool()
                                 .oneOf([true], 'Por favor lee y acepta los términos y condiciones')
                             })}
-                            onSubmit={({username, email, password }, { setStatus, setSubmitting }) => {
+                            onSubmit={({nickname, email, password }, { setStatus, setSubmitting }) => {
                                 setStatus();
-                                authenticationService.register(username, email, password)
+                                authenticationService.register(nickname, email, password)
                                     .then(
                                         user => {
                                             const { from } = this.props.location.state || { from: { pathname: "/verify" } };
@@ -58,9 +58,9 @@ class RegisterPage extends React.Component {
                             <Form>
                             <h3 className="row">Registrame</h3>
                             <div className="form-group">
-                            <label>Nombre de Usuario</label>
-                            <Field name="username" type="text" className={'form-control' + (errors.username && touched.username ? ' is-invalid' : '')} />
-                            <ErrorMessage name="username" component="div" className="invalid-feedback" />
+                            <label>Alias:</label>
+                            <Field name="nickname" type="text" className={'form-control' + (errors.nickname && touched.nickname ? ' is-invalid' : '')} />
+                            <ErrorMessage name="nickname" component="div" className="invalid-feedback" />
                                 </div>
                                 <div className="form-group">
                                     <label>Email</label>

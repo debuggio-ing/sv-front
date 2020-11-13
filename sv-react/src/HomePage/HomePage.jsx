@@ -90,26 +90,26 @@ class HomePage extends React.Component {
 
           <FormGroup>
             <FormControlLabel
-              control={<Checkbox color="primary" checked={Boolean(this.props.listAvailable)} onChange={() => this.toggleAvailable()} name="FilterAvailable" />}
+              control={<Checkbox color="primary" checked={this.props.listAvailable} onChange={() => this.toggleAvailable()} name="FilterAvailable" />}
               label="Partidas Disponibles"
             />
 
             <FormControlLabel
-              control={<Checkbox color="primary" checked={Boolean(this.props.listAvailable)} onChange={() => this.toggleStarted()} name="FilterStarted" />}
+              control={<Checkbox color="primary" checked={this.props.listStarted} onChange={() => this.toggleStarted()} name="FilterStarted" />}
               label="Partidas Comenzadas"
             />
             <FormControlLabel
-              control={<Checkbox color="primary" checked={Boolean(this.props.listAvailable)} onChange={() => this.toggleFinished()} name="FilterFinished" />}
+              control={<Checkbox color="primary" checked={this.props.listFinished} onChange={() => this.toggleFinished()} name="FilterFinished" />}
               label="Partidas Terminadas"
             />
           </FormGroup>
           <FormGroup>
             <FormControlLabel
-              control={<Checkbox color="primary" checked={Boolean(this.props.listAvailable)} onChange={() => this.toggleOwnGames()} name="FilterUser" />}
+              control={<Checkbox color="primary" checked={this.props.listOwnGames} onChange={() => this.toggleOwnGames()} name="FilterUser" />}
               label="Tus Partidas"
             />
             <FormControlLabel
-              control={<Checkbox color="primary" checked={!Boolean(this.props.listAvailable)} onChange={() => this.toggleOwnGames()} name="NoFilter" />}
+              control={<Checkbox color="primary" checked={!this.props.listOwnGames} onChange={() => this.toggleOwnGames()} name="NoFilter" />}
               label="Todas las Partidas"
             />
           </FormGroup>
@@ -154,7 +154,6 @@ const mapDispatchToProps = dispatch => {
       })
     },
     listLobbies: (available, started, finished, ownGames, allGames) => {
-      console.log("map to dispatch", available)
       lobbyService.listLobbies(available, started, finished, ownGames, allGames).then(lobbies => {
         if (Array.isArray(lobbies)) {
           dispatch({ ...listLobbies, lobbies })

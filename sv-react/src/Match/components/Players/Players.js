@@ -79,12 +79,12 @@ function Players({startGame,
                 <Avatar alt="Ministro" src="/static/images/avatar/1.jpg" className={voting ? [classes.voting, classes.ministro] : classes.ministro}/> :
                 (parseInt(director)=== player.player_id)?
                   <Avatar alt="Director" src="/static/images/avatar/1.jpg" className={voting ? [classes.voting, classes.director] : classes.director}/> :
-                  <Avatar alt={player.username} src="/static/images/avatar/1.jpg" />
-              : <Avatar alt={player.username} src="/static/images/avatar/1.jpg" />
+                  <Avatar alt={player.nickname} src="/static/images/avatar/1.jpg" />
+              : <Avatar alt={player.nickname} src="/static/images/avatar/1.jpg" />
             }
           </ListItemAvatar>
           <ListItem>
-            {player.username}
+            {player.nickname}
           </ListItem>
           {player.role ?
             <ListItem>
