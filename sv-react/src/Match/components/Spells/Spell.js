@@ -19,7 +19,7 @@ function Spell({cards, spell, currentGame, spellType}) {
   const getSpell = spell(currentGame.id,1);
   function handleClose() {
     setOpen(false);
-    gameService.postSpell(id,1).then( response=> {
+    gameService.postSpell(currentGame.id,-1).then( response=> {
       console.log("TERMINADO EL SPELL")
     }).catch(err => {
       console.log("No se pudo lanzar el hechizo.")

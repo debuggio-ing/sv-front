@@ -73,7 +73,7 @@ function getSpell(gameId) {
 
 
 // Returns the spell appropriate to the game's status
-function postSpell(gameId, target = 1) {
+function postSpell(gameId, target = -1) {
     const requestOptions = {
         method: 'POST',
         headers: Object.assign(authHeader(), {
