@@ -35,7 +35,7 @@ class HomePage extends React.Component {
   }
 
   refresher() {
-    console.log("refresher", this.props.listAvailable)
+    // console.log("refresher", this.props.listAvailable)
 
 
     clearInterval(intervalLL);
@@ -144,7 +144,7 @@ const mapDispatchToProps = dispatch => {
     joinGame: (id) => {
       lobbyService.joinLobby(id).then(lobby => {
         if (lobby.id) {
-          console.log(lobby.id)
+          // console.log(lobby.id)
           dispatch({ ...joinGame, lobby })
           history.push("/match")
         }
@@ -154,7 +154,7 @@ const mapDispatchToProps = dispatch => {
       })
     },
     listLobbies: (available, started, finished, ownGames, allGames) => {
-      console.log("map to dispatch", available)
+      //console.log("map to dispatch", available)
       lobbyService.listLobbies(available, started, finished, ownGames, allGames).then(lobbies => {
         if (Array.isArray(lobbies)) {
           dispatch({ ...listLobbies, lobbies })

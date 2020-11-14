@@ -18,6 +18,8 @@ export const accountService = {
     userInfo,
     currentData: currentDataSubject.asObservable(),
     logout,
+    getPicture,
+    uploadPicture,
     update,
     get currentDataValue() {
         return currentDataSubject.value
@@ -83,4 +85,42 @@ function update(nickname = null, password = null) {
                 return new Error()
             }
         })
+}
+
+
+function getPicture(){
+    let requestBody = JSON.stringify({
+        password
+    })
+    const requestOptions = {
+    method: 'GET',
+    headers: authHeader(),
+    body: requestBody
+};
+return fetch(`${config.apiUrl}/api/users/info/modify/`,
+        requestOptions)
+    .then(handleResponse)
+    .then(x => {
+        if (x != 'Conflict') {
+            accountService.userInfo()
+            return x;
+        } else {
+            return new Error()
+        }
+    })
+}
+
+function uploadPicture(file){
+    console.log(file)
+    const requestOptions = {
+        method: 'POST',
+        headers: authHeader(),
+        body: file,
+        redirect: 'follow'
+      };
+      
+    return fetch(`${config.apiUrl}/api/users/picture/`, requestOptions)
+        .then(handleResponse)
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
 }
