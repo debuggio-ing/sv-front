@@ -46,6 +46,10 @@ const listCards = {
   cards: [] // [{id: int, phoenix: bool}]
 }
 
+const startAvadaKedavra = {
+  type: "AVADAKEDAVRA",
+}
+
 const updateGameStatus = {
   type: "UPDATEGAMESTATUS",
   game: {
@@ -69,5 +73,6 @@ const updateLobbyStatus = {
 export {
   startGame, joinGame, listLobbies, actionvote, toggleStarted, toggleAvailable,
   toggleFinished, listCards,
-  toggleOwnGames, listProclaim, updateLobbyStatus, updateGameStatus, leaveGame
+  toggleOwnGames, listProclaim, updateLobbyStatus, updateGameStatus, leaveGame,
+  startAvadaKedavra
 }

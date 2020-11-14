@@ -6,7 +6,7 @@ import Results from './components/Results/Results.js'
 import Chat from './components/Chat/Chat.js'
 import Board from './components/Board/Board.js'
 import { connect } from 'react-redux'
-import { startGame, actionvote, updateLobbyStatus, updateGameStatus, listCards, listProclaim, joinGame } from './../redux/actions.js'
+import { startGame, actionvote, updateLobbyStatus, updateGameStatus, listCards, listProclaim, joinGame, startAvadaKedavra } from './../redux/actions.js'
 import Vote from './components/Vote/Vote.js'
 import Deck from './components/Deck/Deck.js'
 import Spell from './components/Spells/Spell.js'
@@ -144,20 +144,22 @@ class Match extends React.Component {
               </Grid>
               : <br />
             }
-            {this.props.currentGame.in_session && 
-            this.props.currentGame.director_proclaimed && 
+            {this.props.currentGame.in_session &&
+            this.props.currentGame.director_proclaimed &&
             this.props.currentGame.client_minister &&
-            this.props.currentGame.last_proc_negative ?
-              <Spell cards={this.props.cards} 
-              spell={this.props.spell} 
-              id={this.props.currentGame.id} />
+            this.props.currentGame.last_proc_negative
+            ?
+              <Spell cards={this.props.cards}
+              spell={this.props.spell}
+              currentGame={this.props.currentGame}
+              spellType={this.props.spellType}  />
               : <br />
             }
 
-            {(((this.props.currentGame.client_director && 
-            this.props.currentGame.minister_proclaimed && 
+            {(((this.props.currentGame.client_director &&
+            this.props.currentGame.minister_proclaimed &&
             !this.props.currentGame.director_proclaimed)
-            || (this.props.currentGame.client_minister && 
+            || (this.props.currentGame.client_minister &&
               !this.props.currentGame.minister_proclaimed))
             && this.props.currentGame.in_session)
               ? <Grid item key="Proc" md={this.props.playing ? 3 : 6}>
@@ -180,9 +182,12 @@ class Match extends React.Component {
                     <Typography gutterBottom variant="h5" component="h2">
                       Resultados
                                 </Typography>
-                    {(this.props.semaphore != 0) ?
-                      <Typography>El ministro no fue elegido.</Typography>
-                      : <Typography>El ministro fue elegido.</Typography>}
+                    {this.props.currentGame.in_session ?
+                      <Typography>{this.props.currentGame.player_list.filter((player) => player.player_id==this.props.currentGame.minister)[0].nickname} y
+                                  {" "+ this.props.currentGame.player_list.filter((player) => player.player_id==this.props.currentGame.director)[0].nickname} fueron elegidos
+                      </Typography>
+                      : <Typography>El gobierno NO fue elegido.</Typography>
+                    }
                     <Results currentGame={this.props.currentGame} />
                   </CardContent>
                 </Card>
@@ -201,9 +206,10 @@ const mapStateToProps = state => ({
   proclamacionesFenix: state.proclamacionesFenix,
   proclamacionesMortifagas: state.proclamacionesMortifagas,
   voting: state.voting,
-  currentGame: state.currentGame,
   proclams: state.proclams,
+  currentGame: state.currentGame,
   cards: state.cards,
+  spellType: state.spellType
 })
 
 const mapDispatchToProps = dispatch => {
@@ -232,17 +238,24 @@ const mapDispatchToProps = dispatch => {
       })
     },
     spell: (id) => {
-      gameService.getSpell(id).then(cards => {
-        dispatch({ ...listCards, cards })
+      gameService.getSpell(id).then(spell => {
+        console.log(spell);
+        switch (typeof(spell)) {
+          case "number":
+            dispatch(startAvadaKedavra)
+            break;
+          default:
+            dispatch({ ...listCards, cards })
+            break;
+        }
       }).catch(err => {
-        console.log("No se pudo obtener el hechizo")
+        console.log(err)
         // alert("No se pudo lanzar el hechizo.")
       })
     },
     vote: (chosen, id) => {
       console.log(id)
       gameService.vote(chosen, id).then(result => {
-        alert(chosen)
         dispatch(actionvote)
       }
       ).catch(err => {

@@ -9,13 +9,14 @@ import {TextField,
          DialogContentText,
          DialogTitle} from "@material-ui/core"
 import Divination from './Divination.js'
+import AvadaKedavra from './AvadaKedavra.js'
 import {gameService} from './../../../_services/game.service.js'
 
 const styles = {};
 
-function Spell({cards, spell, id}) {
+function Spell({cards, spell, currentGame, spellType}) {
   const [open, setOpen] = useState(false);
-  const getSpell = spell(id,1)
+  const getSpell = spell(currentGame.id,1);
   function handleClose() {
     setOpen(false);
     gameService.postSpell(id,1).then( response=> {
@@ -38,8 +39,12 @@ function Spell({cards, spell, id}) {
         <React.Fragment>
           <DialogTitle id="form-dialog-title"></DialogTitle>
           <DialogContent>
-            <DialogContentText align="center">HECHIZO</DialogContentText>
-            <Divination cards={cards}/>
+            <DialogContentText align="center">{spellType}</DialogContentText>
+            {spellType=="Divination" ?
+              <Divination cards={cards}/>
+            :
+              <AvadaKedavra currentGame={currentGame}/>
+            }
             <Button onClick={() => handleClose()}>Proceder con hechizo</Button>
           </DialogContent>
         </React.Fragment>
