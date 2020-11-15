@@ -37,7 +37,7 @@ function Card({type, portrait, clickAction}){
       url = "public/img/nocard.png"
       break;
   }
-  return <img src={url} style={style} onClick={() => clickAction(type)}/>
+  return <img src={url} style={style} onClick={clickAction ? () => clickAction(type) : () => {}}/>
 }
 
 Card.propTypes = {

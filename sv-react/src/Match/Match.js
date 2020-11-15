@@ -245,7 +245,7 @@ const mapDispatchToProps = dispatch => {
             dispatch(startAvadaKedavra)
             break;
           default:
-            dispatch({ ...listCards, cards })
+            dispatch({ ...listCards, cards: spell })
             break;
         }
       }).catch(err => {
