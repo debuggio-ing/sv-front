@@ -154,7 +154,6 @@ const mapDispatchToProps = dispatch => {
       })
     },
     listLobbies: (available, started, finished, ownGames, allGames) => {
-      //console.log("map to dispatch", available)
       lobbyService.listLobbies(available, started, finished, ownGames, allGames).then(lobbies => {
         if (Array.isArray(lobbies)) {
           dispatch({ ...listLobbies, lobbies })

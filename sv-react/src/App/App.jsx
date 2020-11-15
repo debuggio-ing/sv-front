@@ -14,6 +14,7 @@ import { Match } from '@/Match';
 import CreateRoom from './CreateRoom'
 import SimpleMenu from './Menu'
 
+import { deathEaterViolet } from '@/Styles'
 
 class App extends React.Component {
   constructor(props) {
@@ -56,7 +57,7 @@ class App extends React.Component {
         <div>
           {currentUser &&
             <AppBar position="relative">
-              <Toolbar className="sv-toolBar" style={{ backgroundColor: "#5c4965" }}>
+              <Toolbar className="sv-toolBar" style={{ backgroundColor: deathEaterViolet }}>
                 <img src="public/sv-logo.jpg" onClick={this.goHome} style={{ width: "80px" }} alt="logo" />
                 <Typography variant="h6" color="inherit">
                   Secret Voldemort

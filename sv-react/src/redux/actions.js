@@ -20,7 +20,6 @@ const toggleAvailable = {
   type: "TOGGLEAVAILABLE"
 }
 
-
 const toggleStarted = {
   type: "TOGGLESTARTED"
 }
@@ -40,6 +39,15 @@ const actionvote = {
 const listProclaim = {
   type: "LIST_PROCLAIM",
   proclams: [] //Donde un proclam es {id: int, phoenix: bool}
+}
+
+const listCards = {
+  type: "LIST_CARDS",
+  cards: [] // [{id: int, phoenix: bool}]
+}
+
+const startAvadaKedavra = {
+  type: "AVADAKEDAVRA",
 }
 
 const updateGameStatus = {
@@ -64,6 +72,7 @@ const updateLobbyStatus = {
 
 export {
   startGame, joinGame, listLobbies, actionvote, toggleStarted, toggleAvailable,
-  toggleFinished,
-  toggleOwnGames, listProclaim, updateLobbyStatus, updateGameStatus, leaveGame
+  toggleFinished, listCards,
+  toggleOwnGames, listProclaim, updateLobbyStatus, updateGameStatus, leaveGame,
+  startAvadaKedavra
 }
