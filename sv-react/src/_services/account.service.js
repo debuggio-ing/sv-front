@@ -1,9 +1,9 @@
 import config from 'config';
 import {
     handleResponse,
-    authHeader
+    authHeader,
 } from '@/_helpers';
-
+import 'regenerator-runtime/runtime'
 import {
     authenticationService
 } from './authentication.service'
@@ -23,7 +23,7 @@ export const accountService = {
     update,
     get currentDataValue() {
         return currentDataSubject.value
-    }
+    },
 }
 
 // returns {nickname, email, id} when possible
@@ -88,39 +88,32 @@ function update(nickname = null, password = null) {
 }
 
 
-function getPicture(){
-    let requestBody = JSON.stringify({
-        password
-    })
+async function getPicture(){
     const requestOptions = {
     method: 'GET',
     headers: authHeader(),
-    body: requestBody
-};
-return fetch(`${config.apiUrl}/api/users/info/modify/`,
+    };
+
+    let response = await fetch(`${config.apiUrl}/api/users/picture/`,
         requestOptions)
-    .then(handleResponse)
-    .then(x => {
-        if (x != 'Conflict') {
-            accountService.userInfo()
-            return x;
-        } else {
-            return new Error()
-        }
-    })
+    try {
+        let blob = await response.blob()
+        const image = URL.createObjectURL(blob)
+        return image
+    } catch (err){
+        console.log('fetch failed', err)
+    }
 }
 
 function uploadPicture(file){
-    console.log(file)
     const requestOptions = {
         method: 'POST',
         headers: authHeader(),
         body: file,
         redirect: 'follow'
       };
-      
+
     return fetch(`${config.apiUrl}/api/users/picture/`, requestOptions)
         .then(handleResponse)
-        .then(result => console.log(result))
         .catch(error => console.log('error', error));
 }
