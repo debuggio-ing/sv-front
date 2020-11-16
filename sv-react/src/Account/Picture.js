@@ -1,28 +1,41 @@
 
 import React from "react";
-import ReactDOM from "react-dom";
+import {accountService} from '@/_services'
+import { history } from '@/_helpers';
+
 
 
 export default function PictureUpload() {
-    
-    const uploadedImage = React.useRef(null);
-    const imageUploader = React.useRef(null);
+  const imageUploader = React.useRef(null);
+  const uploadedImage = React.useRef(null);
+  const [picture, setPicture] = React.useState("");
+
+  React.useEffect(() => {
+    async function fetchPicture() {
+        const response = await accountService.getPicture();
+        setPicture(response);
+      } fetchPicture();
+  }, []);
+
     const handleImageUpload = e => {
         const [file] = e.target.files;
+        const imagedata = e.target.files[0]
         if (file) {
             const reader = new FileReader();
-            const {
-                current
-            } = uploadedImage;
+            const { current } = uploadedImage;
             current.file = file;
             reader.onload = e => {
                 current.src = e.target.result;
             };
             reader.readAsDataURL(file);
+            let formData = new FormData();
+            formData.append('file', imagedata,file.name);
+            accountService.uploadPicture(formData)
         }
     };
 
-    return ( 
+    return (
+
         < div style = {
             {
                 display: "flex",
@@ -30,29 +43,29 @@ export default function PictureUpload() {
                 alignItems: "center",
                 justifyContent: "center"
             }} >
-        < input type = "file"
-        accept = "image/*"
-        onChange = {
-            handleImageUpload
-        }
-        ref = {imageUploader}
-        style = {{display: "none"}}/> 
-        < div style = {{
+        <form encType="multipart/form-data" action="">
+                < input type = "file"
+                accept = "image/*"
+                onChange = {handleImageUpload}
+                ref = {imageUploader}
+                style = {{display: "none"}}/>
+        </form>
+            < div style = {{
                 height: "60px",
                 width: "60px",
                 border: "1px dashed black"
             }
         }
         onClick = {() => imageUploader.current.click()} >
-        <img ref = {uploadedImage}
+    <img src = {picture} ref = {uploadedImage}
             style = {
-            {
-                width: "100%",
-                height: "100%",
-                position: "acsolute"
-            }
-        }/> 
-        </div>
+                {
+                    width: "100%",
+                    height: "100%",
+                }
+            }/>
+          </div>
+
         Clickee para cambiar su avatar
         </div>
     );

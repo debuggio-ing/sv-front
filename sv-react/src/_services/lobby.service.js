@@ -50,7 +50,7 @@ function getLobby(lobby_id) {
 // Returns a list of objects() with the data of all the lobbies in the server
 function listLobbies(available, started, finished, user_games, all_games) {
 
-    console.log("servicio", available);
+    // console.log("servicio", available);
     const requestOptions = {
         method: 'POST',
         headers: Object.assign(authHeader(),
