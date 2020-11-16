@@ -165,9 +165,10 @@ class Match extends React.Component {
               ? <Grid item key="Proc" md={this.props.playing ? 3 : 6}>
                 <Card className="">
                   <CardContent className="">
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Proclamar
-                                </Typography>
+                    {this.props.currentGame.client_director ?
+                      <Typography gutterBottom variant="h5" component="h2"> Proclamar </Typography>
+                      :<Typography gutterBottom variant="h5" component="h2"> Descartar </Typography>
+                    }
                     <Proclaim proclams={this.props.proclams} proclaimCard={(chosen) => this.proclaimCard(chosen)} />
                   </CardContent>
                 </Card>
