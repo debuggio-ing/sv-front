@@ -12,6 +12,7 @@ export const gameService = {
     nominateDirector,
     getSpell,
     postSpell,
+    sendMessageService,
 };
 
 // Given 'Nox' or 'Lumos' and a gameId it sends a request to the API with the vote
@@ -134,3 +135,24 @@ function nominateDirector(gameId, candidateId) {
             return proclamation;
         });
 }
+
+// Sends a message.
+function sendMessageService(gameId, message) {
+    const requestOptions = {
+        method: 'POST',
+        headers: authHeader(),
+        // headers: Object.assign(authHeader(), {
+        //     'Content-Type': 'application/json'
+        // }),
+        // body: JSON.stringify({msg: message})
+    };
+    return fetch(`${config.apiUrl}/api/games/` +
+        gameId.toString() + '/chat/send/?msg=' + message,
+        requestOptions)
+        .then(handleResponse)
+        .then(response => {
+            // for debugging purposes
+            console.log(response);
+        });
+}
+

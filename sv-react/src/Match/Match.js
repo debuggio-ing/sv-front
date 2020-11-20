@@ -57,6 +57,11 @@ class Match extends React.Component {
     gameService.postProcCards(this.props.currentGame.id, election)
   }
 
+  sendMessage(message) {
+    // const election = this.props.proclams[index].card_pos
+    gameService.sendMessageService(this.props.currentGame.id, message)
+  }
+
   componentDidMount() {
     this.reloadGamePublic();
     intervalGP = setInterval(this.reloadGamePublic.bind(this), 1000);
@@ -74,7 +79,6 @@ class Match extends React.Component {
           </Typography>
           <Grid container spacing={4}>
 
-
             <Grid item key="chat" md={this.props.playing ? 3 : 6}>
               <Card className="">
                 <CardContent className="">
@@ -82,7 +86,7 @@ class Match extends React.Component {
                     Chat
 
                   </Typography>
-                  <Chat />
+                  <Chat sendMessage={(message) => this.sendMessage(message)} />
                 </CardContent>
               </Card>
             </Grid>
