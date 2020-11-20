@@ -2,23 +2,23 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-
+import { history } from '@/_helpers';
 import { accountService } from '@/_services';
 import { authenticationService } from '../_services/authentication.service';
 
 
-function Update({ history }) {
-    const { path } = history;
+function Update() {
     const user = accountService.currentDataValue
     const initialValues = {
         nickname: user.nickname,
+        oldpassword: '',
         password: '',
         confirmPassword: ''
     };
 
     const validationSchema = Yup.object().shape({
-        nickname: Yup.string()
-            .max(20, 'No mas de 20 caracteres estan permitidos'),
+        oldpassword: Yup.string()
+            .min(8, 'La longitud minima es de 8 caracteres'),
         password: Yup.string()
             .min(8, 'La longitud minima es de 8 caracteres'),
         confirmPassword: Yup.string()
@@ -30,12 +30,12 @@ function Update({ history }) {
 
     function onSubmit(fields, { setStatus, setSubmitting }) {
         setStatus();
-        accountService.update(fields.nickname, fields.password)
+        console.log(fields)
+        accountService.update(user.nickname,fields.password,fields.oldpassword)
             .then(() => {
-                accountService.userInfo()
                 if (fields.password) {
-                    authenticationService.logout()
                     history.push('/');
+                    authenticationService.logout()
                 }
                 else
                     history.push('/');
@@ -46,14 +46,15 @@ function Update({ history }) {
         <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
             {({ errors, touched, isSubmitting }) => (
                 <Form>
-                    <h1>Actualizar Perfil</h1>
-                    <div className="form-group">
-                        <label>Alias:</label>
-                        <Field name="nickname" type="text" className={'form-control' + (errors.nickname && touched.nickname ? ' is-invalid' : '')} />
-                        <ErrorMessage name="nickname" component="div" className="invalid-feedback" />
+                    <h3 className="pt-3">Contraseña actual</h3>
+                    <div className="form-row">
+                        <div className="form-group col">
+                            <label>Verifica que eres tú ingresando tu  contraseña actual</label>
+                            <Field name="oldpassword" type="password" className={'form-control' + (errors.oldpassword && touched.oldpassword ? ' is-invalid' : '')} />
+                            <ErrorMessage name="oldpassword" component="div" className="invalid-feedback" />
+                        </div>
                     </div>
                     <h3 className="pt-3">Cambiar contraseña</h3>
-                    <p>Deja los siguientes campos vacíos si solo quieres modificar tu Alias</p>
                     <div className="form-row">
                         <div className="form-group col">
                             <label>Contraseña Nueva</label>

@@ -29,11 +29,6 @@ class App extends React.Component {
   componentDidMount() {
     authenticationService.currentUser.subscribe(x => this.setState({ currentUser: x }));
     accountService.userInfo()
-      .then(x => {
-        if (x != null) {
-          accountService.currentData.subscribe(x => this.setState({ nickname: x.nickname }))
-        }
-      })
   }
 
   logout() {
