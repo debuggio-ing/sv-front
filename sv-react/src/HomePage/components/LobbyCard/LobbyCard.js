@@ -75,4 +75,5 @@ function LobbyCard({ lobby, joinGame }) {
   )
 }
 //Aca debería ir el "Spectate"
+
 export default LobbyCard;

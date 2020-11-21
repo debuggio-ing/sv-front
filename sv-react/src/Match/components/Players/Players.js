@@ -38,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-
 function Players({startGame=()=>{},
                   playing=0,
                   currentGame,

@@ -56,7 +56,6 @@ function listLobbies(available, started, finished, user_games, all_games) {
         headers: Object.assign(authHeader(),
             { 'Content-Type': 'application/json' }),
         body: JSON.stringify({ available, started, finished, user_games, all_games }),
-
     };
     return fetch(`${config.apiUrl}/api/lobbies/`, requestOptions)
         // handle errors

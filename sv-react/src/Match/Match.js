@@ -331,5 +331,4 @@ const mapDispatchToProps = dispatch => {
 
 const connectionPartida = connect(mapStateToProps, mapDispatchToProps)(Match)
 
-
 export { connectionPartida as Match };
