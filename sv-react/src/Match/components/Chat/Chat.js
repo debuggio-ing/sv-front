@@ -6,17 +6,6 @@ import IconButton from '@material-ui/core/IconButton';
 import SendIcon from '@material-ui/icons/Send';
 import { Formik, Field, Form } from 'formik';
 
-const messages = [
-    {
-        "text": "Que bonita implementación del clasico juego Secret Voldemort!",
-        "from": "Maw"
-    },
-    {
-        "text": "Cierto! La mejor del condado",
-        "from": "Lau"
-    }
-]
-
 const useStyles = makeStyles((theme) => ({
   input: {
     marginLeft: theme.spacing(1),
@@ -28,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Chat({sendMessage, key}) {
+function Chat({sendMessage, key, messages}) {
     const classes = useStyles();
     return (<div>
 
@@ -36,9 +25,9 @@ function Chat({sendMessage, key}) {
           {messages.map((message, index) => (
               <ListItem key={index}>
               <ListItemAvatar key={index}>
-              <Avatar alt={message.from} src="/static/images/avatar/1.jpg" />
+              <Avatar alt="{message.from}" src="/static/images/avatar/1.jpg" />
                 </ListItemAvatar>
-                {message.text}
+                {message}
               </ListItem>
           ))}
         </List>

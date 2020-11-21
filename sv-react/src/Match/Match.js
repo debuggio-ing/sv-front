@@ -86,7 +86,8 @@ class Match extends React.Component {
                     Chat
 
                   </Typography>
-                  <Chat sendMessage={(message) => this.sendMessage(message)} />
+                  <Chat sendMessage={(message) => this.sendMessage(message)} 
+                        messages={this.props.currentGame.messages} />
                 </CardContent>
               </Card>
             </Grid>
