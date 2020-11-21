@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   input: {
     marginLeft: theme.spacing(1),
     flex: 1,
-    width: '85%',
+    width: '70%',
   },
   iconButton: {
     padding: 10,
@@ -25,9 +25,9 @@ function Chat({sendMessage, key, messages}) {
           {messages.map((message, index) => (
               <ListItem key={index}>
               <ListItemAvatar key={index}>
-              <Avatar alt="{message.from}" src="/static/images/avatar/1.jpg" />
+              <Avatar alt={message.sender} src="/static/images/avatar/1.jpg" />
                 </ListItemAvatar>
-                {message}
+                {message.message}
               </ListItem>
           ))}
         </List>
