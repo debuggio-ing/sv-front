@@ -12,7 +12,7 @@ import {
     BehaviorSubject
 } from 'rxjs';
 
-const currentDataSubject = new BehaviorSubject(null);
+export const currentDataSubject = new BehaviorSubject(null);
 
 export const accountService = {
     userInfo,
@@ -52,24 +52,19 @@ function logout() {
 // update nickname with new value and returns an UserPublic schema.
 function update(nickname = null, password = null, oldpassword=null) {
     var requestBody = {}
-    console.log(password,oldpassword)
+    console.log(nickname,password, oldpassword)
     let currentUser = accountService.currentDataValue.nickname
     if ((nickname != currentUser) && !password) {
         requestBody = JSON.stringify({
             nickname
         })
-    } else if ((nickname == currentUser) && password) {
+    } else if (password) {
         requestBody = JSON.stringify({
             password,
             oldpassword
         })
-    } else if ((nickname != currentUser) && password) {
-        requestBody = JSON.stringify({
-            nickname,
-            password,
-            oldpassword
-        })
-    }
+    } 
+
     const requestOptions = {
         method: 'POST',
         headers: Object.assign(authHeader(), {
@@ -85,6 +80,7 @@ function update(nickname = null, password = null, oldpassword=null) {
                 accountService.userInfo()
                 return x;
             } else {
+                console.log(x)
                 return new Error()
             }
         })

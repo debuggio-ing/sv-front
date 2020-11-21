@@ -7,10 +7,10 @@ import { accountService } from '@/_services';
 import { authenticationService } from '../_services/authentication.service';
 
 
-function Update() {
+function Update({ history} ) {
+    const {path} = history
     const user = accountService.currentDataValue
     const initialValues = {
-        nickname: user.nickname,
         oldpassword: '',
         password: '',
         confirmPassword: ''
