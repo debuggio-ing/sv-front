@@ -7,8 +7,8 @@ import { accountService } from '@/_services';
 import { authenticationService } from '../_services/authentication.service';
 
 
-function Update({ history} ) {
-    const {path} = history
+function Update({ match }) {
+    const { path } = match
     const user = accountService.currentDataValue
     const initialValues = {
         oldpassword: '',
@@ -31,7 +31,7 @@ function Update({ history} ) {
     function onSubmit(fields, { setStatus, setSubmitting }) {
         setStatus();
         console.log(fields)
-        accountService.update(user.nickname,fields.password,fields.oldpassword)
+        accountService.update(user.nickname, fields.password, fields.oldpassword)
             .then(() => {
                 if (fields.password) {
                     history.push('/');
