@@ -27,11 +27,17 @@ function Card({type, portrait, clickAction}){
     case "Nox":
       url = "public/img/nox.png"
       break;
+    case "Pila-Descarte":
+      url = "public/img/discarded-pool.png"
+      break;
+    case "Pila-Robo":
+      url = "public/img/deck.png"
+      break;
     default:
       url = "public/img/nocard.png"
       break;
   }
-  return <img src={url} style={style} onClick={() => clickAction(type)}/>
+  return <img src={url} style={style} onClick={clickAction ? () => clickAction(type) : () => {}}/>
 }
 
 Card.propTypes = {

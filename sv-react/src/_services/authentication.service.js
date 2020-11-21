@@ -7,6 +7,7 @@ import {
     handleResponse,
     authHeader
 } from '@/_helpers';
+import { accountService } from './account.service';
 
 const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
 
@@ -14,23 +15,23 @@ export const authenticationService = {
     register,
     login,
     logout,
-    userInfo,
     refreshToken,
     RefreshException,
+    verify,
     currentUser: currentUserSubject.asObservable(),
     get currentUserValue() {
         return currentUserSubject.value
     }
 };
 
-function register(username, email, password) {
+function register(nickname, email, password) {
     const requestOptions = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            username,
+            nickname,
             email,
             password
         })
@@ -47,6 +48,7 @@ function register(username, email, password) {
 function logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
+    accountService.logout()
     currentUserSubject.next(null);
 }
 
@@ -70,24 +72,9 @@ function login(email, password) {
             localStorage.setItem('currentUser', JSON.stringify(token));
             console.log(JSON.parse(localStorage.getItem('currentUser')));
             currentUserSubject.next(token);
+            accountService.userInfo()
             return token;
         });
-}
-
-function userInfo() {
-    const requestOptions = {
-        method: 'GET',
-        headers: Object.assign(authHeader(),
-            {'Content-Type': 'application/json'})
-    };
-    return fetch(`${config.apiUrl}/api/users/info/`,
-            requestOptions)
-            .then(userinfo => {
-                console.log(userinfo)
-                localStorage.setItem('userInfo', JSON.stringify(userInfo));
-                console.log(JSON.parse(localStorage.getItem('userInfo')));
-                return userinfo
-            });
 }
 
 // Refresh Token, be careful with raising exceptions
@@ -120,6 +107,22 @@ function refreshToken() {
                             currentUserSubject.next(tokens);
                             return;
                         })
+        });
+}
+
+// Verify email service
+function verify(user_email, input_code) {
+    const requestOptions = {
+        method: 'POST',
+    };
+
+    let int_input_code = parseInt(input_code)
+
+    return fetch(`${config.apiUrl}/api/verify/?user_email=` + user_email + "&input_code=" + int_input_code, requestOptions)
+        // handle errors
+        .then(handleResponse)
+        .then(userVerified => {
+            console.log(userVerified) // debugging purposes
         });
 }
 

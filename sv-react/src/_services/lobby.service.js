@@ -14,12 +14,12 @@ export const lobbyService = {
 
 
 // Given a name and max_players (str, int) it returns the data of the created lobby with the creator already in the game
-function createLobby(name, max_players){
+function createLobby(name, max_players) {
     const requestOptions = {
         method: 'POST',
         headers: Object.assign(authHeader(),
-            {'Content-Type': 'application/json'}),
-        body: JSON.stringify({name, max_players}),
+            { 'Content-Type': 'application/json' }),
+        body: JSON.stringify({ name, max_players }),
     }
     return fetch(`${config.apiUrl}/api/lobbies/new/`, requestOptions)
         // handle errors
@@ -48,10 +48,14 @@ function getLobby(lobby_id) {
 
 
 // Returns a list of objects() with the data of all the lobbies in the server
-function listLobbies() {
+function listLobbies(available, started, finished, user_games, all_games) {
+
+    // console.log("servicio", available);
     const requestOptions = {
-        method: 'GET',
-        headers: authHeader(),
+        method: 'POST',
+        headers: Object.assign(authHeader(),
+            { 'Content-Type': 'application/json' }),
+        body: JSON.stringify({ available, started, finished, user_games, all_games }),
     };
     return fetch(`${config.apiUrl}/api/lobbies/`, requestOptions)
         // handle errors
@@ -65,7 +69,7 @@ function listLobbies() {
 // Receives the id of a lobby the user wants to join.
 // If the lobby is full, it returns 409.
 // If the lobby isn't full it adds the user to the lobby and returns the following data:
-// lobby_id, lobby_name, current_players (usernames of the players in the lobby), max_players_allowed
+// lobby_id, lobby_name, current_players (nicknames of the players in the lobby), max_players_allowed
 function joinLobby(lobby_id) {
     const requestOptions = {
         method: 'POST',

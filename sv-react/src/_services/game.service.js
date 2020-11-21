@@ -7,13 +7,15 @@ import {
 export const gameService = {
     vote,
     gameStatus,
-    getDirProcCards,
-    postDirProcCards,
-    nominate_director,
+    getProcCards,
+    postProcCards,
+    nominateDirector,
+    getSpell,
+    postSpell,
 };
 
 // Given 'Nox' or 'Lumos' and a gameId it sends a request to the API with the vote
-function vote(chosen, gameId = 1) { //delete '= 1'
+function vote(chosen, gameId) {
     var vote = true;
     if (chosen == 'Nox') {
         vote = false;
@@ -28,7 +30,7 @@ function vote(chosen, gameId = 1) { //delete '= 1'
         }),
     };
     return fetch(`${config.apiUrl}/api/games/` + gameId.toString() + `/vote/`,
-            requestOptions)
+        requestOptions)
         // handle errors
         .then(handleResponse)
         .then(response => {
@@ -47,59 +49,88 @@ function gameStatus(gameId) {
         headers: authHeader(),
     };
     return fetch(`${config.apiUrl}/api/games/` + gameId.toString() + '/',
-            requestOptions)
-            .then(handleResponse)
-            .then(game => {
-                return game;
-            });
+        requestOptions)
+        .then(handleResponse)
+        .then(game => {
+            return game;
+        });
 }
 
 
-// Given a gameId it returns to the director the cards selected by the minsiter of the game
-function getDirProcCards(gameId) {
+// Returns the spell appropriate to the game's status
+function getSpell(gameId) {
     const requestOptions = {
         method: 'GET',
         headers: authHeader(),
     };
-    return fetch(`${config.apiUrl}/api/games/` + gameId.toString() + `/dir/proc/`,
-            requestOptions)
-            .then(handleResponse)
-            .then(procCards => {
-                return procCards;
-            })
+    return fetch(`${config.apiUrl}/api/games/` + gameId.toString() + '/spell/',
+        requestOptions)
+        .then(handleResponse)
+        .then(spell_response=> {
+            return spell_response;
+        });
 }
 
 
-// Given the cards to proclaim by the director, it returns true or false if the game is over or not
-function postDirProcCards(gameId, election) {
+// Returns the spell appropriate to the game's status
+function postSpell(gameId, target = -1) {
     const requestOptions = {
         method: 'POST',
         headers: Object.assign(authHeader(), {
             'Content-Type': 'application/json'
         }),
-        body: JSON.stringify(election),
+        body: JSON.stringify({target})
     };
-    return fetch(`${config.apiUrl}/api/games/` + gameId.toString() + `/dir/proc/`,
-            requestOptions)
-            .then(handleResponse)
-            .then(procCards => {
-                return procCards;
-            })
+    return fetch(`${config.apiUrl}/api/games/` + gameId.toString() + '/spell/', requestOptions)
+        .then(handleResponse)
+        .then(response=> {
+            return response;
+        });
 }
 
-// Sends a request to the nominate director.
-function nominate_director(gameId, candidateId) {
+
+// Given a gameId it returns to the director the cards selected by the minsiter of the game
+function getProcCards(gameId) {
+    const requestOptions = {
+        method: 'GET',
+        headers: authHeader(),
+    };
+    return fetch(`${config.apiUrl}/api/games/` + gameId.toString() + `/proc/`,
+        requestOptions)
+        .then(handleResponse)
+        .then(procCards => {
+            return procCards;
+        })
+}
+
+
+// Given the cards to proclaim by the director, it returns true or false if the game is over or not
+function postProcCards(gameId, election) {
     const requestOptions = {
         method: 'POST',
         headers: authHeader(),
     };
-    return fetch(`${config.apiUrl}/api/games/` + 
-                    gameId.toString() +'/director/' + candidateId.toString() + '/',
-                    requestOptions)
-            .then(handleResponse)
-            .then(nomination => {
-                // for debugging purposes
-                console.log(nomination);
-                return proclamation;
-            });
+    return fetch(`${config.apiUrl}/api/games/` + gameId.toString() + `/proc/?election=` + election.toString(),
+        requestOptions)
+        .then(handleResponse)
+        .then(procCards => {
+            return procCards;
+        })
+}
+
+// Sends a request to the nominate director.
+function nominateDirector(gameId, candidateId) {
+    const requestOptions = {
+        method: 'POST',
+        headers: authHeader(),
+    };
+    return fetch(`${config.apiUrl}/api/games/` +
+        gameId.toString() + '/director/' + candidateId.toString() + '/',
+        requestOptions)
+        .then(handleResponse)
+        .then(nomination => {
+            // for debugging purposes
+            console.log(nomination);
+            return proclamation;
+        });
 }
