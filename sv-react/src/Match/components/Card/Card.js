@@ -33,8 +33,11 @@ function Card({type, portrait, clickAction}){
     case "Pila-Robo":
       url = "public/img/deck.png"
       break;
+    case "NocardDE":
+      url = "public/img/nocard_de.png"
+      break;
     default:
-      url = "public/img/nocard.png"
+      url = "public/img/nocard_fe.png"
       break;
   }
   return <img src={url} style={style} onClick={clickAction ? () => clickAction(type) : () => {}}/>

@@ -94,8 +94,7 @@ class Match extends React.Component {
                     <Typography gutterBottom variant="h5" component="h2">
                       Tablero
                                 </Typography>
-                    <Board proclamacionesMortifagas={Array(this.props.currentGame.score.bad).fill()}
-                      proclamacionesFenix={Array(this.props.currentGame.score.good).fill()} />
+                    <Board currentGame={this.props.currentGame} />
                   </CardContent>
                 </Card>
               </Grid>
@@ -117,20 +116,6 @@ class Match extends React.Component {
                 </CardContent>
               </Card>
             </Grid>
-            {this.props.playing
-              ? <Grid item key="deck">
-                <Card className="">
-                  <CardContent className="">
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Estado de mazo
-                                </Typography>
-                    <Deck proclaimed={
-                      this.props.currentGame.score.good + this.props.currentGame.score.bad} />
-                  </CardContent>
-                </Card>
-              </Grid>
-              : <br />
-            }
             {this.props.voting
               ? <Grid item key="vote" md={this.props.playing ? 3 : 6}>
                 <Card className="">
