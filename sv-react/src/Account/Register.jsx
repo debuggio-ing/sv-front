@@ -61,6 +61,7 @@ class RegisterPage extends React.Component {
                             <label>Alias:</label>
                             <Field name="nickname" type="text" className={'form-control' + (errors.nickname && touched.nickname ? ' is-invalid' : '')} />
                             <ErrorMessage name="nickname" component="div" className="invalid-feedback" />
+
                                 </div>
                                 <div className="form-group">
                                     <label>Email</label>

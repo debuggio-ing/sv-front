@@ -136,7 +136,6 @@ const mapStateToProps = state => ({
   listStarted: state.listStarted,
   listFinished: state.listFinished,
   listAll: state.listAll
-
 })
 
 const mapDispatchToProps = dispatch => {

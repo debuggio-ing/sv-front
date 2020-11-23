@@ -19,8 +19,8 @@ const useStyles = makeStyles((theme) => ({
 
 function Deck({proclaimed}) {
     let classes = useStyles();
-    let discarded = (2*proclaimed) % 10;
-    let cards_left = 17 - (2*proclaimed)%10 - proclaimed;
+    let discarded = proclaimed != 9 ? (2*proclaimed) % 10 : 0;
+    let cards_left = 17 - discarded - proclaimed;
     return <Grid container className={classes.root, classes.cardList} container
     spacing={0}
     direction="column"

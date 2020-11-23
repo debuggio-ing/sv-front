@@ -28,6 +28,7 @@ const initialState = {
     director: -1,
     players: [],
     messages: [],
+    semaphore: 0
   }
 }
 
