@@ -140,14 +140,13 @@ function nominateDirector(gameId, candidateId) {
 function sendMessageService(gameId, message) {
     const requestOptions = {
         method: 'POST',
-        headers: authHeader(),
-        // headers: Object.assign(authHeader(), {
-        //     'Content-Type': 'application/json'
-        // }),
-        // body: JSON.stringify({msg: message})
+        headers: Object.assign(authHeader(), {
+            'Content-Type': 'application/json'
+        }),
+        body: JSON.stringify({msg: message})
     };
     return fetch(`${config.apiUrl}/api/games/` +
-        gameId.toString() + '/chat/send/?msg=' + message,
+        gameId.toString() + '/chat/send/',
         requestOptions)
         .then(handleResponse)
         .then(response => {
@@ -155,4 +154,3 @@ function sendMessageService(gameId, message) {
             console.log(response);
         });
 }
-
