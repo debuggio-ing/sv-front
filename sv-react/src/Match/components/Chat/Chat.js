@@ -34,20 +34,24 @@ function Chat({sendMessage, key, messages}) {
 
         <Formik
           initialValues={{
-              mensaje: '',
+              message: '',
           }}
-          onSubmit={({ mensaje }) => {
-              sendMessage(mensaje);
-          }}
-          render={() => (
-              <Form>
-                <Field name="mensaje" type="text" className={classes.input} />
-                <IconButton className={classes.iconButton} type="submit">
-                  <SendIcon />
-                </IconButton>
-              </Form>
-          )}
-        />
+          onSubmit={(values, {resetForm}) => {
+              sendMessage(values.message);
+              resetForm({message: ''})
+          }}>
+            { formProps =>  (
+                <Form onSubmit={formProps.handleSubmit}>
+                  <Field name="message"
+                         type="text"
+                         className={classes.input}
+                         value={formProps.values.message}/>
+                  <IconButton className={classes.iconButton} type="submit">
+                    <SendIcon />
+                  </IconButton>
+                </Form>
+            )}
+        </Formik>
         </div>);
 }
 
