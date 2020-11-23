@@ -70,13 +70,15 @@ function Players({startGame=()=>{},
       {castKedavra ? <Typography>¿Quien debe morir?</Typography>: ""}
       {players.map((player, index) => (
         <ListItem key={index}
-                  onClick={(!player.alive || (player.player_id==currentGame.prev_minister && alive_players<=5) || player.player_id==currentGame.prev_director) ?
+                  onClick={!player.alive ?
                             () => {} :
-                            castKedavra ?
-                                () => castKedavra(player.player_id) :
-                                canElectDirector ?
-                                    () => proposeDirector(player.player_id):
-                                    () => {}}
+                                ((player.player_id==currentGame.prev_minister && alive_players>5) || player.player_id==currentGame.prev_director) ?
+                                () => {} :
+                                    castKedavra ?
+                                        () => castKedavra(player.player_id) :
+                                        canElectDirector ?
+                                            () => proposeDirector(player.player_id):
+                                            () => {}}
                   style={!player.alive ?
                             {opacity: 0.5} :
                                 ((player.player_id==currentGame.prev_minister && alive_players>5) || player.player_id==currentGame.prev_director) ?
