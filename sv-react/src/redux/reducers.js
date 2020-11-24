@@ -27,7 +27,10 @@ const initialState = {
     id: -1,
     minister: -1,
     director: -1,
+    prev_minister: -1,
+    prev_director: -1,
     players: [],
+    messages: [],
     semaphore: 0
   }
 }
