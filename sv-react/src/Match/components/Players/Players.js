@@ -15,7 +15,7 @@ import { primaryLightgreen, secondaryLightblue, backgroundGray } from '@/Styles'
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    maxWidth: '36ch',
+    maxWidth: '72ch',
     backgroundColor: theme.palette.background.paper
   },
   inline: {
@@ -53,6 +53,7 @@ function Players({startGame=()=>{},
     let button2;
     let players = currentGame.players;
     let owner = currentGame.is_owner;
+    let owner_alias = currentGame.owner_alias;
     let director = currentGame.director;
     let minister = currentGame.minister;
     let voting = currentGame.voting;
@@ -91,7 +92,7 @@ function Players({startGame=()=>{},
             }
           </ListItemAvatar>
           <ListItem key={index+"name"}>
-            {player.nickname}
+            {player.nickname == owner_alias ? <b>{player.nickname}</b>  : player.nickname}
           </ListItem>
           {player.role ?
             <ListItem key={index+"loyalty"}>
