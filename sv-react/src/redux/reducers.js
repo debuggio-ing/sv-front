@@ -10,6 +10,7 @@ const initialState = {
   spellType: "None",
   voting: 0,
   in_session: 0,
+  expelliarmus: 0,
   listAvailable: true,
   listStarted: false,
   listFinished: false,

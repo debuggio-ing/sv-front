@@ -105,12 +105,15 @@ function getProcCards(gameId) {
 
 
 // Given the cards to proclaim by the director, it returns true or false if the game is over or not
-function postProcCards(gameId, election) {
+function postProcCards(gameId, election, expelliarmus=false) {
     const requestOptions = {
         method: 'POST',
-        headers: authHeader(),
+        headers: Object.assign(authHeader(), {
+            'Content-Type': 'application/json'
+        }),
+        body: JSON.stringify({election,expelliarmus})
     };
-    return fetch(`${config.apiUrl}/api/games/` + gameId.toString() + `/proc/?election=` + election.toString(),
+    return fetch(`${config.apiUrl}/api/games/` + gameId.toString() + `/proc/`,
         requestOptions)
         .then(handleResponse)
         .then(procCards => {
