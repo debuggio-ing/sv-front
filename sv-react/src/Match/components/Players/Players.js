@@ -24,6 +24,10 @@ const useStyles = makeStyles((theme) => ({
   playButton: {
     float: 'right'
   },
+
+  leaveButton: {
+    float: 'right'
+  },
   director: {
     color: theme.palette.getContrastText(primaryLightgreen),
     backgroundColor: primaryLightgreen,
@@ -39,12 +43,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Players({startGame=()=>{},
+                  leaveGame,
                   playing=0,
                   currentGame,
                   proposeDirector,
                   castKedavra}) {
     const classes = useStyles();
     let button;
+    let button2;
     let players = currentGame.players;
     let owner = currentGame.is_owner;
     let director = currentGame.director;
@@ -62,7 +68,10 @@ function Players({startGame=()=>{},
         <br/>
       }
     }
-
+       button2 = <Button className={classes.leaveButton}
+           variant="contained" color="primary" onClick={leaveGame}>
+                      Salir
+                   </Button>
     return <List className={classes.root}>
 
       {canElectDirector ? <Typography>Seleccione un candidato a director</Typography>: ""}
@@ -100,6 +109,7 @@ function Players({startGame=()=>{},
         </ListItem>
       ))}
       {!playing ? button : <div/>}
+      {button2}
     </List>
 }
 

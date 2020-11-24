@@ -27,7 +27,8 @@ const initialState = {
     minister: -1,
     director: -1,
     players: [],
-    semaphore: 0
+    semaphore: 0,
+    owner: ""
   }
 }
 
