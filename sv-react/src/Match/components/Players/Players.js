@@ -72,7 +72,7 @@ function Players({startGame=()=>{},
         <ListItem key={index}
                   onClick={!player.alive ?
                             () => {} :
-                                ((player.player_id==currentGame.prev_minister && alive_players>5) || player.player_id==currentGame.prev_director) ?
+                                ((player.player_id==currentGame.prev_minister && alive_players>5) || player.player_id==currentGame.prev_director || player.player_id==currentGame.minister) ?
                                 () => {} :
                                     castKedavra ?
                                         () => castKedavra(player.player_id) :
@@ -81,7 +81,7 @@ function Players({startGame=()=>{},
                                             () => {}}
                   style={!player.alive ?
                             {opacity: 0.5} :
-                                ((player.player_id==currentGame.prev_minister && alive_players>5) || player.player_id==currentGame.prev_director) ?
+                                ((player.player_id==currentGame.prev_minister && alive_players>5) || player.player_id==currentGame.prev_director || player.player_id==currentGame.minister) ?
                                 undefined :
                                     castKedavra ?
                                         {cursor: "pointer"} :
