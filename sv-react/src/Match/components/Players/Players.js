@@ -58,6 +58,7 @@ function Players({startGame=()=>{},
     let minister = currentGame.minister;
     let voting = currentGame.voting;
     let canElectDirector = currentGame.client_minister && !currentGame.in_session && !voting;
+    let alive_players = currentGame.players.filter((player) => player.alive).length
     if (owner) {
       if(players.length >= 5){
           button = <Button className={classes.playButton}
@@ -79,8 +80,24 @@ function Players({startGame=()=>{},
       {castKedavra ? <Typography>¿Quien debe morir?</Typography>: ""}
       {players.map((player, index) => (
         <ListItem key={index}
-                  onClick={!player.alive ? () => {} : castKedavra ? () => castKedavra(player.player_id) : canElectDirector ? () => proposeDirector(player.player_id): () => {}}
-                  style={!player.alive ? {opacity: 0.5} : castKedavra ? {cursor: "pointer"} :canElectDirector ? {cursor: "pointer"} : undefined}>
+                  onClick={!player.alive ?
+                            () => {} :
+                                ((player.player_id==currentGame.prev_minister && alive_players>5) || player.player_id==currentGame.prev_director || player.player_id==currentGame.minister) ?
+                                () => {} :
+                                    castKedavra ?
+                                        () => castKedavra(player.player_id) :
+                                        canElectDirector ?
+                                            () => proposeDirector(player.player_id):
+                                            () => {}}
+                  style={!player.alive ?
+                            {opacity: 0.5} :
+                                ((player.player_id==currentGame.prev_minister && alive_players>5) || player.player_id==currentGame.prev_director || player.player_id==currentGame.minister) ?
+                                undefined :
+                                    castKedavra ?
+                                        {cursor: "pointer"} :
+                                        canElectDirector ?
+                                            {cursor: "pointer"} :
+                                            undefined}>
           <ListItemAvatar key={index}>
             {playing ?
               (parseInt(minister) === player.player_id) ?
