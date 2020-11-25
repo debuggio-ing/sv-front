@@ -50,6 +50,10 @@ const startAvadaKedavra = {
   type: "AVADAKEDAVRA",
 }
 
+const startImperio = {
+  type: "IMPERIO",
+}
+
 const updateGameStatus = {
   type: "UPDATEGAMESTATUS",
   game: {
@@ -74,5 +78,5 @@ export {
   startGame, joinGame, listLobbies, actionvote, toggleStarted, toggleAvailable,
   toggleFinished, listCards,
   toggleOwnGames, listProclaim, updateLobbyStatus, updateGameStatus, leaveGame,
-  startAvadaKedavra
+  startAvadaKedavra, startImperio
 }

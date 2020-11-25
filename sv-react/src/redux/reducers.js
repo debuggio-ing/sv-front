@@ -75,9 +75,11 @@ export default (state = initialState, action) => {
     case "LIST_PROCLAIM":
       return { ...state, proclams: action.proclams };
     case "AVADAKEDAVRA":
-      return {...state, spellType: "AvadaKedavra" };
+      return { ...state, spellType: "AvadaKedavra" };
+    case "IMPERIO":
+      return { ...state, spellType: "Imperio" };
     case "LIST_CARDS":
-      return {...state, cards: action.cards, spellType: "Divination" };
+      return { ...state, cards: action.cards, spellType: "Divination" };
     case "UPDATEGAMESTATUS":
       if (action.game.player_list) {
         let game = { ...action.game, players: action.game.player_list, id: state.currentGame.id }

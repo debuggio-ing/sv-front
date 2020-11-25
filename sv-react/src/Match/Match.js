@@ -6,7 +6,8 @@ import Results from './components/Results/Results.js'
 import Chat from './components/Chat/Chat.js'
 import Board from './components/Board/Board.js'
 import { connect } from 'react-redux'
-import { startGame, actionvote, updateLobbyStatus, updateGameStatus, listCards, listProclaim, joinGame, startAvadaKedavra } from './../redux/actions.js'
+import { startGame, actionvote, updateLobbyStatus, updateGameStatus, listCards,
+        listProclaim, joinGame, startAvadaKedavra, startImperio } from './../redux/actions.js'
 import Vote from './components/Vote/Vote.js'
 import Deck from './components/Deck/Deck.js'
 import Spell from './components/Spells/Spell.js'
@@ -174,7 +175,8 @@ class Match extends React.Component {
                       Resultados
                                 </Typography>
                     {this.props.currentGame.in_session ?
-                      <Typography>{this.props.currentGame.player_list.filter((player) => player.player_id==this.props.currentGame.minister)[0].nickname} y
+                      <Typography>{console.log(this.props.currentGame.player_list)}
+                                  {this.props.currentGame.player_list.filter((player) => player.player_id==this.props.currentGame.minister)[0].nickname} y
                                   {" "+ this.props.currentGame.player_list.filter((player) => player.player_id==this.props.currentGame.director)[0].nickname} fueron elegidos
                       </Typography>
                       : <Typography>El gobierno NO fue elegido.</Typography>
@@ -230,13 +232,25 @@ const mapDispatchToProps = dispatch => {
     },
     spell: (id) => {
       gameService.getSpell(id).then(spell => {
-        console.log(spell);
+        console.log("TIPO DE SPELL GRAL")
+        console.log(typeof(spell))
         switch (typeof(spell)) {
-          case "number":
-            dispatch(startAvadaKedavra)
+          case 'number':
+            switch (spell){
+              case 1:
+                dispatch(startAvadaKedavra)
+                break;
+              case 2:
+                dispatch(startImperio)
+                break;
+              default:
+                break;
+            }
+            break;
+          case 'object':
+            dispatch({ ...listCards, cards: spell })
             break;
           default:
-            dispatch({ ...listCards, cards: spell })
             break;
         }
       }).catch(err => {
@@ -286,7 +300,7 @@ const mapDispatchToProps = dispatch => {
         }
       }
       ).catch(err => {
-        alert("No se pudo actualizar el estado de la partida");
+        alert("asd;fjksd;fkjasd;fjksad;fk");
         clearInterval(intervalGP);
       })
     },
@@ -301,7 +315,8 @@ const mapDispatchToProps = dispatch => {
             }
           }
           ).catch(err => {
-            alert("No se pudo actualizar el estado de la partida")
+            console.log(err)
+            alert("18i23879128739")
           });
         }
         else {
