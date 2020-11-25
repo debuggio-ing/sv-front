@@ -110,7 +110,7 @@ function Players({startGame=()=>{},
         </ListItem>
       ))}
       {!playing ? button : <div/>}
-      {button2}
+      {!playing ? button2 : <div/>}
     </List>
 }
 
