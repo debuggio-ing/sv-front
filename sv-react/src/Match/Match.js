@@ -323,7 +323,7 @@ const mapDispatchToProps = dispatch => {
         }
       }
       ).catch(err => {
-        alert("asd;fjksd;fkjasd;fjksad;fk");
+        alert("No se pudo efectuar la elección");
         clearInterval(intervalGP);
       })
     },
@@ -339,7 +339,7 @@ const mapDispatchToProps = dispatch => {
           }
           ).catch(err => {
             console.log(err)
-            alert("18i23879128739")
+            alert("No se pudo actualizar el estado de la partida")
           });
         }
         else {
