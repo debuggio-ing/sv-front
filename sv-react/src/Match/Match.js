@@ -11,6 +11,7 @@ import Vote from './components/Vote/Vote.js'
 import Deck from './components/Deck/Deck.js'
 import Spell from './components/Spells/Spell.js'
 import Proclaim from './components/Proclaim/Proclaim.js'
+import Expelliarmus from './components/Expelliarmus/Expelliarmus.js'
 import { gameService, lobbyService } from '@/_services'
 import { history } from '@/_helpers';
 import { array } from 'prop-types';
@@ -26,7 +27,7 @@ class Match extends React.Component {
       this.props.joinGame(query.get("id"));
     }
     this.classes = {
-      card:  {
+      card: {
         backgroundColor: backgroundGray
       }
     };
@@ -57,7 +58,7 @@ class Match extends React.Component {
 
   proclaimCard(index) {
     const election = this.props.proclams[index].card_pos
-    gameService.postProcCards(this.props.currentGame.id, election)
+    gameService.postProcCards(this.props.currentGame.id, election, false)
   }
 
   sendMessage(message) {
@@ -73,6 +74,12 @@ class Match extends React.Component {
   componentWillUnmount() {
     clearInterval(intervalGP);
   }
+
+  expelliarmus() {
+    gameService.postProcCards(this.props.currentGame.id, 99, true)
+
+  }
+
   render() {
     return (
       <div className="match">
@@ -101,7 +108,7 @@ class Match extends React.Component {
                   <CardContent className="">
                     <Typography gutterBottom variant="h5" component="h2">
                       Tablero
-                                </Typography>
+                    </Typography>
                     <Board currentGame={this.props.currentGame} />
                   </CardContent>
                 </Card>
@@ -131,7 +138,7 @@ class Match extends React.Component {
                   <CardContent className="">
                     <Typography gutterBottom variant="h5" component="h2">
                       Votación
-                                </Typography>
+                    </Typography>
                     <Vote vote={(chosen) => this.props.vote(chosen, this.props.currentGame.id)} />
                   </CardContent>
                 </Card>
@@ -139,31 +146,45 @@ class Match extends React.Component {
               : <br />
             }
             {this.props.currentGame.in_session &&
-            this.props.currentGame.director_proclaimed &&
-            this.props.currentGame.client_minister &&
-            this.props.currentGame.last_proc_negative
-            ?
+              this.props.currentGame.director_proclaimed &&
+              this.props.currentGame.client_minister &&
+              this.props.currentGame.last_proc_negative
+              ?
               <Spell cards={this.props.cards}
-              spell={this.props.spell}
-              currentGame={this.props.currentGame}
-              spellType={this.props.spellType}  />
+                spell={this.props.spell}
+                currentGame={this.props.currentGame}
+                spellType={this.props.spellType} />
+              : <br />
+            }
+
+
+            {this.props.currentGame.in_session && this.props.currentGame.score.bad == 5 &&
+              this.props.currentGame.expelliarmus && this.props.currentGame.client_minister
+              && !this.props.currentGame.minister_proclaimed ?
+              <Expelliarmus game_id={this.props.currentGame.id} />
               : <br />
             }
 
             {(((this.props.currentGame.client_director &&
-            this.props.currentGame.minister_proclaimed &&
-            !this.props.currentGame.director_proclaimed)
-            || (this.props.currentGame.client_minister &&
-              !this.props.currentGame.minister_proclaimed))
-            && this.props.currentGame.in_session)
+              this.props.currentGame.minister_proclaimed &&
+              !this.props.currentGame.director_proclaimed)
+              || (this.props.currentGame.client_minister &&
+                !this.props.currentGame.minister_proclaimed
+                && !this.props.currentGame.expelliarmus))
+              && this.props.currentGame.in_session)
               ? <Grid item key="Proc" md={this.props.playing ? 3 : 6}>
                 <Card className="">
                   <CardContent className="">
                     {this.props.currentGame.client_director ?
                       <Typography gutterBottom variant="h5" component="h2"> Proclamar </Typography>
-                      :<Typography gutterBottom variant="h5" component="h2"> Descartar </Typography>
+                      : <Typography gutterBottom variant="h5" component="h2"> Descartar </Typography>
                     }
                     <Proclaim proclams={this.props.proclams} proclaimCard={(chosen) => this.proclaimCard(chosen)} />
+                    {(this.props.currentGame.score.bad == 5 && !this.props.currentGame.expelliarmus &&
+                      this.props.currentGame.client_director && this.props.currentGame.in_session) ?
+                      <Button onClick={() => this.expelliarmus()}> Expelliarmus</Button>
+                      : <br />
+                    }
                   </CardContent>
                 </Card>
               </Grid>
@@ -178,8 +199,8 @@ class Match extends React.Component {
                       Resultados
                                 </Typography>
                     {this.props.currentGame.in_session ?
-                      <Typography>{this.props.currentGame.player_list.filter((player) => player.player_id==this.props.currentGame.minister)[0].nickname} y
-                                  {" "+ this.props.currentGame.player_list.filter((player) => player.player_id==this.props.currentGame.director)[0].nickname} fueron elegidos
+                      <Typography>{this.props.currentGame.player_list.filter((player) => player.player_id == this.props.currentGame.minister)[0].nickname} y
+                                  {" " + this.props.currentGame.player_list.filter((player) => player.player_id == this.props.currentGame.director)[0].nickname} fueron elegidos
                       </Typography>
                       : <Typography>El gobierno NO fue elegido.</Typography>
                     }
@@ -202,6 +223,7 @@ const mapStateToProps = state => ({
   proclamacionesMortifagas: state.proclamacionesMortifagas,
   voting: state.voting,
   proclams: state.proclams,
+  expelliarmus: state.expelliarmus,
   currentGame: state.currentGame,
   cards: state.cards,
   spellType: state.spellType
@@ -247,7 +269,7 @@ const mapDispatchToProps = dispatch => {
     spell: (id) => {
       gameService.getSpell(id).then(spell => {
         console.log(spell);
-        switch (typeof(spell)) {
+        switch (typeof (spell)) {
           case "number":
             dispatch(startAvadaKedavra)
             break;
@@ -285,7 +307,11 @@ const mapDispatchToProps = dispatch => {
       gameService.gameStatus(gameId).then(game => {
         if (game.player_list) {
           dispatch({ ...updateGameStatus, game })
-          if (game.in_session && ((game.client_director && game.minister_proclaimed) || (game.client_minister && !game.minister_proclaimed))) {
+          if (game.in_session
+            && ((game.client_director && game.minister_proclaimed)
+            || (game.client_minister
+              && !game.minister_proclaimed
+              && !game.expelliarmus))) {
             gameService.getProcCards(gameId).then(proclams => {
               if (Array.isArray(proclams)) {
                 console.log(proclams)

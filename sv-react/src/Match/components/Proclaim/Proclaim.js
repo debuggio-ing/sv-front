@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 //Get_Cards
 
-function DirProclaim({proclams, proclaimCard}) {
+function Proclaim({proclams, proclaimCard}) {
     let classes = useStyles();
     return <Grid container className={classes.root, classes.cardList} spacing={1}>
         {proclams.map( (proclam, index) =>  (
@@ -36,8 +36,8 @@ function DirProclaim({proclams, proclaimCard}) {
 }
 
 
-DirProclaim.propTypes = {
+Proclaim.propTypes = {
   proclams: PropTypes.array.isRequired
 }
 
-export default DirProclaim;
+export default Proclaim;
