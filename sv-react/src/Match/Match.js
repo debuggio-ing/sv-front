@@ -52,6 +52,9 @@ class Match extends React.Component {
     }
   }
 
+
+
+
   proclaimCard(index) {
     const election = this.props.proclams[index].card_pos
     gameService.postProcCards(this.props.currentGame.id, election)
@@ -113,6 +116,7 @@ class Match extends React.Component {
                     Jugadores
                             </Typography>
                   <Players startGame={() => this.props.play(this.props.currentGame.id)}
+                    leaveGame={() => this.props.leaveGame(this.props.currentGame.id)}
                     playing={this.props.playing}
                     voting={this.props.voting}
                     currentGame={this.props.currentGame}
@@ -228,6 +232,18 @@ const mapDispatchToProps = dispatch => {
         alert("No se pudo iniciar la partida")
       })
     },
+    leaveGame: (lobbyId) => {
+      lobbyService.leaveMatch(lobbyId).then(result => {
+        if (result.startConfirmation) {
+          dispatch(leaveGame)
+          history.push('/');
+        }
+        history.push('/');
+      }
+      ).catch(err => {
+        alert("La partida no existe")
+      })
+    },
     spell: (id) => {
       gameService.getSpell(id).then(spell => {
         console.log(spell);
@@ -302,6 +318,8 @@ const mapDispatchToProps = dispatch => {
           }
           ).catch(err => {
             alert("No se pudo actualizar el estado de la partida")
+            history.push("/")
+
           });
         }
         else {

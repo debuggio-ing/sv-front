@@ -10,6 +10,7 @@ export const lobbyService = {
     startMatch,
     getLobby,
     createLobby,
+    leaveMatch
 };
 
 
@@ -91,6 +92,22 @@ function startMatch(lobbyId) {
     };
     // This works if the backend wants to code properly, otherwise modify function to receive the number of current players
     return fetch(`${config.apiUrl}/api/lobbies/` + lobbyId.toString() + '/start/', requestOptions)
+        .then(handleResponse)
+        // DEBUG purposes
+        .then(gameId => {
+            console.log(gameId);
+            return gameId;
+        })
+}
+
+
+function leaveMatch(lobbyId) {
+    const requestOptions = {
+        method: 'POST',
+        headers: authHeader(),
+    };
+    // This works if the backend wants to code properly, otherwise modify function to receive the number of current players
+    return fetch(`${config.apiUrl}/api/lobbies/` + lobbyId.toString() + '/leave/', requestOptions)
         .then(handleResponse)
         // DEBUG purposes
         .then(gameId => {
