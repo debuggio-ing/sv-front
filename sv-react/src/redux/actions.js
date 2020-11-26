@@ -6,6 +6,7 @@ const leaveGame = {
   type: "LEAVE"
 };
 
+
 const joinGame = {
   type: "JOIN",
   lobby: { name: "def" }

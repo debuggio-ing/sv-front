@@ -15,13 +15,17 @@ import { primaryLightgreen, secondaryLightblue, backgroundGray } from '@/Styles'
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    maxWidth: '36ch',
+    maxWidth: '72ch',
     backgroundColor: theme.palette.background.paper
   },
   inline: {
     display: 'inline',
   },
   playButton: {
+    float: 'right'
+  },
+
+  leaveButton: {
     float: 'right'
   },
   director: {
@@ -39,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Players({startGame=()=>{},
+                  leaveGame,
                   playing=0,
                   currentGame,
                   proposeDirector,
@@ -47,8 +52,10 @@ function Players({startGame=()=>{},
     console.log(proposeDirector, castKedavra, castImperio)
     const classes = useStyles();
     let button;
+    let button2;
     let players = currentGame.players;
     let owner = currentGame.is_owner;
+    let owner_alias = currentGame.owner_alias;
     let director = currentGame.director;
     let minister = currentGame.minister;
     let voting = currentGame.voting;
@@ -65,7 +72,10 @@ function Players({startGame=()=>{},
         <br/>
       }
     }
-
+       button2 = <Button className={classes.leaveButton}
+           variant="contained" color="primary" onClick={leaveGame}>
+                      Salir
+                   </Button>
     return <List className={classes.root}>
 
       {canElectDirector ? <Typography>Seleccione un candidato a director</Typography>: ""}
@@ -110,7 +120,7 @@ function Players({startGame=()=>{},
             }
           </ListItemAvatar>
           <ListItem key={index+"name"}>
-            {player.nickname}
+            {player.nickname == owner_alias ? <b>{player.nickname}</b>  : player.nickname}
           </ListItem>
           {player.role ?
             <ListItem key={index+"loyalty"}>
@@ -128,6 +138,7 @@ function Players({startGame=()=>{},
         </ListItem>
       ))}
       {!playing ? button : <div/>}
+      {!playing ? button2 : <div/>}
     </List>
 }
 

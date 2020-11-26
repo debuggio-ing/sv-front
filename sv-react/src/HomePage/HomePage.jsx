@@ -166,6 +166,7 @@ const mapDispatchToProps = dispatch => {
     },
     leave: () => {
       dispatch(leaveGame)
+      
     },
     toggleAvailable: () => {
       dispatch(toggleAvailable)
