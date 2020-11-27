@@ -33,7 +33,7 @@ const initialState = {
     semaphore: 0,
     owner: "",
     messages: []
-    
+
   }
 }
 
@@ -81,6 +81,8 @@ export default (state = initialState, action) => {
       return { ...state, spellType: "AvadaKedavra" };
     case "IMPERIO":
       return { ...state, spellType: "Imperio" };
+    case "CRUCIO":
+      return { ...state, spellType: "Crucio" };
     case "LIST_CARDS":
       return { ...state, cards: action.cards, spellType: "Divination" };
     case "UPDATEGAMESTATUS":

@@ -48,8 +48,9 @@ function Players({startGame=()=>{},
                   currentGame,
                   proposeDirector,
                   castKedavra,
-                  castImperio}) {
-    console.log(proposeDirector, castKedavra, castImperio)
+                  castImperio,
+                  castCrucio}) {
+    console.log(proposeDirector, castKedavra, castImperio, castCrucio)
     const classes = useStyles();
     let button;
     let button2;
@@ -59,6 +60,7 @@ function Players({startGame=()=>{},
     let director = currentGame.director;
     let minister = currentGame.minister;
     let voting = currentGame.voting;
+    let tortured = currentGame.tortured;
     let canElectDirector = currentGame.client_minister && !currentGame.in_session && !voting;
     let alive_players = currentGame.players.filter((player) => player.alive).length
     if (owner) {
@@ -81,12 +83,13 @@ function Players({startGame=()=>{},
       {canElectDirector ? <Typography>Seleccione un candidato a director</Typography>: ""}
       {castKedavra ? <Typography>¿Quien debe morir?</Typography>: ""}
       {castImperio ? <Typography>Elige al proximo ministro</Typography>: ""}
+      {castCrucio ? <Typography>Seleccione un jugador para ver su rol</Typography>: ""}
       {players.map((player, index) => (
         <ListItem key={index}
                   onClick={!player.alive ?
                             () => {} :
-                                ((player.player_id==currentGame.prev_minister && alive_players>5) || 
-                                  player.player_id==currentGame.prev_director || 
+                                ((player.player_id==currentGame.prev_minister && alive_players>5) ||
+                                  player.player_id==currentGame.prev_director ||
                                   player.player_id==currentGame.minister) ?
                                 () => {} :
                                     castKedavra ?
@@ -94,10 +97,14 @@ function Players({startGame=()=>{},
                                         canElectDirector ?
                                             () => proposeDirector(player.player_id):
                                             castImperio ?
-                                            () => castImperio(player.player_id) :
-                                              () => {}}
+                                              () => castImperio(player.player_id) :
+                                              castCrucio ?
+                                                () => castCrucio(player.player_id):
+                                                () => {}}
                   style={!player.alive ?
-                            {opacity: 0.5} :
+                          castCrucio ?
+                            {cursor: "pointer"} :
+                              {opacity: 0.5} :
                                 ((player.player_id==currentGame.prev_minister && alive_players>5) ||
                                   player.player_id==currentGame.prev_director ||
                                   player.player_id==currentGame.minister) ?
@@ -107,8 +114,8 @@ function Players({startGame=()=>{},
                                         canElectDirector ?
                                             {cursor: "pointer"} :
                                             castImperio ?
-                                            {cursor: "pointer"} :
-                                            undefined}>
+                                              {cursor: "pointer"} :                                          
+                                                undefined}>
           <ListItemAvatar key={index}>
             {playing ?
               (parseInt(minister) === player.player_id) ?

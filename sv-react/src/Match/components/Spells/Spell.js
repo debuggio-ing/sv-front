@@ -9,6 +9,7 @@ import { Button,
 import Divination from './Divination.js'
 import AvadaKedavra from './AvadaKedavra.js'
 import Imperio from './Imperio.js'
+import Crucio from './Crucio.js'
 import {gameService} from './../../../_services/game.service.js'
 
 const styles = {};
@@ -24,9 +25,6 @@ function Spell({cards, spell, currentGame, spellType}) {
       console.log("No se pudo lanzar el hechizo.")
     })
   }
-  console.log(spell)
-  console.log("SPELL TYPE")
-  console.log(spellType)
 
   return (
     <MCard>
@@ -42,7 +40,9 @@ function Spell({cards, spell, currentGame, spellType}) {
               <Divination cards={cards}/>
               : spellType=="AvadaKedavra" ?
               <AvadaKedavra currentGame={currentGame}/>
-              : <Imperio currentGame={currentGame}/>
+              : spellType =="Crucio" ?
+              <Crucio currentGame={currentGame} />
+              :<Imperio currentGame={currentGame}/>
             }
             <Button onClick={() => handleClose()}>Proceder con hechizo</Button>
           </DialogContent>

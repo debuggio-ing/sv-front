@@ -7,7 +7,8 @@ import Chat from './components/Chat/Chat.js'
 import Board from './components/Board/Board.js'
 import { connect } from 'react-redux'
 import { startGame, actionvote, updateLobbyStatus, updateGameStatus, listCards,
-        listProclaim, joinGame, startAvadaKedavra, startImperio } from './../redux/actions.js'
+        listProclaim, joinGame, startAvadaKedavra, startImperio, startCrucio
+       } from './../redux/actions.js'
 import Vote from './components/Vote/Vote.js'
 import Deck from './components/Deck/Deck.js'
 import Spell from './components/Spells/Spell.js'
@@ -97,7 +98,7 @@ class Match extends React.Component {
                     Chat
 
                   </Typography>
-                  <Chat sendMessage={(message) => this.sendMessage(message)} 
+                  <Chat sendMessage={(message) => this.sendMessage(message)}
                         messages={this.props.currentGame.messages} />
                 </CardContent>
               </Card>
@@ -273,10 +274,13 @@ const mapDispatchToProps = dispatch => {
           case 'number':
             switch (spell){
               case 1:
-                dispatch(startAvadaKedavra)
+                dispatch(startAvadaKedavra);
                 break;
               case 2:
-                dispatch(startImperio)
+                dispatch(startImperio);
+                break;
+              case 3:
+                dispatch(startCrucio);
                 break;
               default:
                 break;

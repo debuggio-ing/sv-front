@@ -55,6 +55,10 @@ const startImperio = {
   type: "IMPERIO",
 }
 
+const startCrucio = {
+  type: "CRUCIO",
+}
+
 const updateGameStatus = {
   type: "UPDATEGAMESTATUS",
   game: {
@@ -79,5 +83,5 @@ export {
   startGame, joinGame, listLobbies, actionvote, toggleStarted, toggleAvailable,
   toggleFinished, listCards,
   toggleOwnGames, listProclaim, updateLobbyStatus, updateGameStatus, leaveGame,
-  startAvadaKedavra, startImperio
+  startAvadaKedavra, startImperio, startCrucio
 }
