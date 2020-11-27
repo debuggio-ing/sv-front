@@ -68,17 +68,18 @@ function login(email, password) {
     return fetch(`${config.apiUrl}/api/login/`, requestOptions)
         .then(response => {
             return response.text().then(text => {
-                const data = text && JSON.parse(text);
-                return data;
+                return  text && JSON.parse(text);
             })
         })
         .then(token => {
             // store jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('currentUser', JSON.stringify(token));
-            console.log(JSON.parse(localStorage.getItem('currentUser')));
-            currentUserSubject.next(token);
-            accountService.userInfo()
-            return token;
+            if (token["access_token"]){
+                localStorage.setItem('currentUser', JSON.stringify(token));
+                console.log(JSON.parse(localStorage.getItem('currentUser')));
+                currentUserSubject.next(token);
+                accountService.userInfo()
+                return token;
+            }
         });
 }
 
@@ -108,9 +109,11 @@ function refreshToken() {
                     const access_token = text && JSON.parse(text);
                     // store jwt token in local storage to keep user logged in between page refreshes
                     const tokens = (Object.assign(access_token, { "refresh_token": refresh_token }));
-                    localStorage.setItem('currentUser', JSON.stringify(tokens));
-                    currentUserSubject.next(tokens);
-                    return;
+                    if (tokens["access_token"]){
+                        localStorage.setItem('currentUser', JSON.stringify(tokens));
+                        currentUserSubject.next(tokens);
+                    }
+                    
                 })
         });
 }
