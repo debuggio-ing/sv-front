@@ -67,6 +67,10 @@ function login(email, password) {
 
     return fetch(`${config.apiUrl}/api/login/`, requestOptions)
         .then(response => {
+            if (!response.ok) {
+                const error = (data && data.message) || response.statusText;
+                return Promise.reject(error);
+            }
             return response.text().then(text => {
                 return  text && JSON.parse(text);
             })

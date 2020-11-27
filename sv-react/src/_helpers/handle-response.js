@@ -11,6 +11,10 @@ export function handleResponse(response) {
             accountService.userInfo()
             return "Token refreshed";
         }
+        if (!response.ok) {
+            const error = (data && data.message) || response.statusText;
+            return Promise.reject(error);
+        }
         return data;
     });
 }
