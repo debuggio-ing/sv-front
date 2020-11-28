@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { withStyles } from "@material-ui/core/styles";
-import {TextField,
-         Button,
+import { Button,
          Card as MCard,
          Dialog,
          DialogActions,
@@ -10,13 +8,14 @@ import {TextField,
          DialogTitle} from "@material-ui/core"
 import Divination from './Divination.js'
 import AvadaKedavra from './AvadaKedavra.js'
+import Imperio from './Imperio.js'
 import {gameService} from './../../../_services/game.service.js'
 
 const styles = {};
 
 function Spell({cards, spell, currentGame, spellType}) {
   const [open, setOpen] = useState(false);
-  const getSpell = spell(currentGame.id,1);
+  const getSpell = spell(currentGame.id);
   function handleClose() {
     setOpen(false);
     gameService.postSpell(currentGame.id,-1).then( response=> {
@@ -25,10 +24,9 @@ function Spell({cards, spell, currentGame, spellType}) {
       console.log("No se pudo lanzar el hechizo.")
     })
   }
-
-  function handleClickOpen() {
-    setOpen(true);
-  }
+  console.log(spell)
+  console.log("SPELL TYPE")
+  console.log(spellType)
 
   return (
     <MCard>
@@ -42,8 +40,9 @@ function Spell({cards, spell, currentGame, spellType}) {
             <DialogContentText align="center">{spellType}</DialogContentText>
             {spellType=="Divination" ?
               <Divination cards={cards}/>
-            :
+              : spellType=="AvadaKedavra" ?
               <AvadaKedavra currentGame={currentGame}/>
+              : <Imperio currentGame={currentGame}/>
             }
             <Button onClick={() => handleClose()}>Proceder con hechizo</Button>
           </DialogContent>

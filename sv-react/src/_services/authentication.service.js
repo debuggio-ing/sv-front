@@ -66,14 +66,24 @@ function login(email, password) {
     };
 
     return fetch(`${config.apiUrl}/api/login/`, requestOptions)
-        .then(handleResponse)
+        .then(response => {
+            if (!response.ok) {
+                const error = (data && data.message) || response.statusText;
+                return Promise.reject(error);
+            }
+            return response.text().then(text => {
+                return  text && JSON.parse(text);
+            })
+        })
         .then(token => {
             // store jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('currentUser', JSON.stringify(token));
-            console.log(JSON.parse(localStorage.getItem('currentUser')));
-            currentUserSubject.next(token);
-            accountService.userInfo()
-            return token;
+            if (token["access_token"]){
+                localStorage.setItem('currentUser', JSON.stringify(token));
+                console.log(JSON.parse(localStorage.getItem('currentUser')));
+                currentUserSubject.next(token);
+                accountService.userInfo()
+                return token;
+            }
         });
 }
 
@@ -90,23 +100,25 @@ function refreshToken() {
 
     return fetch(`${config.apiUrl}/api/refresh/`, requestOptions)
         .then(response => {
-                if (!response.ok) {
-                    if ([401, 403].indexOf(response.status) !== -1) {
-                        // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
-                        authenticationService.logout();
-                    }
-                    return Promise.reject("ERROR");
-                };
+            if (!response.ok) {
+                if ([401, 403].indexOf(response.status) !== -1) {
+                    // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
+                    authenticationService.logout();
+                }
+                return Promise.reject("ERROR");
+            };
 
-                return response.text()
-                        .then(text => {
-                            const access_token = text && JSON.parse(text);
-                            // store jwt token in local storage to keep user logged in between page refreshes
-                            const tokens = (Object.assign(access_token, {"refresh_token":refresh_token}));
-                            localStorage.setItem('currentUser', JSON.stringify(tokens));
-                            currentUserSubject.next(tokens);
-                            return;
-                        })
+            return response.text()
+                .then(text => {
+                    const access_token = text && JSON.parse(text);
+                    // store jwt token in local storage to keep user logged in between page refreshes
+                    const tokens = (Object.assign(access_token, { "refresh_token": refresh_token }));
+                    if (tokens["access_token"]){
+                        localStorage.setItem('currentUser', JSON.stringify(tokens));
+                        currentUserSubject.next(tokens);
+                    }
+                    
+                })
         });
 }
 
@@ -127,7 +139,7 @@ function verify(user_email, input_code) {
 }
 
 function RefreshException() {
-  return new Error();
+    return new Error();
 }
 
 RefreshException.prototype = Object.create(Error.prototype);

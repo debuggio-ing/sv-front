@@ -74,7 +74,9 @@ function getSpell(gameId) {
 
 
 // Returns the spell appropriate to the game's status
-function postSpell(gameId, target = -1) {
+function postSpell(gameId, target) {
+    console.log("TARGET HECHIZO")
+    console.log(target)
     const requestOptions = {
         method: 'POST',
         headers: Object.assign(authHeader(), {
@@ -85,6 +87,7 @@ function postSpell(gameId, target = -1) {
     return fetch(`${config.apiUrl}/api/games/` + gameId.toString() + '/spell/', requestOptions)
         .then(handleResponse)
         .then(response=> {
+            console.log(response)
             return response;
         });
 }

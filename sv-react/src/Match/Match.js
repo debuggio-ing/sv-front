@@ -6,7 +6,8 @@ import Results from './components/Results/Results.js'
 import Chat from './components/Chat/Chat.js'
 import Board from './components/Board/Board.js'
 import { connect } from 'react-redux'
-import { startGame, actionvote, updateLobbyStatus, updateGameStatus, listCards, listProclaim, joinGame, startAvadaKedavra } from './../redux/actions.js'
+import { startGame, actionvote, updateLobbyStatus, updateGameStatus, listCards,
+        listProclaim, joinGame, startAvadaKedavra, startImperio } from './../redux/actions.js'
 import Vote from './components/Vote/Vote.js'
 import Deck from './components/Deck/Deck.js'
 import Spell from './components/Spells/Spell.js'
@@ -268,13 +269,23 @@ const mapDispatchToProps = dispatch => {
     },
     spell: (id) => {
       gameService.getSpell(id).then(spell => {
-        console.log(spell);
-        switch (typeof (spell)) {
-          case "number":
-            dispatch(startAvadaKedavra)
+        switch (typeof(spell)) {
+          case 'number':
+            switch (spell){
+              case 1:
+                dispatch(startAvadaKedavra)
+                break;
+              case 2:
+                dispatch(startImperio)
+                break;
+              default:
+                break;
+            }
+            break;
+          case 'object':
+            dispatch({ ...listCards, cards: spell })
             break;
           default:
-            dispatch({ ...listCards, cards: spell })
             break;
         }
       }).catch(err => {
@@ -328,7 +339,7 @@ const mapDispatchToProps = dispatch => {
         }
       }
       ).catch(err => {
-        alert("No se pudo actualizar el estado de la partida");
+        alert("No se pudo efectuar la elección");
         clearInterval(intervalGP);
       })
     },
@@ -343,6 +354,7 @@ const mapDispatchToProps = dispatch => {
             }
           }
           ).catch(err => {
+            console.log(err)
             alert("No se pudo actualizar el estado de la partida")
             history.push("/")
 
