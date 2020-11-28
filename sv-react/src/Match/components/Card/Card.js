@@ -33,8 +33,23 @@ function Card({type, portrait, clickAction}){
     case "Pila-Robo":
       url = "public/img/deck.png"
       break;
+    case "Adivination":
+      url = "public/img/adivination.png"
+      break;
+    case "Crucio":
+      url = "public/img/crucio.png"
+      break;
+    case "AvadaKedavra":
+      url = "public/img/avadakedavra.png"
+      break;
+    case "AvadaKedavraExp":
+      url = "public/img/avadakedavra_expeliarmus.png"
+      break;
     case "NocardDE":
       url = "public/img/nocard_de.png"
+      break;
+    case "NocardDEEND":
+      url = "public/img/nocard_de_ak.png"
       break;
     default:
       url = "public/img/nocard_fe.png"

@@ -7,6 +7,7 @@ const secondaryLightblue = "#C5D1EB";
 const primaryLightgreen = "#78a189";
 const secondaryLightgreen = "#CBE896";
 const backgroundGray = "#d0cecd";
+const darkDeathEaterViolet = "#34203b";
 
 
-export { dark, phoenixRed, deathEaterViolet, secondaryLightblue, primaryLightgreen, secondaryLightgreen, backgroundGray, lightPhoenixRed, lightDeathEaterViolet };
+export { dark, phoenixRed, deathEaterViolet, darkDeathEaterViolet, secondaryLightblue, primaryLightgreen, secondaryLightgreen, backgroundGray, lightPhoenixRed, lightDeathEaterViolet };

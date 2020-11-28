@@ -109,7 +109,7 @@ function refreshToken() {
                         localStorage.setItem('currentUser', JSON.stringify(tokens));
                         currentUserSubject.next(tokens);
                     }
-                    
+
                 })
         });
 }

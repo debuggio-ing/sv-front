@@ -87,6 +87,7 @@ function postSpell(gameId, target) {
     return fetch(`${config.apiUrl}/api/games/` + gameId.toString() + '/spell/', requestOptions)
         .then(handleResponse)
         .then(response=> {
+            console.log(response)
             return response;
         });
 }

@@ -5,7 +5,7 @@ import { Card as MaterialCard } from '@material-ui/core';
 import Card from './../Card/Card.js';
 import Deck from './../Deck/Deck.js';
 import PropTypes from 'prop-types';
-import { phoenixRed, deathEaterViolet, lightPhoenixRed, lightDeathEaterViolet  } from '@/Styles'
+import { phoenixRed, deathEaterViolet, lightPhoenixRed, lightDeathEaterViolet, darkDeathEaterViolet  } from '@/Styles'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +31,18 @@ function Board({currentGame}){
   }
   const voidMortifagas = Array(6-proclamacionesMortifagas.length).fill();
   const voidFenix = Array(5-proclamacionesFenix.length).fill();
+  let spells = new Array(6).fill("NocardDE")
+  if(currentGame.player_list.length<7) {
+    spells = ["NocardDE", "NocardDE", "Adivination", "AvadaKedavra", "AvadaKedavraExp", "NocardDEEND"]
+  }
+  else {
+    if (currentGame.player_list.length<9){
+      spells = ["NocardDE", "Crucio", "Adivination", "AvadaKedavra", "AvadaKedavraExp", "NocardDEEND"]
+    }
+    else{
+      spells = ["Crucio", "Crucio", "Adivination", "AvadaKedavra", "AvadaKedavraExp", "NocardDEEND"]
+    }
+  }
   return <div>
       <Grid container className={classes.root, classes.cardList} spacing={1}
             style={{backgroundColor: lightDeathEaterViolet, border: "5px solid "+deathEaterViolet}}>
@@ -40,8 +52,9 @@ function Board({currentGame}){
           </Grid>
         ))}
         {voidMortifagas.map((proclamacion, index) => (
-          <Grid xs={2} sm={2} md={2} key={index}>
-            <Card type={"NocardDE"} portrait={true} key={index}/>
+          <Grid xs={2} sm={2} md={2} key={index} style={index+currentGame.score.bad>=3 ?
+                                                        {backgroundColor: darkDeathEaterViolet, "border-radius": "1px"} : undefined}>
+            <Card type={spells[index+currentGame.score.bad]} portrait={true} key={index}/>
           </Grid>
         ))}
       </Grid>

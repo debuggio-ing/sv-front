@@ -18,7 +18,6 @@ import { gameService } from './../../../_services/game.service.js'
 
 function Spell({ cards, role, spell, currentGame, spellType }) {
   const [open, setOpen] = useState(false);
-  console.log(role);
   const getSpell = spell(currentGame.id);
   function handleClose() {
     setOpen(false);

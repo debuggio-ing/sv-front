@@ -119,7 +119,7 @@ function Players({ startGame = () => { },
                 player.player_id == currentGame.prev_director ||
                 player.player_id == currentGame.minister) ?
                 undefined :
-   
+
                   canElectDirector ?
                     { cursor: "pointer" } :
                     undefined}>
