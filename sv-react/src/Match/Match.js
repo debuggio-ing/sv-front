@@ -292,8 +292,6 @@ const mapDispatchToProps = dispatch => {
           default:
             console.log('There has been a mistake with spells')
             break;
-          default:
-            break;
         }
       }).catch(err => {
         console.log(err)
