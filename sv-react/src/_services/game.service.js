@@ -137,7 +137,6 @@ function nominateDirector(gameId, candidateId) {
         .then(handleResponse)
         .then(nomination => {
             // for debugging purposes
-            console.log(nomination);
             return proclamation;
         });
 }

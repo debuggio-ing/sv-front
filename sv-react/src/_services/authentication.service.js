@@ -67,10 +67,6 @@ function login(email, password) {
 
     return fetch(`${config.apiUrl}/api/login/`, requestOptions)
         .then(response => {
-            if (!response.ok) {
-                const error = (data && data.message) || response.statusText;
-                return Promise.reject(error);
-            }
             return response.text().then(text => {
                 return  text && JSON.parse(text);
             })
@@ -101,10 +97,6 @@ function refreshToken() {
     return fetch(`${config.apiUrl}/api/refresh/`, requestOptions)
         .then(response => {
             if (!response.ok) {
-                if ([401, 403].indexOf(response.status) !== -1) {
-                    // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
-                    authenticationService.logout();
-                }
                 return Promise.reject("ERROR");
             };
 
@@ -117,7 +109,7 @@ function refreshToken() {
                         localStorage.setItem('currentUser', JSON.stringify(tokens));
                         currentUserSubject.next(tokens);
                     }
-                    
+
                 })
         });
 }
