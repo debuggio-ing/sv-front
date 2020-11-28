@@ -6,9 +6,11 @@ import Results from './components/Results/Results.js'
 import Chat from './components/Chat/Chat.js'
 import Board from './components/Board/Board.js'
 import { connect } from 'react-redux'
-import { startGame, actionvote, updateLobbyStatus, updateGameStatus, listCards,
-        listProclaim, joinGame, startAvadaKedavra, startImperio, startCrucio
-       } from './../redux/actions.js'
+import {
+  startGame, actionvote, updateLobbyStatus, updateGameStatus, listCards,
+  listProclaim, joinGame, startAvadaKedavra, startImperio, startCrucio,
+  updateCrucioRole
+} from './../redux/actions.js'
 import Vote from './components/Vote/Vote.js'
 import Deck from './components/Deck/Deck.js'
 import Spell from './components/Spells/Spell.js'
@@ -55,9 +57,6 @@ class Match extends React.Component {
     }
   }
 
-
-
-
   proclaimCard(index) {
     const election = this.props.proclams[index].card_pos
     gameService.postProcCards(this.props.currentGame.id, election, false)
@@ -99,7 +98,7 @@ class Match extends React.Component {
 
                   </Typography>
                   <Chat sendMessage={(message) => this.sendMessage(message)}
-                        messages={this.props.currentGame.messages} />
+                    messages={this.props.currentGame.messages} />
                 </CardContent>
               </Card>
             </Grid>
@@ -154,6 +153,7 @@ class Match extends React.Component {
               ?
               <Spell cards={this.props.cards}
                 spell={this.props.spell}
+                role={this.props.crucioRole}
                 currentGame={this.props.currentGame}
                 spellType={this.props.spellType} />
               : <br />
@@ -225,6 +225,7 @@ const mapStateToProps = state => ({
   proclamacionesMortifagas: state.proclamacionesMortifagas,
   voting: state.voting,
   proclams: state.proclams,
+  crucioRole: state.crucioRole,
   expelliarmus: state.expelliarmus,
   currentGame: state.currentGame,
   cards: state.cards,
@@ -270,26 +271,26 @@ const mapDispatchToProps = dispatch => {
     },
     spell: (id) => {
       gameService.getSpell(id).then(spell => {
-        switch (typeof(spell)) {
-          case 'number':
-            switch (spell){
-              case 1:
-                dispatch(startAvadaKedavra);
-                break;
-              case 2:
-                dispatch(startImperio);
-                break;
-              case 3:
-                dispatch(startCrucio);
-                break;
-              default:
-                break;
+        console.log(spell)
+        switch (spell["spell_type"]) {
+          case "Divination":
+            dispatch({ ...listCards, cards: spell["cards"] })
+            break;
+          case "Avada Kedavra":
+            dispatch(startAvadaKedavra);
+            break;
+          case "Crucio":
+            dispatch(startCrucio)
+            if (spell["role"]) {
+              let crucioRole = spell["role"]
+              dispatch({ ...updateCrucioRole, crucioRole })
             }
             break;
-          case 'object':
-            dispatch({ ...listCards, cards: spell })
+          case "Imperio":
+            dispatch(startImperio);
             break;
           default:
+            console.log('There has been a mistake with spells')
             break;
         }
       }).catch(err => {
@@ -324,9 +325,9 @@ const mapDispatchToProps = dispatch => {
           dispatch({ ...updateGameStatus, game })
           if (game.in_session
             && ((game.client_director && game.minister_proclaimed)
-            || (game.client_minister
-              && !game.minister_proclaimed
-              && !game.expelliarmus))) {
+              || (game.client_minister
+                && !game.minister_proclaimed
+                && !game.expelliarmus))) {
             gameService.getProcCards(gameId).then(proclams => {
               if (Array.isArray(proclams)) {
                 console.log(proclams)

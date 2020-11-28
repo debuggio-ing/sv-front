@@ -16,10 +16,12 @@ const initialState = {
   listFinished: false,
   listOwnGames: false,
   minister_proclaimed: 0,
+  in_crucio: 0,
   client_minister: 0,
   client_director: 0,
   proclams: [],
   cards: [],
+  crucioRole: "",
   //head_list: 0,
   lobbies: [],
   currentGame: {
@@ -83,6 +85,8 @@ export default (state = initialState, action) => {
       return { ...state, spellType: "Imperio" };
     case "CRUCIO":
       return { ...state, spellType: "Crucio" };
+    case "CRUCIO_ROLE":
+      return {...state, crucioRole: action.crucioRole}
     case "LIST_CARDS":
       return { ...state, cards: action.cards, spellType: "Divination" };
     case "UPDATEGAMESTATUS":

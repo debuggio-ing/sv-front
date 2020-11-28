@@ -87,7 +87,6 @@ function postSpell(gameId, target) {
     return fetch(`${config.apiUrl}/api/games/` + gameId.toString() + '/spell/', requestOptions)
         .then(handleResponse)
         .then(response=> {
-            console.log(response)
             return response;
         });
 }
@@ -137,7 +136,6 @@ function nominateDirector(gameId, candidateId) {
         .then(handleResponse)
         .then(nomination => {
             // for debugging purposes
-            console.log(nomination);
             return proclamation;
         });
 }

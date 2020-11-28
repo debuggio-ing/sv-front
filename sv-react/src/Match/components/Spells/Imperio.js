@@ -12,10 +12,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function imposeMinister(gameId, playerId){
-  console.log("LLamando a GAME SERVICE " + gameId + "  y playerId " + playerId)
-  gameService.postSpell(gameId, playerId).then( response=> {
-    console.log("TERMINADO EL SPELL")
-  }).catch(err => {
+  gameService.postSpell(gameId, playerId).then(
+    ()=>{}
+  ).catch(err => {
     console.log(err)
   })
 }
@@ -23,7 +22,7 @@ function imposeMinister(gameId, playerId){
 function Imperio({currentGame}) {
   const styles = useStyles;
   return <Grid container xs={12} spacing={2}>
-    <Players currentGame={currentGame} castImperio={(id) => imposeMinister(currentGame.id, id)} />
+    <Players playing={1} currentGame={currentGame} castImperio={(id) => imposeMinister(currentGame.id, id)} />
   </Grid>
 }
 

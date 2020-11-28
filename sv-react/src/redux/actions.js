@@ -6,7 +6,6 @@ const leaveGame = {
   type: "LEAVE"
 };
 
-
 const joinGame = {
   type: "JOIN",
   lobby: { name: "def" }
@@ -47,6 +46,11 @@ const listCards = {
   cards: [] // [{id: int, phoenix: bool}]
 }
 
+const updateCrucioRole = {
+  type: "CRUCIO_ROLE",
+  crucioRole: ""
+}
+
 const startAvadaKedavra = {
   type: "AVADAKEDAVRA",
 }
@@ -83,5 +87,5 @@ export {
   startGame, joinGame, listLobbies, actionvote, toggleStarted, toggleAvailable,
   toggleFinished, listCards,
   toggleOwnGames, listProclaim, updateLobbyStatus, updateGameStatus, leaveGame,
-  startAvadaKedavra, startImperio, startCrucio
+  startAvadaKedavra, startImperio, startCrucio, updateCrucioRole
 }
