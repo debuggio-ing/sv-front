@@ -15,7 +15,6 @@ import { primaryLightgreen, secondaryLightblue, backgroundGray } from '@/Styles'
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    maxWidth: '72ch',
     backgroundColor: theme.palette.background.paper
   },
   inline: {
@@ -24,7 +23,9 @@ const useStyles = makeStyles((theme) => ({
   playButton: {
     float: 'right'
   },
-
+  addBotButton: {
+    float: 'right'
+  },
   leaveButton: {
     float: 'right'
   },
@@ -44,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Players({startGame=()=>{},
                   leaveGame,
+                  addBot,
                   playing=0,
                   currentGame,
                   proposeDirector,
@@ -51,6 +53,7 @@ function Players({startGame=()=>{},
     const classes = useStyles();
     let button;
     let button2;
+    let button3;
     let players = currentGame.players;
     let owner = currentGame.is_owner;
     let owner_alias = currentGame.owner_alias;
@@ -60,11 +63,18 @@ function Players({startGame=()=>{},
     let canElectDirector = currentGame.client_minister && !currentGame.in_session && !voting;
     let alive_players = currentGame.players.filter((player) => player.alive).length
     if (owner) {
+      if(players.length < currentGame.max_players){
+      button3 = <Button className={classes.addBotButton}
+          variant="contained" color="primary" onClick={addBot}>
+                     Añadir Bot
+                  </Button>
+      }
       if(players.length >= 5){
           button = <Button className={classes.playButton}
            variant="contained" color="primary" onClick={startGame}>
                       Jugar
                    </Button>
+          
       }
       else {
         <br/>
@@ -127,7 +137,9 @@ function Players({startGame=()=>{},
         </ListItem>
       ))}
       {!playing ? button : <div/>}
+      {!playing ? button3 : <div/>}
       {!playing ? button2 : <div/>}
+      
     </List>
 }
 

@@ -87,7 +87,7 @@ class Match extends React.Component {
           <Typography gutterBottom variant="h5" component="h2">
             {this.props.currentGame.name}
           </Typography>
-          <Grid container spacing={4}>
+          <Grid container spacing={6}>
 
             <Grid item key="chat" md={this.props.playing ? 3 : 6}>
               <Card className="">
@@ -124,6 +124,7 @@ class Match extends React.Component {
                             </Typography>
                   <Players startGame={() => this.props.play(this.props.currentGame.id)}
                     leaveGame={() => this.props.leaveGame(this.props.currentGame.id)}
+                    addBot={() => this.props.addBot(this.props.currentGame.id)}
                     playing={this.props.playing}
                     voting={this.props.voting}
                     currentGame={this.props.currentGame}
@@ -252,6 +253,14 @@ const mapDispatchToProps = dispatch => {
       }
       ).catch(err => {
         alert("No se pudo iniciar la partida")
+      })
+    },
+    addBot: (lobbyId) => {
+      lobbyService.addBot(lobbyId).then(result => {
+        alert("added")
+      }
+      ).catch(err => {
+        alert("No se pudo agregar el bot")
       })
     },
     leaveGame: (lobbyId) => {

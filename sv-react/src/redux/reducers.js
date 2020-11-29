@@ -32,6 +32,7 @@ const initialState = {
     players: [],
     semaphore: 0,
     owner: "",
+    max_players: 5,
     messages: []
     
   }
