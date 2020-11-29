@@ -15,6 +15,9 @@ const listLobbies = {
   type: "LISTLOBBIES",
   lobbies: []
 }
+const toggleFilter = {
+  type: "TOGGLEFILTER"
+}
 
 const toggleAvailable = {
   type: "TOGGLEAVAILABLE"
@@ -85,7 +88,7 @@ const updateLobbyStatus = {
 
 export {
   startGame, joinGame, listLobbies, actionvote, toggleStarted, toggleAvailable,
-  toggleFinished, listCards,
+  toggleFinished, listCards, toggleFilter,
   toggleOwnGames, listProclaim, updateLobbyStatus, updateGameStatus, leaveGame,
   startAvadaKedavra, startImperio, startCrucio, updateCrucioRole
 }
