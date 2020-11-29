@@ -4,7 +4,7 @@ import startGame from './actions.js'
 import { lobbyService } from '@/_services';
 
 const initialState = {
-  playing: 0, //is client in /match
+  playing: 0, //is client in match
   proclamacionesFenix: 2,
   proclamacionesMortifagas: 4,
   spellType: "None",
@@ -30,6 +30,7 @@ const initialState = {
     minister: -1,
     director: -1,
     prev_minister: -1,
+    discarded: 0,
     prev_director: -1,
     players: [],
     semaphore: 0,
