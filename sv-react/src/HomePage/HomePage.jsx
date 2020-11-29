@@ -159,14 +159,14 @@ const mapDispatchToProps = dispatch => {
         }
       }
       ).catch(err => {
-        alert("No se pudieron listar los lobbies")
-        clearInterval(intervalLL);
+        //alert("No se pudieron listar los lobbies")
+        //clearInterval(intervalLL);
       }
       )
     },
     leave: () => {
       dispatch(leaveGame)
-      
+
     },
     toggleAvailable: () => {
       dispatch(toggleAvailable)

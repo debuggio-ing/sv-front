@@ -4,6 +4,7 @@
     "private": true,
     "license": "MITia",
     "scripts": {
+        "build": "webpack -p --config webpack.prod.config.js",
         "start": "webpack-dev-server --open"
     },
     "dependencies": {

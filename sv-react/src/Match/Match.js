@@ -334,7 +334,7 @@ const mapDispatchToProps = dispatch => {
                 dispatch({ ...listProclaim, proclams })
               }
             }).catch(err => {
-              alert("No se pudieron obtener las proclamaciones");
+              //alert("No se pudieron obtener las proclamaciones");
             })
           }
           if (game.score.good >= 5 || game.score.bad >= 6) {
@@ -344,8 +344,8 @@ const mapDispatchToProps = dispatch => {
         }
       }
       ).catch(err => {
-        alert("No se pudo efectuar la elección");
-        clearInterval(intervalGP);
+        //alert("No se pudo actualizar el estado de la partida");
+        //clearInterval(intervalGP);
       })
     },
     lobbyStatus: (lobbyId) => {
@@ -359,10 +359,8 @@ const mapDispatchToProps = dispatch => {
             }
           }
           ).catch(err => {
-            console.log(err)
-            alert("No se pudo actualizar el estado de la partida")
-            history.push("/")
-
+            //alert("No se pudo actualizar el estado de la partida")
+            //history.push("/")
           });
         }
         else {
@@ -373,8 +371,8 @@ const mapDispatchToProps = dispatch => {
       }
       ).catch(err => {
         console.log(err)
-        alert("No se pudo actualizar el estado del lobby");
-        clearInterval(intervalGP);
+        //alert("No se pudo actualizar el estado del lobby");
+        //clearInterval(intervalGP);
       })
     }
   }
