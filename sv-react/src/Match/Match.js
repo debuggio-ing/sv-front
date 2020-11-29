@@ -12,6 +12,7 @@ import {
   updateCrucioRole
 } from './../redux/actions.js'
 import Vote from './components/Vote/Vote.js'
+import Endgame from './components/Endgame/Endgame.js'
 import Deck from './components/Deck/Deck.js'
 import Spell from './components/Spells/Spell.js'
 import Proclaim from './components/Proclaim/Proclaim.js'
@@ -212,6 +213,10 @@ class Match extends React.Component {
               </Grid>
               : <br />
             }
+
+            {this.props.currentGame.end
+            ? <Endgame currentGame={this.props.currentGame}/>
+            : <br />}
           </Grid>
         </Container>
       </div>
