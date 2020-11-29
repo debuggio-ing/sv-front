@@ -16,10 +16,12 @@ const initialState = {
   listFinished: false,
   listOwnGames: false,
   minister_proclaimed: 0,
+  in_crucio: 0,
   client_minister: 0,
   client_director: 0,
   proclams: [],
   cards: [],
+  crucioRole: "",
   //head_list: 0,
   lobbies: [],
   currentGame: {
@@ -34,7 +36,7 @@ const initialState = {
     owner: "",
     max_players: 5,
     messages: []
-    
+
   }
 }
 
@@ -79,9 +81,15 @@ export default (state = initialState, action) => {
     case "LIST_PROCLAIM":
       return { ...state, proclams: action.proclams };
     case "AVADAKEDAVRA":
-      return {...state, spellType: "AvadaKedavra" };
+      return { ...state, spellType: "AvadaKedavra" };
+    case "IMPERIO":
+      return { ...state, spellType: "Imperio" };
+    case "CRUCIO":
+      return { ...state, spellType: "Crucio" };
+    case "CRUCIO_ROLE":
+      return {...state, crucioRole: action.crucioRole}
     case "LIST_CARDS":
-      return {...state, cards: action.cards, spellType: "Divination" };
+      return { ...state, cards: action.cards, spellType: "Divination" };
     case "UPDATEGAMESTATUS":
       if (action.game.player_list) {
         let game = { ...action.game, players: action.game.player_list, id: state.currentGame.id }

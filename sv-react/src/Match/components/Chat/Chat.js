@@ -1,5 +1,5 @@
-import React from 'react';
-import { TextField, List, ListItem, ListItemAvatar, Avatar, Button } from '@material-ui/core';
+import React, {useEffect, useRef} from 'react';
+import { TextField, List, ListItem, ListItemAvatar, Avatar, Button, Paper } from '@material-ui/core';
 
 import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
@@ -19,18 +19,32 @@ const useStyles = makeStyles((theme) => ({
 
 function Chat({sendMessage, key, messages}) {
     const classes = useStyles();
-    return (<div>
 
-        <List className="chatMessages">
-          {messages.map((message, index) => (
-              <ListItem key={index}>
-              <ListItemAvatar key={index}>
-              <Avatar alt={message.sender} src="/static/images/avatar/1.jpg" />
-                </ListItemAvatar>
-                {message.message}
-              </ListItem>
-          ))}
-        </List>
+    const messagesEndRef = useRef(null)
+    const messageScroll = useRef(null)
+
+    const scrollToBottom = () => {
+      var height = document.getElementById("messagesContainer").scrollHeight;
+
+      if (messageScroll.current.scrollTop > height - 500){
+        messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
+      }
+    }
+
+    useEffect(scrollToBottom, [messages]);
+
+    return (<div>
+        <Paper ref={messageScroll} id="messagesContainer" style={{maxHeight: 400, overflow: 'auto'}}>
+            {messages.map((message, index) => (
+                <ListItem key={index}>
+                <ListItemAvatar key={index}>
+                <Avatar alt={message.sender} src="/static/images/avatar/1.jpg" />
+                  </ListItemAvatar>
+                  {message.message}
+                </ListItem>
+            ))}
+            <div ref={messagesEndRef} />
+        </Paper>
 
         <Formik
           initialValues={{
