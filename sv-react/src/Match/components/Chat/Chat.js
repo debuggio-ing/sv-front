@@ -21,7 +21,7 @@ function Chat({ sendMessage, messages }) {
 
     return (<div>
         <div style={{ width: '100%', height: 400 }}>
-            <ThemeProvider theme={themes['defaultTheme']}>
+            <ThemeProvider>
                 <MessageList active>
                     {messages.map((message, index) => (
                         <MessageGroup avatar='public/img/harry-potter.png'>
