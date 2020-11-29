@@ -1,55 +1,63 @@
 import React, { useState, useEffect } from "react";
-import { withStyles } from "@material-ui/core/styles";
-import {TextField,
-         Button,
-         Card as MCard,
-         Dialog,
-         DialogActions,
-         DialogContent,
-         DialogContentText,
-         DialogTitle} from "@material-ui/core"
+import {
+  Button,
+  Grid,
+  Card,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle
+} from "@material-ui/core"
 import Divination from './Divination.js'
 import AvadaKedavra from './AvadaKedavra.js'
-import {gameService} from './../../../_services/game.service.js'
+import Imperio from './Imperio.js'
+import Crucio from './Crucio.js'
+import { gameService } from './../../../_services/game.service.js'
 
-const styles = {};
 
-function Spell({cards, spell, currentGame, spellType}) {
+function Spell({ cards, role, spell, currentGame, spellType }) {
   const [open, setOpen] = useState(false);
-  const getSpell = spell(currentGame.id,1);
+  const getSpell = spell(currentGame.id);
   function handleClose() {
     setOpen(false);
-    gameService.postSpell(currentGame.id,-1).then( response=> {
+    gameService.postSpell(currentGame.id, -1).then(response => {
       console.log("TERMINADO EL SPELL")
     }).catch(err => {
       console.log("No se pudo lanzar el hechizo.")
     })
   }
 
-  function handleClickOpen() {
-    setOpen(true);
-  }
-
   return (
-    <MCard>
-      <Dialog
-        open={true}
-        onClose={handleClose}
-      >
-        <React.Fragment>
-          <DialogTitle id="form-dialog-title"></DialogTitle>
-          <DialogContent>
-            <DialogContentText align="center">{spellType}</DialogContentText>
-            {spellType=="Divination" ?
-              <Divination cards={cards}/>
-            :
-              <AvadaKedavra currentGame={currentGame}/>
+    <Dialog
+      open={true}
+      onClose={handleClose}
+    >
+      <Grid container
+        alignText='center' alignSelf='stretch' xs={12}
+        justify='center' alignItems='center'>
+        <DialogTitle>{spellType}</DialogTitle>
+        <Grid container
+          alignText='center' alignSelf='stretch' xs={12}
+          justify='center' alignItems='center'>
+          <Grid container xs={6} justify='center' alignItems='center'>
+            {spellType == "Divination" ?
+              <Divination cards={cards} />
+              : spellType == "AvadaKedavra" ?
+                <AvadaKedavra currentGame={currentGame} />
+                : spellType == "Crucio" ?
+                  <Crucio currentGame={currentGame} role={role} />
+                  : <Imperio currentGame={currentGame} />
             }
-            <Button onClick={() => handleClose()}>Proceder con hechizo</Button>
-          </DialogContent>
-        </React.Fragment>
-      </Dialog>
-    </MCard>
+            {spellType == 'Divination' || (spellType == 'Crucio' && currentGame.in_crucio) ?
+              <Button  onClick={() => handleClose()}>Continuar</Button>
+              : <Button onClick={()=>{}}/>
+            }
+          </Grid>
+
+        </Grid>
+      </Grid>
+    </Dialog>
   );
 }
 

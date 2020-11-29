@@ -11,24 +11,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function killSomeone(gameId, playerId){
-  gameService.postSpell(gameId, playerId).then( response=> {
-    
-  }).catch(err => {
-    console.log("There has been a mistake with the spell")
+function imposeMinister(gameId, playerId){
+  gameService.postSpell(gameId, playerId).then(
+    ()=>{}
+  ).catch(err => {
+    console.log(err)
   })
 }
 
-function AvadaKedavra({currentGame}) {
+function Imperio({currentGame}) {
   const styles = useStyles;
   return <Grid container xs={12} spacing={2}>
-    <Players playing={1} currentGame={currentGame} castKedavra={(id) => killSomeone(currentGame.id, id)} />
+    <Players playing={1} currentGame={currentGame} castImperio={(id) => imposeMinister(currentGame.id, id)} />
   </Grid>
 }
 
-AvadaKedavra.propTypes = {
+Imperio.propTypes = {
   currentGame: PropTypes.object.isRequired
 }
 
 
-export default AvadaKedavra;
+export default Imperio;
