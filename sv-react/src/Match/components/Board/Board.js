@@ -87,8 +87,9 @@ function Board({currentGame}){
         <Grid item key="deck"  xs={6} sm={6} md={6}>
           <MaterialCard className="">
             <CardContent className="">
-              <Deck proclaimed={
-                currentGame.score.good + currentGame.score.bad} />
+              <Deck discarded={currentGame.discarded}
+                proclaimed={currentGame.score.good + currentGame.score.bad} 
+              />
             </CardContent>
           </MaterialCard>
         </Grid>
