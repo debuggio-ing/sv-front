@@ -74,7 +74,7 @@ function Players({startGame=()=>{},
            variant="contained" color="primary" onClick={startGame}>
                       Jugar
                    </Button>
-          
+
       }
       else {
         <br/>
@@ -124,7 +124,7 @@ function Players({startGame=()=>{},
           {player.role ?
             <ListItem key={index+"loyalty"}>
               {player.role=="Death Eater" ? <img key={index} src={"public/img/mortifago_lealtad.png"} style={{height:"50px"}}/> :
-                                          [player.role=="voldemort" ? <img key={index} src={"public/img/voldemort.png"} style={{height:"50px"}}/> :
+                                          [player.role=="Voldemort" ? <img key={index} src={"public/img/voldemort.png"} style={{height:"50px"}}/> :
                                                                       <img key={index} src={"public/img/fenix_lealtad.png"} style={{height:"50px"}}/>]}
             </ListItem> :
             <ListItem key={index+"loyalty"}>
@@ -139,7 +139,7 @@ function Players({startGame=()=>{},
       {!playing ? button : <div/>}
       {!playing ? button3 : <div/>}
       {!playing ? button2 : <div/>}
-      
+
     </List>
 }
 
