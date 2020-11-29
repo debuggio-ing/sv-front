@@ -11,6 +11,7 @@ const initialState = {
   voting: 0,
   in_session: 0,
   expelliarmus: 0,
+  showFilters: false,
   listAvailable: true,
   listStarted: false,
   listFinished: false,
@@ -47,7 +48,14 @@ export default (state = initialState, action) => {
     case "JOIN":
       return { ...state, voting: 0, currentGame: { ...action.lobby, players: action.lobby.current_players.map((player) => { return { nickname: player } }) } };
 
-
+    case "TOGGLEFILTER": {
+        if (!state.showFilters) {
+          return { ...state, showFilters: true}
+        }
+        else {
+          return { ...state,showFilters: false }
+        }
+      }
     case "TOGGLEAVAILABLE": {
       if (!state.listAvailable) {
         return { ...state, listAvailable: true, listStarted: false, listFinished: false }
