@@ -85,24 +85,24 @@ class HomePage extends React.Component {
     return (
       <div>
 
-        <Typography gutterBottom variant="h5" component="h2">
+        <Typography gutterBottom variant="h5"  component="h2">
           ¡Bienvenido! Crea una nueva sala o elige alguna disponible para jugar
                 </Typography>
-       
-        
-          {this.props.showFilters 
-          ? 
-          
+
+
+          {this.props.showFilters
+          ?
+
           <Grid container justify="flex-end">
-            
+
             <Button variant="contained" color="primary"
             onClick={() => this.toggleFilter1()}>
            Esconder Filtros
           </Button>
-            
+
         </Grid>
 
-          : 
+          :
           <Grid container justify="flex-end">
           <Button variant="contained" color="primary"
             onClick={() => this.toggleFilter1()}>
@@ -111,8 +111,8 @@ class HomePage extends React.Component {
            </Grid>
 
         }
-                 {this.props.showFilters 
-          ? 
+                 {this.props.showFilters
+          ?
           <Grid container justify="flex-end">
         <FormGroup>
               <FormControlLabel

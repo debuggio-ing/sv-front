@@ -84,7 +84,7 @@ class Match extends React.Component {
   render() {
     return (
       <div className="match">
-        <Container className="" style={{"max-width": "95%"}}>
+        <Container className="" style={{"maxWidth": "95%"}}>
           <Typography gutterBottom variant="h5" component="h2">
             {this.props.currentGame.name}
           </Typography>
