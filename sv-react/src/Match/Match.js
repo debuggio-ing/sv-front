@@ -192,13 +192,14 @@ class Match extends React.Component {
             }
 
             {this.props.playing && !this.props.currentGame.voting && (this.props.currentGame.in_session || (this.props.currentGame.semaphore != 0))
+              && this.props.currentGame.players.length>=5
               ? <Grid item key="results" xs={12}>
                 <Card className="">
                   <CardContent className="">
                     <Typography gutterBottom variant="h5" component="h2">
                       Resultados
                                 </Typography>
-                    {this.props.currentGame.in_session ?
+                    {this.props.currentGame.in_session && this.props.currentGame.minister!=-1 && this.props.currentGame.director!=-1 ?
                       <Typography>{this.props.currentGame.players.filter((player) => player.player_id == this.props.currentGame.minister)[0].nickname} y
                                   {" " + this.props.currentGame.players.filter((player) => player.player_id == this.props.currentGame.director)[0].nickname} fueron elegidos
                       </Typography>

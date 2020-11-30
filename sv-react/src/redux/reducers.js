@@ -40,7 +40,10 @@ const initialState = {
     end: false,
     phoenix_win: false,
     max_players: 5,
-
+    score: {
+      good: 0,
+      bad: 0
+    }
   }
 }
 
