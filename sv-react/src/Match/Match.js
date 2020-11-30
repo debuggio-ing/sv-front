@@ -93,10 +93,6 @@ class Match extends React.Component {
             <Grid item key="chat" md={this.props.playing ? 4 : 6}>
               <Card className="">
                 <CardContent className="">
-                  <Typography gutterBottom variant="h5" component="h2">
-                    Chat
-
-                  </Typography>
                   <Chat sendMessage={(message) => this.sendMessage(message)}
                     messages={this.props.currentGame.messages} />
                 </CardContent>
