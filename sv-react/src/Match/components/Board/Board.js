@@ -32,7 +32,7 @@ function Board({currentGame}){
   const voidMortifagas = Array(6-proclamacionesMortifagas.length).fill();
   const voidFenix = Array(5-proclamacionesFenix.length).fill();
   let spells = new Array(6).fill("NocardDE")
-  if(currentGame.player_list.length<7) {
+  if(currentGame.players.length<7) {
     spells = ["NocardDE", "NocardDE", "Adivination", "AvadaKedavra", "AvadaKedavraExp", "NocardDEEND"]
   }
   else {

@@ -2,7 +2,7 @@ import config from 'config';
 import {
     authHeader,
     handleResponse
-} from '@/_helpers';
+} from '@/_core';
 
 export const gameService = {
     vote,
@@ -137,7 +137,7 @@ function nominateDirector(gameId, candidateId) {
         .then(handleResponse)
         .then(nomination => {
             // for debugging purposes
-            return proclamation;
+            return nomination;
         });
 }
 

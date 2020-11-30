@@ -18,7 +18,7 @@ import Spell from './components/Spells/Spell.js'
 import Proclaim from './components/Proclaim/Proclaim.js'
 import Expelliarmus from './components/Expelliarmus/Expelliarmus.js'
 import { gameService, lobbyService } from '@/_services'
-import { history } from '@/_helpers';
+import { history } from '@/_core';
 import { array } from 'prop-types';
 import { backgroundGray, phoenixRed } from '@/Styles'
 
@@ -199,8 +199,8 @@ class Match extends React.Component {
                       Resultados
                                 </Typography>
                     {this.props.currentGame.in_session ?
-                      <Typography>{this.props.currentGame.player_list.filter((player) => player.player_id == this.props.currentGame.minister)[0].nickname} y
-                                  {" " + this.props.currentGame.player_list.filter((player) => player.player_id == this.props.currentGame.director)[0].nickname} fueron elegidos
+                      <Typography>{this.props.currentGame.players.filter((player) => player.player_id == this.props.currentGame.minister)[0].nickname} y
+                                  {" " + this.props.currentGame.players.filter((player) => player.player_id == this.props.currentGame.director)[0].nickname} fueron elegidos
                       </Typography>
                       : <Typography>El gobierno NO fue elegido.</Typography>
                     }

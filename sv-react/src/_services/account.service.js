@@ -2,7 +2,7 @@ import config from 'config';
 import {
     handleResponse,
     authHeader,
-} from '@/_helpers';
+} from '@/_core';
 import 'regenerator-runtime/runtime'
 import {
     authenticationService

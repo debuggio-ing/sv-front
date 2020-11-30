@@ -2,7 +2,7 @@ import React from 'react';
 import { Router, Route, Link } from 'react-router-dom';
 
 import { AppBar, Toolbar, Typography, Button, Grid } from '@material-ui/core';
-import { history } from '@/_helpers';
+import { history } from '@/_core';
 import {
   authenticationService,
   accountService

@@ -6,7 +6,7 @@ import config from 'config';
 import {
     handleResponse,
     authHeader
-} from '@/_helpers';
+} from '@/_core';
 import { accountService } from './account.service';
 
 const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
