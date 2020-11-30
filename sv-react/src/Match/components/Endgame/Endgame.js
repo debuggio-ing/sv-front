@@ -8,7 +8,7 @@ import { Grid, Typography, GridListTile,  Dialog,
   Button } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import Card from './../Card/Card.js'
-import { history } from '@/_helpers';
+import { history } from '@/_core';
 
 
 const useStyles = makeStyles((theme) => ({

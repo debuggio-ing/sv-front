@@ -18,7 +18,7 @@ import Spell from './components/Spells/Spell.js'
 import Proclaim from './components/Proclaim/Proclaim.js'
 import Expelliarmus from './components/Expelliarmus/Expelliarmus.js'
 import { gameService, lobbyService } from '@/_services'
-import { history } from '@/_helpers';
+import { history } from '@/_core';
 import { array } from 'prop-types';
 import { backgroundGray, phoenixRed } from '@/Styles'
 

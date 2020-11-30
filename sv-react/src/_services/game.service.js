@@ -2,7 +2,7 @@ import config from 'config';
 import {
     authHeader,
     handleResponse
-} from '@/_helpers';
+} from '@/_core';
 
 export const gameService = {
     vote,

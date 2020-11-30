@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { authenticationService, lobbyService } from '@/_services';
-import { tokenRefreshException } from '@/_helpers';
+import { tokenRefreshException } from '@/_core';
 import { Button, Typography, Label, Grid, List, ListItem, FormGroup, Checkbox, FormControlLabel } from '@material-ui/core';
 import LobbyCard from './components/LobbyCard/LobbyCard.js'
 import { connect } from 'react-redux'
@@ -10,7 +10,7 @@ import {
   toggleFinished, toggleFilter,
   toggleOwnGames
 } from './../redux/actions.js'
-import { history } from '@/_helpers';
+import { history } from '@/_core';
 
 let intervalLL;
 

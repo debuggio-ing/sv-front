@@ -1,7 +1,6 @@
 
 import React from "react";
 import {accountService} from '@/_services'
-import { history } from '@/_helpers';
 
 
 
