@@ -38,7 +38,7 @@ const initialState = {
     owner: "",
     messages: [],
     end: false,
-    phoenix_win: false
+    phoenix_win: false,
     max_players: 5,
 
   }
