@@ -69,7 +69,7 @@ class App extends React.Component {
             </AppBar>
           }
           <div className="jumbotron">
-            <div className="container">
+            <div className="container" style={{"margin-left": "auto !important", "margin-right":"auto !important", "width": "100% !important", "max-width": "95%"}}>
               <PrivateRoute exact path="/" component={HomePage} />
               <Route path="/login" component={LoginPage} />
               <PrivateRoute path="/profile" component={Profile} />
