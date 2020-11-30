@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { history } from '@/_helpers';
+import { history } from '@/_core';
 import { accountService } from '@/_services';
 import { authenticationService } from '../_services/authentication.service';
 

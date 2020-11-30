@@ -4,9 +4,12 @@ import { Grid, Typography, GridListTile,  Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle } from '@material-ui/core';
+  DialogTitle,
+  Button } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import Card from './../Card/Card.js'
+import { history } from '@/_core';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,10 +23,12 @@ const imgs_src = {
 }
 
 function handleClose() {
+  history.push('/')
   setOpen(false);
 }
 
 function Endgame({ currentGame}) {
+  const winners = currentGame.phoenix_win ? 'Orden del Fénix' : 'Mortífagos'
   return (<Dialog
     open={true}
     onClose={handleClose}
@@ -31,7 +36,7 @@ function Endgame({ currentGame}) {
     <Grid container
       alignText='center' alignSelf='stretch' xs={12}
       justify='center' alignItems='center'>
-      <DialogTitle>{"Ganadores"}</DialogTitle>
+      <DialogTitle>{"¡Felicitaciones " + winners + ", han ganado el juego!"}</DialogTitle>
       <Grid container
         alignText='center' alignSelf='stretch' xs={12}
         justify='center' alignItems='center'>
@@ -48,8 +53,14 @@ function Endgame({ currentGame}) {
                 <img src={imgs_src["Death Eater"]} style={{ height: "300px" }} />
               </Grid>
             </Grid>
+                    
           }
+          <Button 
+                    onClick={handleClose} 
+                    > IR AL LOBBY 
+                    </Button>
         </Grid>
+
   
       </Grid>
     </Grid>
