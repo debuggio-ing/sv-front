@@ -175,7 +175,7 @@ class Match extends React.Component {
                 !this.props.currentGame.minister_proclaimed
                 && !this.props.currentGame.expelliarmus))
               && this.props.currentGame.in_session)
-              ? <Grid item key="Proc" md={this.props.playing ? 3 : 6}>
+              ? <Grid item key="Proc" md={this.props.playing ? 2 : 6}>
                 <Card className="">
                   <CardContent className="">
                     {this.props.currentGame.client_director ?
