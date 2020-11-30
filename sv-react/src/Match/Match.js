@@ -84,13 +84,13 @@ class Match extends React.Component {
   render() {
     return (
       <div className="match">
-        <Container className="">
+        <Container className="" style={{"maxWidth": "95%"}}>
           <Typography gutterBottom variant="h5" component="h2">
             {this.props.currentGame.name}
           </Typography>
           <Grid container spacing={4}>
 
-            <Grid item key="chat" md={this.props.playing ? 3 : 6}>
+            <Grid item key="chat" md={this.props.playing ? 4 : 6}>
               <Card className="">
                 <CardContent className="">
                   <Chat sendMessage={(message) => this.sendMessage(message)}
@@ -100,7 +100,7 @@ class Match extends React.Component {
             </Grid>
 
             {this.props.playing
-              ? <Grid item key="board" xs={6} sm={6} md={6}>
+              ? <Grid item key="board" xs={4} sm={4} md={4}>
                 <Card className="">
                   <CardContent className="">
                     <Typography gutterBottom variant="h5" component="h2">
@@ -113,7 +113,7 @@ class Match extends React.Component {
               : <br />
             }
 
-            <Grid item key="players" md={this.props.playing ? 3 : 6}>
+            <Grid item key="players" md={this.props.playing ? 4 : 6}>
               <Card className="">
                 <CardContent className="">
                   <Typography gutterBottom variant="h5" component="h2">
@@ -131,7 +131,7 @@ class Match extends React.Component {
               </Card>
             </Grid>
             {this.props.voting
-              ? <Grid item key="vote" md={this.props.playing ? 3 : 6}>
+              ? <Grid item key="vote" md={this.props.playing ? 2 : 6}>
                 <Card className="">
                   <CardContent className="">
                     <Typography gutterBottom variant="h5" component="h2">
@@ -171,7 +171,7 @@ class Match extends React.Component {
                 !this.props.currentGame.minister_proclaimed
                 && !this.props.currentGame.expelliarmus))
               && this.props.currentGame.in_session)
-              ? <Grid item key="Proc" md={this.props.playing ? 3 : 6}>
+              ? <Grid item key="Proc" md={this.props.playing ? 2 : 6}>
                 <Card className="">
                   <CardContent className="">
                     {this.props.currentGame.client_director ?
