@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Results({currentGame}) {
     const classes = useStyles();
-    let players = currentGame.players;
+    let players = currentGame.players.filter(player => player.alive);
     let voting = currentGame.voting;
     let chaos = currentGame.semaphore != 0;
 
@@ -29,8 +29,8 @@ function Results({currentGame}) {
                 {player.nickname}
               </div>
               <div>
-                {player.last_vote ? 
-                          <Card type={"Lumos"} portrait={false}/> 
+                {player.last_vote ?
+                          <Card type={"Lumos"} portrait={false}/>
                           : <Card type={"Nox"} portrait={false}/> }
               </div>
             </div>
