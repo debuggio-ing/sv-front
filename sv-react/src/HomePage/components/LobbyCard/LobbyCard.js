@@ -54,7 +54,7 @@ function LobbyCard({ lobby, joinGame, listOwnGames}) {
           : <Box align="right" gutterbottom="true" variant="body1" component="p" fontFamily="Segoe UI Emoji">
 
           </Box>}
-        {!lobby.finished && lobby.started
+        { lobby.started
           ? <Box align="right" gutterbottom="true" variant="body1" component="p" fontFamily="Segoe UI Emoji">
             Partida comenzada
           </Box>

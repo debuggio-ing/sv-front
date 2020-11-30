@@ -36,7 +36,7 @@ function Board({currentGame}){
     spells = ["NocardDE", "NocardDE", "Adivination", "AvadaKedavra", "AvadaKedavraExp", "NocardDEEND"]
   }
   else {
-    if (currentGame.player_list.length<9){
+    if (currentGame.players.length<9){
       spells = ["NocardDE", "Crucio", "Adivination", "AvadaKedavra", "AvadaKedavraExp", "NocardDEEND"]
     }
     else{

@@ -36,8 +36,10 @@ const initialState = {
     players: [],
     semaphore: 0,
     owner: "",
+    messages: [],
+    end: false,
+    phoenix_win: false,
     max_players: 5,
-    messages: []
 
   }
 }
