@@ -1,5 +1,6 @@
 import React from 'react';
 import { MessageList, MessageGroup, Message, MessageText, ThemeProvider, Avatar } from '@livechat/ui-kit'
+import { lightDeathEaterViolet } from '@/Styles'
 import IconButton from '@material-ui/core/IconButton';
 import SendIcon from '@material-ui/icons/Send';
 import { Formik, Field, Form } from 'formik';
@@ -16,12 +17,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const theme = {
+    MessageGroup:{
+      css:{
+        borderRadius: '15px 30px',
+        backgroundColor: lightDeathEaterViolet,
+      }
+    }
+}
+
 function Chat({ sendMessage, messages }) {
     const classes = useStyles();
 
     return (<div>
         <div style={{ width: '100%', height: 400 }}>
-            <ThemeProvider>
+            <ThemeProvider theme={theme}>
                 <MessageList active>
                     {messages.map((message, index) => (
                         <MessageGroup avatar='public/img/harry-potter.png'>
