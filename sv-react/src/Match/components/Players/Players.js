@@ -70,10 +70,10 @@ function Players({ startGame = () => { },
   let canElectDirector = currentGame.client_minister && !currentGame.in_session && !voting;
   let alive_players = currentGame.players.filter((player) => player.alive).length
   if (owner) {
-    if(players.length < currentGame.max_players){
-    button3 = <Button className={classes.addBotButton}
+    if (players.length < currentGame.max_players) {
+      button3 = <Button className={classes.addBotButton}
         variant="contained" color="primary" onClick={addBot}>
-                   Añadir Bot
+        Añadir Bot
                 </Button>
     }
     if (players.length >= 5) {
@@ -122,11 +122,11 @@ function Players({ startGame = () => { },
             (castImperio && player.player_id != currentGame.minister) ?
               { cursor: "pointer" } :
               (castKedavra && player.player_id != currentGame.minister) ?
-              { cursor: "pointer" } :
-              ((player.player_id == currentGame.prev_minister && alive_players > 5) ||
-                player.player_id == currentGame.prev_director ||
-                player.player_id == currentGame.minister) ?
-                undefined :
+                { cursor: "pointer" } :
+                ((player.player_id == currentGame.prev_minister && alive_players > 5) ||
+                  player.player_id == currentGame.prev_director ||
+                  player.player_id == currentGame.minister) ?
+                  undefined :
 
                   canElectDirector ?
                     { cursor: "pointer" } :
@@ -160,7 +160,7 @@ function Players({ startGame = () => { },
       </ListItem>
     ))}
     {!playing ? button : <div />}
-    {!playing ? button3 : <div/>}
+    {!playing ? button3 : <div />}
     {!playing ? button2 : <div />}
   </List>
 }
