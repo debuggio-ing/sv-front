@@ -53,7 +53,7 @@ function Board({currentGame}){
         ))}
         {voidMortifagas.map((proclamacion, index) => (
           <Grid xs={2} sm={2} md={2} key={index} style={index+currentGame.score.bad>=3 ?
-                                                        {backgroundColor: darkDeathEaterViolet, "border-radius": "1px"} : undefined}>
+                                                        {backgroundColor: darkDeathEaterViolet, "borderRadius": "1px"} : undefined}>
             <Card type={spells[index+currentGame.score.bad]} portrait={true} key={index}/>
           </Grid>
         ))}
@@ -88,7 +88,7 @@ function Board({currentGame}){
           <MaterialCard className="">
             <CardContent className="">
               <Deck discarded={currentGame.discarded}
-                proclaimed={currentGame.score.good + currentGame.score.bad} 
+                proclaimed={currentGame.score.good + currentGame.score.bad}
               />
             </CardContent>
           </MaterialCard>

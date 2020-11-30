@@ -10,7 +10,7 @@ import {TextField,
 import {gameService} from './../../../_services/game.service.js'
 
 
-function Expelliarmus({currentGame}) {
+function Expelliarmus({game_id}) {
   const [open, setOpen] = useState(false);
   function handleClose() {
     setOpen(false);
@@ -21,7 +21,7 @@ function Expelliarmus({currentGame}) {
   }
 
   function cast_expelliarmus(choice){
-    gameService.postProcCards(1,1,choice).then( response=> {
+    gameService.postProcCards(game_id,1,choice).then( response=> {
       console.log("Expelliarmus no lanzado")
     }).catch(err => {
       console.log("No se pudo lanzar expelliarmus.")
