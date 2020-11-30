@@ -97,7 +97,10 @@ async function getPicture(){
         requestOptions)
     try {
         let blob = await response.blob()
-        const image = URL.createObjectURL(blob)
+        let image="public/img/harry-potter.png"
+        if (blob.size){
+            image = URL.createObjectURL(blob)
+        }
         return image
     } catch (err){
         console.log('fetch failed', err)

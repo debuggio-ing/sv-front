@@ -4,13 +4,14 @@ import startGame from './actions.js'
 import { lobbyService } from '@/_services';
 
 const initialState = {
-  playing: 0, //is client in /match
+  playing: 0, //is client in match
   proclamacionesFenix: 2,
   proclamacionesMortifagas: 4,
   spellType: "None",
   voting: 0,
   in_session: 0,
   expelliarmus: 0,
+  showFilters: false,
   listAvailable: true,
   listStarted: false,
   listFinished: false,
@@ -30,6 +31,7 @@ const initialState = {
     minister: -1,
     director: -1,
     prev_minister: -1,
+    discarded: 0,
     prev_director: -1,
     players: [],
     semaphore: 0,
@@ -37,6 +39,8 @@ const initialState = {
     messages: [],
     end: false,
     phoenix_win: false
+    max_players: 5,
+
   }
 }
 
@@ -47,7 +51,14 @@ export default (state = initialState, action) => {
     case "JOIN":
       return { ...state, voting: 0, currentGame: { ...action.lobby, players: action.lobby.current_players.map((player) => { return { nickname: player } }) } };
 
-
+    case "TOGGLEFILTER": {
+        if (!state.showFilters) {
+          return { ...state, showFilters: true}
+        }
+        else {
+          return { ...state,showFilters: false }
+        }
+      }
     case "TOGGLEAVAILABLE": {
       if (!state.listAvailable) {
         return { ...state, listAvailable: true, listStarted: false, listFinished: false }

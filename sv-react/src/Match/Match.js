@@ -94,10 +94,6 @@ class Match extends React.Component {
             <Grid item key="chat" md={this.props.playing ? 3 : 6}>
               <Card className="">
                 <CardContent className="">
-                  <Typography gutterBottom variant="h5" component="h2">
-                    Chat
-
-                  </Typography>
                   <Chat sendMessage={(message) => this.sendMessage(message)}
                     messages={this.props.currentGame.messages} />
                 </CardContent>
@@ -126,6 +122,7 @@ class Match extends React.Component {
                             </Typography>
                   <Players startGame={() => this.props.play(this.props.currentGame.id)}
                     leaveGame={() => this.props.leaveGame(this.props.currentGame.id)}
+                    addBot={() => this.props.addBot(this.props.currentGame.id)}
                     playing={this.props.playing}
                     voting={this.props.voting}
                     currentGame={this.props.currentGame}
@@ -262,6 +259,14 @@ const mapDispatchToProps = dispatch => {
         alert("No se pudo iniciar la partida")
       })
     },
+    addBot: (lobbyId) => {
+      lobbyService.addBot(lobbyId).then(result => {
+        alert("added")
+      }
+      ).catch(err => {
+        alert("No se pudo agregar el bot")
+      })
+    },
     leaveGame: (lobbyId) => {
       lobbyService.leaveMatch(lobbyId).then(result => {
         if (result.startConfirmation) {
@@ -339,7 +344,7 @@ const mapDispatchToProps = dispatch => {
                 dispatch({ ...listProclaim, proclams })
               }
             }).catch(err => {
-              alert("No se pudieron obtener las proclamaciones");
+              //alert("No se pudieron obtener las proclamaciones");
             })
           }
           if (game.score.good >= 5 || game.score.bad >= 6) {
@@ -349,8 +354,8 @@ const mapDispatchToProps = dispatch => {
         }
       }
       ).catch(err => {
-        alert("No se pudo efectuar la elección");
-        clearInterval(intervalGP);
+        //alert("No se pudo actualizar el estado de la partida");
+        //clearInterval(intervalGP);
       })
     },
     lobbyStatus: (lobbyId) => {
@@ -364,10 +369,8 @@ const mapDispatchToProps = dispatch => {
             }
           }
           ).catch(err => {
-            console.log(err)
-            alert("No se pudo actualizar el estado de la partida")
-            history.push("/")
-
+            //alert("No se pudo actualizar el estado de la partida")
+            //history.push("/")
           });
         }
         else {
@@ -378,8 +381,8 @@ const mapDispatchToProps = dispatch => {
       }
       ).catch(err => {
         console.log(err)
-        alert("No se pudo actualizar el estado del lobby");
-        clearInterval(intervalGP);
+        //alert("No se pudo actualizar el estado del lobby");
+        //clearInterval(intervalGP);
       })
     }
   }

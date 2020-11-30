@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function LobbyCard({ lobby, joinGame }) {
+function LobbyCard({ lobby, joinGame, listOwnGames}) {
   const classes = useStyles();
   return (
     <Card className={classes.card}>
@@ -49,27 +49,29 @@ function LobbyCard({ lobby, joinGame }) {
 
         {lobby.finished
           ? <Box align="right" gutterbottom="true" variant="body1" component="p" fontFamily="Segoe UI Emoji">
-            Finished
+            Partida terminada
           </Box>
           : <Box align="right" gutterbottom="true" variant="body1" component="p" fontFamily="Segoe UI Emoji">
 
           </Box>}
         { lobby.started
           ? <Box align="right" gutterbottom="true" variant="body1" component="p" fontFamily="Segoe UI Emoji">
-            Started
+            Partida comenzada
           </Box>
           : <Box align="right" gutterbottom="true" variant="body1" component="p" fontFamily="Segoe UI Emoji">
-            Not Started
+            
           </Box>}
 
         <Box align="right" gutterbottom="true" variant="body1" component="p" fontFamily="Segoe UI Emoji">
           ({lobby.current_players.length} / {lobby.max_players})
           </Box>
-        <Button className={classes.joinButton} variant="contained" color="primary"
+        
+<Button className={classes.joinButton} variant="contained" color="primary"
           onClick={() => joinGame(lobby.id)}>
-          Unirse
+          {listOwnGames ?
+          "Reconectarse"
+          : "Unirse"}
             </Button>
-
       </CardContent>
     </Card>
   )

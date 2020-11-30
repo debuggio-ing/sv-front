@@ -51,15 +51,16 @@ export default function PictureUpload() {
                 style = {{display: "none"}}/>
         </form>
             < div style = {{
-                height: "60px",
-                width: "60px",
-                border: "1px dashed black"
+                height: "200px",
+                width: "200px",
+                border: "4px solid black"
             }
         }
         onClick = {() => imageUploader.current.click()} >
     <img src = {picture} ref = {uploadedImage}
             style = {
                 {
+                    objectFit: 'cover',
                     width: "100%",
                     height: "100%",
                 }

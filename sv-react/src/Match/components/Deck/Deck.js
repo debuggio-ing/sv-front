@@ -17,9 +17,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function Deck({proclaimed}) {
+function Deck({discarded, proclaimed}) {
     let classes = useStyles();
-    let discarded = proclaimed != 9 ? (2*proclaimed) % 10 : 0;
     let cards_left = 17 - discarded - proclaimed;
     return <Grid container className={classes.root, classes.cardList} container
     spacing={0}
@@ -46,7 +45,8 @@ function Deck({proclaimed}) {
 
 
 Deck.propTypes = {
-  proclaimed: PropTypes.number.isRequired
+  proclaimed: PropTypes.number.isRequired,
+  discarded: PropTypes.number.isRequired
 }
 
 export default Deck;
