@@ -83,6 +83,26 @@ class Match extends React.Component {
   }
 
   render() {
+    this.spellTime = this.props.currentGame.in_session &&
+                this.props.currentGame.director_proclaimed &&
+                this.props.currentGame.client_minister &&
+                this.props.currentGame.last_proc_negative;
+
+    this.expeliarmusTime = this.props.currentGame.in_session && this.props.currentGame.score.bad == 5 &&
+                      this.props.currentGame.expelliarmus && this.props.currentGame.client_minister
+                      && !this.props.currentGame.minister_proclaimed;
+
+    this.proclamationTime = (((this.props.currentGame.client_director &&
+                        this.props.currentGame.minister_proclaimed &&
+                        !this.props.currentGame.director_proclaimed)
+                        || (this.props.currentGame.client_minister &&
+                          !this.props.currentGame.minister_proclaimed
+                          && !this.props.currentGame.expelliarmus))
+                        && this.props.currentGame.in_session);
+
+    this.resultsTime = this.props.playing && !this.props.currentGame.voting &&
+                  (this.props.currentGame.in_session || (this.props.currentGame.semaphore != 0))
+                  && this.props.currentGame.players.length>0 && this.props.currentGame.minister!=-1;
     return (
       <div className="match">
         <Container className="" style={{"maxWidth": "95%"}}>
@@ -144,10 +164,7 @@ class Match extends React.Component {
               </Grid>
               : <br />
             }
-            {this.props.currentGame.in_session &&
-              this.props.currentGame.director_proclaimed &&
-              this.props.currentGame.client_minister &&
-              this.props.currentGame.last_proc_negative
+            {this.spellTime
               ?
               <Spell cards={this.props.cards}
                 spell={this.props.spell}
@@ -158,20 +175,12 @@ class Match extends React.Component {
             }
 
 
-            {this.props.currentGame.in_session && this.props.currentGame.score.bad == 5 &&
-              this.props.currentGame.expelliarmus && this.props.currentGame.client_minister
-              && !this.props.currentGame.minister_proclaimed ?
+            {this.expeliarmusTime ?
               <Expelliarmus game_id={this.props.currentGame.id} />
               : <br />
             }
 
-            {(((this.props.currentGame.client_director &&
-              this.props.currentGame.minister_proclaimed &&
-              !this.props.currentGame.director_proclaimed)
-              || (this.props.currentGame.client_minister &&
-                !this.props.currentGame.minister_proclaimed
-                && !this.props.currentGame.expelliarmus))
-              && this.props.currentGame.in_session)
+            {this.proclamationTime
               ? <Grid item key="Proc" md={this.props.playing ? 2 : 6}>
                 <Card className="">
                   <CardContent className="">
@@ -191,8 +200,7 @@ class Match extends React.Component {
               : <br />
             }
 
-            {this.props.playing && !this.props.currentGame.voting && (this.props.currentGame.in_session || (this.props.currentGame.semaphore != 0))
-              && this.props.currentGame.players.length>0 && this.props.currentGame.minister!=-1
+            {this.resultsTime
               ? <Grid item key="results" xs={12}>
                 <Card className="">
                   <CardContent className="">
