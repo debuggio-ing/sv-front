@@ -116,7 +116,7 @@ export default (state = initialState, action) => {
       }
       return state
     case "LEAVE":
-      return { ...state, playing: 0, currentGame: { id: -1 } };
+      return { ...state, playing: 0, currentGame: { id: -1, end: false } };
     default:
       return state;
   }
