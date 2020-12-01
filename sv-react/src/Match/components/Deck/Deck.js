@@ -29,14 +29,14 @@ function Deck({discarded, proclaimed}) {
         <Grid xs={6} sm={6} md={6}>
           <Typography align="center">Descarte</Typography>
           <div align="center">
-            <Card type={"Pila-Descarte"} portrait={true} />
+            <Card type={discarded==0 ? "Pila-Descarte" : "Proclamation-back"} portrait={true} />
           </div>
             <Typography align="center" >{discarded}</Typography>
         </Grid>
         <Grid xs={6} sm={6} md={6}>
           <Typography align="center">Robo</Typography>
           <div align="center">
-            <Card type={"Pila-Robo"} portrait={true}/>
+            <Card type={cards_left==0 ? "Pila-Robo" : "Proclamation-back"} portrait={true}/>
           </div>
           <Typography align="center"> {cards_left}</Typography>
         </Grid>

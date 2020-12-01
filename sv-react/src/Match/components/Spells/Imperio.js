@@ -15,7 +15,7 @@ function imposeMinister(gameId, playerId){
   gameService.postSpell(gameId, playerId).then(
     ()=>{}
   ).catch(err => {
-    console.log(err)
+    //console.log(err)
   })
 }
 

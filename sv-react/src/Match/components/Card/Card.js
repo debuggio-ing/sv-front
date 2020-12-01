@@ -33,6 +33,9 @@ function Card({type, portrait, clickAction}){
     case "Pila-Robo":
       url = "public/img/deck.png"
       break;
+    case "Proclamation-back":
+      url = "public/img/proclamation-back.png"
+      break;
     case "Adivination":
       url = "public/img/adivination.png"
       break;

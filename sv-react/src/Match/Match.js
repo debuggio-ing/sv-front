@@ -192,13 +192,14 @@ class Match extends React.Component {
             }
 
             {this.props.playing && !this.props.currentGame.voting && (this.props.currentGame.in_session || (this.props.currentGame.semaphore != 0))
+              && this.props.currentGame.players.length>0 && this.props.currentGame.minister!=-1
               ? <Grid item key="results" xs={12}>
                 <Card className="">
                   <CardContent className="">
                     <Typography gutterBottom variant="h5" component="h2">
                       Resultados
                                 </Typography>
-                    {this.props.currentGame.in_session ?
+                    {this.props.currentGame.in_session && this.props.currentGame.director!=-1 ?
                       <Typography>{this.props.currentGame.players.filter((player) => player.player_id == this.props.currentGame.minister)[0].nickname} y
                                   {" " + this.props.currentGame.players.filter((player) => player.player_id == this.props.currentGame.director)[0].nickname} fueron elegidos
                       </Typography>
@@ -238,9 +239,9 @@ const mapDispatchToProps = dispatch => {
   return {
     joinGame: (id) => {
       lobbyService.joinLobby(id).then(lobby => {
-        console.log(lobby)
+        //console.log(lobby)
         if (lobby.id) {
-          console.log(lobby.id)
+          //console.log(lobby.id)
           dispatch({ ...joinGame, lobby })
           history.push("/match")
         }
@@ -281,7 +282,7 @@ const mapDispatchToProps = dispatch => {
     },
     spell: (id) => {
       gameService.getSpell(id).then(spell => {
-        console.log(spell)
+        //console.log(spell)
         switch (spell["spell_type"]) {
           case "Divination":
             dispatch({ ...listCards, cards: spell["cards"] })
@@ -300,16 +301,16 @@ const mapDispatchToProps = dispatch => {
             dispatch(startImperio);
             break;
           default:
-            console.log('There has been a mistake with spells')
+            //console.log('There has been a mistake with spells')
             break;
         }
       }).catch(err => {
-        console.log(err)
+        //console.log(err)
         // alert("No se pudo lanzar el hechizo.")
       })
     },
     vote: (chosen, id) => {
-      console.log(id)
+      //console.log(id)
       gameService.vote(chosen, id).then(result => {
         dispatch(actionvote)
       }
@@ -340,7 +341,7 @@ const mapDispatchToProps = dispatch => {
                 && !game.expelliarmus))) {
             gameService.getProcCards(gameId).then(proclams => {
               if (Array.isArray(proclams)) {
-                console.log(proclams)
+                //console.log(proclams)
                 dispatch({ ...listProclaim, proclams })
               }
             }).catch(err => {
@@ -348,7 +349,6 @@ const mapDispatchToProps = dispatch => {
             })
           }
           if (game.score.good >= 5 || game.score.bad >= 6) {
-            alert("Juego terminado");
             clearInterval(intervalGP);
           }
         }
@@ -380,7 +380,7 @@ const mapDispatchToProps = dispatch => {
         }
       }
       ).catch(err => {
-        console.log(err)
+        //console.log(err)
         //alert("No se pudo actualizar el estado del lobby");
         //clearInterval(intervalGP);
       })

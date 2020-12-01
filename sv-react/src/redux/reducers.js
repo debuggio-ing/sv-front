@@ -40,7 +40,10 @@ const initialState = {
     end: false,
     phoenix_win: false,
     max_players: 5,
-
+    score: {
+      good: 0,
+      bad: 0
+    }
   }
 }
 
@@ -49,7 +52,7 @@ export default (state = initialState, action) => {
     case "START":
       return { ...state, playing: 1 };
     case "JOIN":
-      return { ...state, voting: 0, currentGame: { ...action.lobby, players: action.lobby.current_players.map((player) => { return { nickname: player } }) } };
+      return { ...state, voting: 0, currentGame: { ...state.currentGame, ...action.lobby, players: action.lobby.current_players.map((player) => { return { nickname: player } }) } };
 
     case "TOGGLEFILTER": {
         if (!state.showFilters) {
@@ -103,17 +106,17 @@ export default (state = initialState, action) => {
       return { ...state, cards: action.cards, spellType: "Divination" };
     case "UPDATEGAMESTATUS":
       if (action.game.player_list) {
-        let game = { ...action.game, players: action.game.player_list, id: state.currentGame.id }
+        let game = { ...state.currentGame, ...action.game, players: action.game.player_list, id: state.currentGame.id }
         return { ...state, voting: action.game.voting, currentGame: game };
       }
       return state
     case "UPDATELOBBYSTATUS":
       if (action.lobby.id) {
-        return { ...state, currentGame: { ...action.lobby, players: action.lobby.current_players.map((player) => { return { nickname: player } }) } };
+        return { ...state, currentGame: { ...state.currentGame, ...action.lobby, players: action.lobby.current_players.map((player) => { return { nickname: player } }) } };
       }
       return state
     case "LEAVE":
-      return { ...state, playing: 0, currentGame: { id: -1 } };
+      return { ...state, playing: 0, currentGame: { id: -1, end: false } };
     default:
       return state;
   }
