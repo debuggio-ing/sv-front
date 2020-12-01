@@ -15,7 +15,7 @@ const imgs_src = {
 function torturePlayer(gameId, playerId) {
   gameService.postSpell(gameId, playerId).then(response => {
   }).catch(err => {
-    console.log(err)
+    //console.log(err)
   })
 }
 

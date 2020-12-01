@@ -239,9 +239,9 @@ const mapDispatchToProps = dispatch => {
   return {
     joinGame: (id) => {
       lobbyService.joinLobby(id).then(lobby => {
-        console.log(lobby)
+        //console.log(lobby)
         if (lobby.id) {
-          console.log(lobby.id)
+          //console.log(lobby.id)
           dispatch({ ...joinGame, lobby })
           history.push("/match")
         }
@@ -282,7 +282,7 @@ const mapDispatchToProps = dispatch => {
     },
     spell: (id) => {
       gameService.getSpell(id).then(spell => {
-        console.log(spell)
+        //console.log(spell)
         switch (spell["spell_type"]) {
           case "Divination":
             dispatch({ ...listCards, cards: spell["cards"] })
@@ -301,16 +301,16 @@ const mapDispatchToProps = dispatch => {
             dispatch(startImperio);
             break;
           default:
-            console.log('There has been a mistake with spells')
+            //console.log('There has been a mistake with spells')
             break;
         }
       }).catch(err => {
-        console.log(err)
+        //console.log(err)
         // alert("No se pudo lanzar el hechizo.")
       })
     },
     vote: (chosen, id) => {
-      console.log(id)
+      //console.log(id)
       gameService.vote(chosen, id).then(result => {
         dispatch(actionvote)
       }
@@ -341,7 +341,7 @@ const mapDispatchToProps = dispatch => {
                 && !game.expelliarmus))) {
             gameService.getProcCards(gameId).then(proclams => {
               if (Array.isArray(proclams)) {
-                console.log(proclams)
+                //console.log(proclams)
                 dispatch({ ...listProclaim, proclams })
               }
             }).catch(err => {
@@ -349,7 +349,6 @@ const mapDispatchToProps = dispatch => {
             })
           }
           if (game.score.good >= 5 || game.score.bad >= 6) {
-            alert("Juego terminado");
             clearInterval(intervalGP);
           }
         }
@@ -381,7 +380,7 @@ const mapDispatchToProps = dispatch => {
         }
       }
       ).catch(err => {
-        console.log(err)
+        //console.log(err)
         //alert("No se pudo actualizar el estado del lobby");
         //clearInterval(intervalGP);
       })

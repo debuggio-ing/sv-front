@@ -13,9 +13,9 @@ const useStyles = makeStyles((theme) => ({
 
 function killSomeone(gameId, playerId){
   gameService.postSpell(gameId, playerId).then( response=> {
-    
+
   }).catch(err => {
-    console.log("There has been a mistake with the spell")
+    //console.log("There has been a mistake with the spell")
   })
 }
 
